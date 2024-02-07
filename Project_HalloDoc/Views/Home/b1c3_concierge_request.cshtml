@@ -1,0 +1,154 @@
+﻿
+@model Project_HalloDoc.Views.Home.b1c2_family_friend_requestModel
+@{
+    Layout = "~/Views/Shared/_b1c.cshtml";
+}
+
+<div class="con container">
+
+    <div class="d-flex flex-row-reverse mb-3">
+        <a asp-controller="Home" asp-action="b1_submit_request_screen" type="button" class="back btn btn-outline-info">
+            &lt&nbspBack
+        </a>
+    </div>
+
+    <div class="flex-column rounded shadow-lg p-4 pb-0">
+
+        <h4 class="form-headings mt-2 justify-content-start">
+            Concierge Information
+        </h4>
+        <div class="row row-cols-2">
+            <div class="form-floating col my-3 w-50">
+                <input type="text" class="form-control shadow-none px-4" id="floatingInput"
+                       placeholder="Your First Name" />
+                <label for="floatingInput" class=" common mx-4">Your First Name</label>
+            </div>
+
+            <div class="form-floating col my-3 w-50">
+                <input type="text" class="form-control px-4 shadow-none" id="floatingInput"
+                       placeholder="Your Last Name" />
+                <label for="floatingInput" class=" common mx-4">Your Last Name</label>
+            </div>
+
+            <div class="form-floating col my-3 w-50">
+                <input type="text" class="form-control px-4 shadow-none" id="floatingInput"
+                       placeholder="Your Phone Number" />
+                <label for="floatingInput" class=" common mx-4">Your Phone Number</label>
+            </div>
+
+            <div class="form-floating col my-3 w-50">
+                <input type="email" class="form-control px-4 shadow-none" id="floatingInput"
+                       placeholder="Your Email" />
+                <label for="floatingInput" class="common mx-4">Your Email</label>
+            </div>
+
+            <div class="form-floating col my-3 w-50">
+                <input type="text" class="form-control px-4 shadow-none" id="floatingInput"
+                       placeholder="Relation With Patient" />
+                <label for="floatingInput" class="common mx-4">Hotel/Property Name</label>
+            </div>
+        </div>
+
+        <h4 class="form-headings mt-2 justify-content-start">
+            Concierge Location
+        </h4>
+        <div class="row row-cols-2">
+            <div class="form-floating col my-3 w-50">
+                <input type="text" class="form-control px-4 shadow-none" id="floatingInput" placeholder="Street" />
+                <label for="floatingInput" class=" common mx-4">Street</label>
+            </div>
+
+            <div class="form-floating col my-3 w-50">
+                <input type="text" class="form-control px-4 shadow-none" id="floatingInput" placeholder="City" />
+                <label for="floatingInput" class=" common mx-4">City</label>
+            </div>
+
+            <div class="form-floating col my-3 w-50">
+                <input type="text" class="form-control px-4 shadow-none" id="floatingInput" placeholder="State" />
+                <label for="floatingInput" class=" common mx-4">State</label>
+            </div>
+
+            <div class="form-floating col my-3 w-50">
+                <input type="text" class="form-control px-4 shadow-none" id="floatingInput"
+                       placeholder="Zip Code" />
+                <label for="floatingInput" class="common mx-4">Zip Code</label>
+            </div>
+        </div>
+
+        <h4 class="form-headings mt-2 justify-content-start">
+            Patient Information
+        </h4>
+        <div class="row row-cols-2">
+            <div class="form-floating col w-100">
+                <textarea class="form-control px-4 shadow-none" placeholder="Symptoms" id="floatingTextarea"
+                          style="height: 100px"></textarea>
+                <label for="floatingTextarea" class=" common mx-4">
+                    Enter Brief Details of Symptoms
+                    (Optional)
+                </label>
+            </div>
+
+            <div class="form-floating col my-3 w-50">
+                <input type="text" class="form-control px-4 shadow-none" id="floatingInput"
+                       placeholder="First Name" />
+                <label for="floatingInput" class=" common mx-4">First Name</label>
+            </div>
+
+            <div class="form-floating col my-3 w-50">
+                <input type="text" class="form-control px-4 shadow-none" id="floatingInput"
+                       placeholder="Last Name" />
+                <label for="floatingInput" class=" common mx-4">Last Name</label>
+            </div>
+
+            <div class="form-floating col my-3 w-50">
+                <input id="startDate" class="form-control px-4 shadow-none" type="date" />
+                <label for="startDate" class=" common mx-4">Date of Birth</label>
+            </div>
+        </div>
+
+        <h4 class="form-headings mt-2 justify-content-start">
+            Patient Contact Information
+        </h4>
+        <div class="row row-cols-2">
+            <div class="form-floating col my-3 w-50">
+                <input type="email" class="form-control px-4 shadow-none" id="floatingInput" placeholder="Email" />
+                <label for="floatingInput" class=" common mx-4">Email</label>
+            </div>
+
+            <div class="form-floating col my-3 w-50">
+                <input type="text" class="form-control px-4 shadow-none" id="floatingInput"
+                       placeholder="Phone Number" />
+                <label for="floatingInput" class="common mx-4">Phone Number</label>
+            </div>
+        </div>
+
+        <h4 class="form-headings mt-2 justify-content-start">
+            Patient Location
+        </h4>
+        <div class="row row-cols-2">
+            <div class="form-floating col my-3 w-50">
+                <input type="text" class="form-control px-4 shadow-none" id="floatingInput"
+                       placeholder="Room # / Suite (Optional)" />
+                <label for="floatingInput" class="common mx-4">Room # / Suite (Optional)</label>
+            </div>
+        </div>
+
+        <div class="row row-cols-2 mt-3 pb-3 justify-content-end">
+            <div class="col w-auto">
+                <a href=".\submit_request_screen.html">
+                    <button class="back btn btn-outline-info" type="submit">
+                        Submit
+                    </button>
+                </a>
+            </div>
+
+            <div class="col w-auto">
+                <a href=".\submit_request_screen.html">
+                    <button class="back btn btn-outline-info" type="button">
+                        Cancel
+                    </button>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

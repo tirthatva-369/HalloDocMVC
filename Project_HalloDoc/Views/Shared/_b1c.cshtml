@@ -1,0 +1,81 @@
+﻿@model Project_HalloDoc.Views.Shared._b1cModel
+@{
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HalloDoc - Submit Request</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="~/css/b1c_request_submitters.css" />
+
+
+</head>
+
+<body>
+
+    <!-- Modal -->
+    <button class="d-none" id="myBtn"></button>
+    <div id="myModal" class="modal">
+        <div class="modal-content d-flex flex-column justify-content-evenly align-items-center">
+            <div></div>
+            <img class="alert" id="info-icon" src="~/Images/info.png" alt="info">
+            <h5>Information</h5>
+            <p class="" id="info">
+                When submitting a request, you must provide the correct contact information
+                for the patient or the responsibility party. Failure to provide the correct email and phone
+                number will delay service or be declined.
+            </p>
+            <span class="close"><button class="btn btn-primary">OK</button></span>
+        </div>
+    </div>
+
+    <!-- Nav Bar -->
+    <nav class="navbar navbar-white shadow">
+        <div>
+            <a class="mx-5 navbar-brand" href="#">
+                <img src="../../Images/logo.png" height="80px" width="150px" alt="" />
+            </a>
+        </div>
+        <div id="d-mode">
+            <img class="light px-5" onclick="myFunction()" src="../../Images/dark.png" alt="" height="50px" />
+        </div>
+    </nav>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer id="fixed-footer" class="py-1 bg-dark text-white-50 fixed-bottom justify-content-end">
+        <div class="footer-css row row-cols-3 container justify-content-end text-center">
+            <a class="foot-text col-5 w-auto link-opacity-100 link-underline link-underline-opacity-0 text-decoration-none text-white" href="#">
+                Terms of
+                Conditions
+            </a>
+            <p class="foot-text col-2 w-auto text-white">|</p>
+            <a class="foot-text col-5 w-auto link-opacity-100 link-underline link-underline-opacity-0 text-white text-decoration-none" href="#">
+                Privacy
+                Policy
+            </a>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/custom.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+
+</html>
