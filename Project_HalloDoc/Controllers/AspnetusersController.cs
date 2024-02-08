@@ -20,12 +20,9 @@ namespace Project_HalloDoc.Controllers
         }
 
         // GET: Aspnetusers
-        public async Task<IActionResult> Index()
-        {
-              return _context.Aspnetusers != null ? 
+        public async Task<IActionResult> Index() => _context.Aspnetusers != null ?
                           View(await _context.Aspnetusers.ToListAsync()) :
                           Problem("Entity set 'ApplicationDbContext.Aspnetusers'  is null.");
-        }
 
         // GET: Aspnetusers/Details/5
         public async Task<IActionResult> Details(string id)
@@ -150,14 +147,28 @@ namespace Project_HalloDoc.Controllers
             {
                 _context.Aspnetusers.Remove(aspnetuser);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpPost]
+        public IActionResult validate(Aspnetuser obj)
+        {
+            var x = _context.Aspnetusers.FirstOrDefault(m => m.Email == obj.Email);
+            if (x != null && x.Passwordhash == obj.Passwordhash)
+            {
+                return RedirectToAction("b1c1_patient_request", "Home");
+            }
+            else
+            {
+                return RedirectToAction("b2_registered_user", "Home");
+            }
+        }
+
         private bool AspnetuserExists(string id)
         {
-          return (_context.Aspnetusers?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Aspnetusers?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

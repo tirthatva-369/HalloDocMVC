@@ -1,4 +1,4 @@
-﻿@model Project_HalloDoc.Views.Home.b2_registered_userModel
+﻿@model Project_HalloDoc.DataModels.Aspnetuser
 @{
     Layout = "~/Views/Shared/_b2.cshtml";
 }
@@ -27,26 +27,26 @@
                 <h3 class="text-center">Login To Your Account</h3>
             </div>
 
-            <form>
+            <form asp-controller="Aspnetusers" asp-action="validate">
                 <div class="row w-100 form-floating mb-3 mt-3">
-                    <input type="email" class="form-control shadow-none border-info" id="floatingInput" placeholder="Email" />
+                    <input type="email" asp-for="Email" class="form-control shadow-none border-info" id="floatingInput" placeholder="Email" />
+
                     <label for="floatingInput" class="input-box-text">Email</label>
                 </div>
 
                 <div class="row w-100 form-floating">
-                    <input type="password" class="form-control shadow-none border-info" id="floatingPassword"
+                    <input type="password" asp-for="Passwordhash" class="form-control shadow-none border-info" id="floatingPassword"
                            placeholder="Password" />
                     <label for="floatingPassword" class="input-box-text">Password</label>
                 </div>
-                <a asp-controller="Aspnetusers" asp-action="Index" type="submit" class="row btn btn-info text-white font-weight-bold fs-5 mt-3 w-100 p-3">
+                <button type="submit" class="row btn btn-info text-white font-weight-bold fs-5 mt-3 w-100 p-3">
                     Log In
-                </a>
+                </button>
             </form>
 
             <div class="row mt-5 text-center">
                 <p>
                     <a asp-controller="Home" asp-action="b2c_forgot_password" type="button" class="text-primary link-opacity-100 link-underline link-underline-opacity-0 w-100">
-
                         Forgot
                         Password?
                     </a>
