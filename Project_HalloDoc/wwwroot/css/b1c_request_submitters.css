@@ -134,3 +134,44 @@ label[for="file-upload"] {
     --bs-btn-active-color: white;
 }
 
+.file-upload-container {
+    position: relative;
+    width: 100px;
+}
+
+.file-upload-container::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 32px;
+    z-index: 1;
+}
+
+.file-name {
+    border-block:thick;
+}
+
+.input-group-text {
+    border-start-start-radius: var(--bs-border-radius);
+    border-start-end-radius: 0%;
+    border-end-start-radius: var(--bs-border-radius);
+    border-end-end-radius: 0%;
+}
+
+.upload {
+    border-start-end-radius: var(--bs-btn-border-radius);
+    border-end-end-radius: var(--bs-btn-border-radius);
+    border-end-start-radius: 0%;
+    border-start-start-radius: 0%;
+    color: white;
+    background-color: #64d5f7;
+    --bs-btn-active-color: white;
+}
+    .upload:hover {
+        color: white;
+        background-color: #64d5f7;
+        --bs-btn-active-color: white;
+    }

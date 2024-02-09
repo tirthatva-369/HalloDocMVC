@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DataAccess.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -153,17 +154,35 @@ namespace Project_HalloDoc.Controllers
         }
 
         [HttpPost]
-        public IActionResult validate(Aspnetuser obj)
+        [ValidateAntiForgeryToken]
+        public IActionResult Validate(Aspnetuser Email, Aspnetuser Passwordhash)
         {
-            var x = _context.Aspnetusers.FirstOrDefault(m => m.Email == obj.Email);
-            if (x != null && x.Passwordhash == obj.Passwordhash)
+            if (ModelState.IsValid)
             {
                 return RedirectToAction("b1c1_patient_request", "Home");
             }
-            else
+            return View();
+            //var x = _context.Aspnetusers.FirstOrDefault(m => m.Email == obj.Email);
+            //if (x != null && x.Passwordhash == obj.Passwordhash)
+            //{
+            //    return RedirectToAction("b1c1_patient_request", "Home");
+            //}
+            //else
+            //{
+            //    return RedirectToAction("b2_registered_user", "Home");
+            //}
+        }
+
+        public IActionResult patient_login(LoginModel loginModel)
+        {
+            if (_loginService.Login(loginModel))
             {
-                return RedirectToAction("b2_registered_user", "Home");
+
+                return RedirectToAction("submit_request", "Patient");
             }
+            TempData["Email"] = "Enter Valid Email";
+
+            return RedirectToAction("patient_login", "Patient");
         }
 
         private bool AspnetuserExists(string id)

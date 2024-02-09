@@ -27,17 +27,20 @@
                 <h3 class="text-center">Login To Your Account</h3>
             </div>
 
-            <form asp-controller="Aspnetusers" asp-action="validate">
+            <form asp-controller="Home" asp-action="b1c1_patient_request">
                 <div class="row w-100 form-floating mb-3 mt-3">
                     <input type="email" asp-for="Email" class="form-control shadow-none border-info" id="floatingInput" placeholder="Email" />
 
                     <label for="floatingInput" class="input-box-text">Email</label>
+                    <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
 
                 <div class="row w-100 form-floating">
                     <input type="password" asp-for="Passwordhash" class="form-control shadow-none border-info" id="floatingPassword"
                            placeholder="Password" />
                     <label for="floatingPassword" class="input-box-text">Password</label>
+                    <span asp-validation-for="Passwordhash" class="text-danger"></span>
+
                 </div>
                 <button type="submit" class="row btn btn-info text-white font-weight-bold fs-5 mt-3 w-100 p-3">
                     Log In

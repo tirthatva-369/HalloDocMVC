@@ -230,3 +230,7 @@ D:\Project\Project_HalloDoc\Project_HalloDoc\bin\Debug\net7.0\runtimes\unix\lib\
 D:\Project\Project_HalloDoc\Project_HalloDoc\bin\Debug\net7.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
 D:\Project\Project_HalloDoc\Project_HalloDoc\bin\Debug\net7.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
 D:\Project\Project_HalloDoc\Project_HalloDoc\bin\Debug\net7.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+D:\Project\Project_HalloDoc\Project_HalloDoc\bin\Debug\net7.0\BusinessLogic.dll
+D:\Project\Project_HalloDoc\Project_HalloDoc\bin\Debug\net7.0\DataAccess.dll
+D:\Project\Project_HalloDoc\Project_HalloDoc\bin\Debug\net7.0\BusinessLogic.pdb
+D:\Project\Project_HalloDoc\Project_HalloDoc\bin\Debug\net7.0\DataAccess.pdb

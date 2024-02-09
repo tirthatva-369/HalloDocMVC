@@ -1,9 +1,12 @@
+using BusinessLogic.Interfaces;
+using BusinessLogic.Repository;
 using Project_HalloDoc.DataContext;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<ILoginService, LoginService>();
 builder.Services.AddDbContext<ApplicationDbContext>();
 var app = builder.Build();
 
