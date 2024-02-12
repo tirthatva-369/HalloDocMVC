@@ -2283,6 +2283,7 @@
       },
       "DataAccess/1.0.0": {
         "dependencies": {
+          "Microsoft.VisualStudio.Web.CodeGeneration.Design": "7.0.11",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "7.0.11"
         },
         "runtime": {

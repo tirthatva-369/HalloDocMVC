@@ -5,13 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
 namespace BusinessLogic.Interfaces
 {
-    public interface ILoginService
+    public interface ILoginInterface
     {
-        public bool Login(LoginModel loginModel);
+        public bool EmailCheck(LoginModel loginModel);
+        public bool PasswordCheck(LoginModel loginModel);
     }
 }
-
-

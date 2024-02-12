@@ -1,13 +1,15 @@
 using BusinessLogic.Interfaces;
-using BusinessLogic.Repository;
-using Project_HalloDoc.DataContext;
+using BusinessLogic.Services;
+using DataAccess.DataContext;
+using DataAccess.DataModels;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<ApplicationDbContext>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddScoped<ILoginService, LoginService>();
-builder.Services.AddDbContext<ApplicationDbContext>();
+builder.Services.AddScoped<ILoginInterface, LoginService>();
+//builder.Services.AddScoped<IPatientService, PatientService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

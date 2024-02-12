@@ -16,26 +16,6 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = D:\Project\Project_HalloDoc\Project_HalloDoc
 build_property._RazorSourceGeneratorDebug = 
 
-[D:/Project/Project_HalloDoc/Project_HalloDoc/Views/Aspnetusers/Create.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXNwbmV0dXNlcnNcQ3JlYXRlLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[D:/Project/Project_HalloDoc/Project_HalloDoc/Views/Aspnetusers/Delete.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXNwbmV0dXNlcnNcRGVsZXRlLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[D:/Project/Project_HalloDoc/Project_HalloDoc/Views/Aspnetusers/Details.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXNwbmV0dXNlcnNcRGV0YWlscy5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[D:/Project/Project_HalloDoc/Project_HalloDoc/Views/Aspnetusers/Edit.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXNwbmV0dXNlcnNcRWRpdC5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[D:/Project/Project_HalloDoc/Project_HalloDoc/Views/Aspnetusers/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXNwbmV0dXNlcnNcSW5kZXguY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
 [D:/Project/Project_HalloDoc/Project_HalloDoc/Views/Home/b1c1_patient_request.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxiMWMxX3BhdGllbnRfcmVxdWVzdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

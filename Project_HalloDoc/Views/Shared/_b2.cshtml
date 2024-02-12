@@ -1,5 +1,4 @@
-﻿
-@model Project_HalloDoc.Views.Shared._b2Model
+﻿@model Project_HalloDoc.Views.Shared._b2Model
 @{
 }
 
@@ -36,6 +35,23 @@
         <a class="text-decoration-none text-muted w-auto" href="#">Privacy Policy</a>
 
     </div>
+
+    <script>
+        var eye = document.getElementById('eye')
+        var password = document.getElementById('see')
+        eye.addEventListener('click', function () {
+            if (password.type == 'password') {
+                eye.classList.remove('bi-eye-fill');
+                eye.classList.add('bi-eye-slash-fill');
+                password.type = 'text';
+            }
+            else {
+                eye.classList.remove('bi-eye-slash-fill');
+                eye.classList.add('bi-eye-fill');
+                password.type = 'password';
+            }
+        })
+    </script>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/js/bootstrap.bundle.min.js"></script>

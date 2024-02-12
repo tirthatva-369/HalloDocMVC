@@ -1,35 +1,32 @@
 ﻿using BusinessLogic.Interfaces;
 using DataAccess.DataModels;
 using DataAccess.Models;
+using DataAccess.DataContext;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BusinessLogic.Repository
+namespace BusinessLogic.Services
 {
-    public class LoginService : ILoginService
+    public class LoginService : ILoginInterface
     {
+        private readonly DataAccess.DataContext.ApplicationDbContext _db;
 
-        private readonly DataAccess.Data.ApplicationDbContext _db;
-
-        public LoginService(DataAccess.Data.ApplicationDbContext db)
+        public LoginService(DataAccess.DataContext.ApplicationDbContext db)
         {
             _db = db;
         }
 
-
-
-        public bool Login(LoginModel loginModel)
+        public bool EmailCheck(LoginModel loginModel)
         {
+            return _db.Aspnetusers.Any(x => x.Email == loginModel.Email);
+        }
 
-
-            return _db.Aspnetusers.Any(x => x.Email == loginModel.Email && x.Passwordhash == loginModel.Password);
-
+        public bool PasswordCheck(LoginModel loginModel)
+        {
+            return _db.Aspnetusers.Any(x => x.Passwordhash == loginModel.Passwordhash);
         }
     }
-
-
-
 }

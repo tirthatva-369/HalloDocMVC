@@ -3565,6 +3565,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v7.0",
         "dependencies": {
+          "Microsoft.VisualStudio.Web.CodeGeneration.Design": "7.0.11",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "7.0.11"
         },
         "compile": {

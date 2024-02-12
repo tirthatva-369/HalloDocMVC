@@ -1,4 +1,4 @@
-﻿@model Project_HalloDoc.DataModels.Aspnetuser
+﻿@model DataAccess.DataModels.Aspnetuser
 @{
     Layout = "~/Views/Shared/_b2.cshtml";
 }
@@ -27,19 +27,24 @@
                 <h3 class="text-center">Login To Your Account</h3>
             </div>
 
-            <form asp-controller="Home" asp-action="b1c1_patient_request">
+            <form asp-action="b1_submit_request_screen" asp-controller="Aspnetusers">
                 <div class="row w-100 form-floating mb-3 mt-3">
+
                     <input type="email" asp-for="Email" class="form-control shadow-none border-info" id="floatingInput" placeholder="Email" />
+                    <i class="bi bi-person-circle login-icon w-auto fs-4"></i>
 
                     <label for="floatingInput" class="input-box-text">Email</label>
-                    <span asp-validation-for="Email" class="text-danger"></span>
+                    <span class="text-danger">@TempData["Email"]</span>
+                    
                 </div>
 
                 <div class="row w-100 form-floating">
-                    <input type="password" asp-for="Passwordhash" class="form-control shadow-none border-info" id="floatingPassword"
+                    <input type="password" asp-for="Passwordhash" class="form-control shadow-none border-info" id="see"
                            placeholder="Password" />
                     <label for="floatingPassword" class="input-box-text">Password</label>
-                    <span asp-validation-for="Passwordhash" class="text-danger"></span>
+                    <span asp-validation-for="Passwordhash" class="text-danger"></span> 
+                    <i class="bi bi-eye-fill login-icon w-auto fs-4 " id="eye"></i>
+                    <span class="text-danger">@TempData["Password"]</span>
 
                 </div>
                 <button type="submit" class="row btn btn-info text-white font-weight-bold fs-5 mt-3 w-100 p-3">

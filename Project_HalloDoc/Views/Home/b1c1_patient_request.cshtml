@@ -1,4 +1,4 @@
-﻿@model Project_HalloDoc.Views.Home.b1c1_patient_requestModel
+﻿@model DataAccess.Models.PatientRequestModel;
 @{
     Layout = "~/Views/Shared/_b1c.cshtml";
 }
@@ -12,114 +12,114 @@
         </a>
     </div>
 
-    <div class="flex-column rounded shadow-lg p-4 pb-0">
+    <form asp-controller="Aspnetusers" asp-action="b1c1_patient_request">
+        <div class="flex-column rounded shadow-lg p-4 pb-0">
 
-        <h4 class="form-headings mt-2 justify-content-start">
-            Patient Information
-        </h4>
-        <div class="row row-cols-2">
-            <div class="form-floating col w-100">
-                <textarea class="form-control px-4 shadow-none" placeholder="Symptoms" id="floatingTextarea"
-                          style="height: 100px"></textarea>
-                <label for="floatingTextarea" class=" common mx-4">
-                    Enter Brief Details of Symptoms
-                    (Optional)
-                </label>
+            <h4 class="form-headings mt-2 justify-content-start">
+                Patient Information
+            </h4>
+            <div class="row row-cols-2">
+                <div class="form-floating col w-100">
+                    <textarea asp-for="symptoms" class="form-control px-4 shadow-none" placeholder="Symptoms" id="floatingTextarea"
+                              style="height: 100px"></textarea>
+                    <label for="floatingTextarea" class=" common mx-4">
+                        Enter Brief Details of Symptoms
+                        (Optional)
+                    </label>
+                </div>
+
+                <div class="form-floating col my-3 w-50">
+                    <input asp-for="first_name" type="text" class="form-control px-4 shadow-none" id="floatingInput"
+                           placeholder="First Name" />
+                    <label for="floatingInput" class=" common mx-4">First Name</label>
+                </div>
+
+                <div class="form-floating col my-3 w-50">
+                    <input asp-for="last_name" type="text" class="form-control px-4 shadow-none" id="floatingInput"
+                           placeholder="Last Name" />
+                    <label for="floatingInput" class=" common mx-4">Last Name</label>
+                </div>
+
+                <div class="form-floating col mb-3 w-50">
+                    <input asp-for="dateofbirth" id="startDate" class="form-control px-4 shadow-none" type="date" />
+                    <label for="startDate" class=" common mx-4">Date of Birth</label>
+                </div>
             </div>
 
-            <div class="form-floating col my-3 w-50">
-                <input type="text" class="form-control px-4 shadow-none" id="floatingInput"
-                       placeholder="First Name" />
-                <label for="floatingInput" class=" common mx-4">First Name</label>
+            <h4 class="form-headings mt-2 justify-content-start">
+                Patient Contact Information
+            </h4>
+            <div class="row row-cols-2">
+                <div class="form-floating col my-3 w-50">
+                    <input asp-for="email" type="email" class="form-control px-4 shadow-none" id="floatingInput" placeholder="Email" />
+                    <label for="floatingInput" class=" common mx-4">Email</label>
+                </div>
+
+                <div class="form-floating col my-3 w-50">
+                    <input asp-for="phone" type="tel" class="form-control px-4 shadow-none" id="phone">
+                </div>
+
             </div>
 
-            <div class="form-floating col my-3 w-50">
-                <input type="text" class="form-control px-4 shadow-none" id="floatingInput"
-                       placeholder="Last Name" />
-                <label for="floatingInput" class=" common mx-4">Last Name</label>
+            <h4 class="form-headings mt-2 justify-content-start">
+                Patient Location
+            </h4>
+            <div class="row row-cols-2">
+                <div class="form-floating col my-3 w-50">
+                    <input asp-for="street" type="text" class="form-control px-4 shadow-none" id="floatingInput" placeholder="Street" />
+                    <label for="floatingInput" class=" common mx-4">Street</label>
+                </div>
+
+                <div class="form-floating col my-3 w-50">
+                    <input asp-for="city" type="text" class="form-control px-4 shadow-none" id="floatingInput" placeholder="City" />
+                    <label for="floatingInput" class=" common mx-4">City</label>
+                </div>
+
+                <div class="form-floating col my-3 w-50">
+                    <input asp-for="state" type="text" class="form-control px-4 shadow-none" id="floatingInput" placeholder="State" />
+                    <label for="floatingInput" class=" common mx-4">State</label>
+                </div>
+
+                <div class="form-floating col my-3 w-50">
+                    <input asp-for="zip_code" type="text" class="form-control px-4 shadow-none" id="floatingInput"
+                           placeholder="Zip Code" />
+                    <label for="floatingInput" class="common mx-4">Zip Code</label>
+                </div>
+
+                <div class="form-floating col my-3 w-50">
+                    <input asp-for="room_suite" type="text" class="form-control px-4 shadow-none" id="floatingInput"
+                           placeholder="Room # / Suite (Optional)" />
+                    <label for="floatingInput" class="common mx-4">Room # / Suite (Optional)</label>
+                </div>
             </div>
 
-            <div class="form-floating col mb-3 w-50">
-                <input id="startDate" class="form-control px-4 shadow-none" type="date" />
-                <label for="startDate" class=" common mx-4">Date of Birth</label>
-            </div>
-        </div>
+            <h4 class="form-headings mt-2 justify-content-start">
+                (Optional) Upload Photo or Document
+            </h4>
+            <div class="row my-4 ms-1 justify-content-end">
+                <div class="file-name input-group-text border-top border-bottom -border-start border-rounded-left px-3 py-2 col-11" id="file-name">Select File</div>
+                <div class="file-upload-container col-1 mx-0 px-0">
+                    <label for="formFile" class="upload btn btn-info m-0 py-2">Upload</label>
+                    <input class="d-none" type="file" id="formFile">
+                </div>
 
-        <h4 class="form-headings mt-2 justify-content-start">
-            Patient Contact Information
-        </h4>
-        <div class="row row-cols-2">
-            <div class="form-floating col my-3 w-50">
-                <input type="email" class="form-control px-4 shadow-none" id="floatingInput" placeholder="Email" />
-                <label for="floatingInput" class=" common mx-4">Email</label>
             </div>
 
-            <div class="form-floating col my-3 w-50">
-                <input type="tel" class="form-control px-4 shadow-none" id="phone">
-            </div>
-
-        </div>
-
-        <h4 class="form-headings mt-2 justify-content-start">
-            Patient Location
-        </h4>
-        <div class="row row-cols-2">
-            <div class="form-floating col my-3 w-50">
-                <input type="text" class="form-control px-4 shadow-none" id="floatingInput" placeholder="Street" />
-                <label for="floatingInput" class=" common mx-4">Street</label>
-            </div>
-
-            <div class="form-floating col my-3 w-50">
-                <input type="text" class="form-control px-4 shadow-none" id="floatingInput" placeholder="City" />
-                <label for="floatingInput" class=" common mx-4">City</label>
-            </div>
-
-            <div class="form-floating col my-3 w-50">
-                <input type="text" class="form-control px-4 shadow-none" id="floatingInput" placeholder="State" />
-                <label for="floatingInput" class=" common mx-4">State</label>
-            </div>
-
-            <div class="form-floating col my-3 w-50">
-                <input type="text" class="form-control px-4 shadow-none" id="floatingInput"
-                       placeholder="Zip Code" />
-                <label for="floatingInput" class="common mx-4">Zip Code</label>
-            </div>
-
-            <div class="form-floating col my-3 w-50">
-                <input type="text" class="form-control px-4 shadow-none" id="floatingInput"
-                       placeholder="Room # / Suite (Optional)" />
-                <label for="floatingInput" class="common mx-4">Room # / Suite (Optional)</label>
-            </div>
-        </div>
-
-        <h4 class="form-headings mt-2 justify-content-start">
-            (Optional) Upload Photo or Document
-        </h4>
-        <div class="row my-4 ms-1 justify-content-end">
-            <div class="file-name input-group-text border-top border-bottom -border-start border-rounded-left px-3 py-2 col-11" id="file-name">Select File</div>
-            <div class="file-upload-container col-1 mx-0 px-0">
-                <label for="formFile" class="upload btn btn-info m-0 py-2">Upload</label>
-                <input class="d-none" type="file" id="formFile">
-            </div>
-            
-        </div>
-
-        <div class="row row-cols-2 mt-3 pb-3 justify-content-end">
-            <div class="col w-auto">
-                <a href=".\submit_request_screen.html">
-                    <button class="back btn btn-outline-info" type="submit">
+            <div class="row row-cols-2 mt-3 pb-3 justify-content-end">
+                <div class="col w-auto">
+                    <a type="submit" class="back btn btn-outline-info">
                         Submit
-                    </button>
-                </a>
-            </div>
+                    </a>
+                </div>
 
-            <div class="col w-auto">
-                <a href=".\submit_request_screen.html">
-                    <button class="back btn btn-outline-info" type="button">
-                        Cancel
-                    </button>
-                </a>
+                <div class="col w-auto">
+                    <a href=".\submit_request_screen.html">
+                        <button class="back btn btn-outline-info" type="button">
+                            Cancel
+                        </button>
+                    </a>
+                </div>
             </div>
         </div>
-    </div>
+    </form>
 </div>

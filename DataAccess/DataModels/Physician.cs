@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace Project_HalloDoc.DataModels;
+namespace DataAccess.DataModels;
 
 [Table("physician")]
 public partial class Physician
