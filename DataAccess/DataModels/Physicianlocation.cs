@@ -6,10 +6,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.DataModels;
 
-[Keyless]
 [Table("physicianlocation")]
 public partial class Physicianlocation
 {
+    [Key]
     [Column("locationid")]
     public int Locationid { get; set; }
 
@@ -17,11 +17,11 @@ public partial class Physicianlocation
     public int Physicianid { get; set; }
 
     [Column("latitude")]
-    [Precision(9, 0)]
+    [Precision(9, 3)]
     public decimal? Latitude { get; set; }
 
     [Column("longitude")]
-    [Precision(9, 0)]
+    [Precision(9, 3)]
     public decimal? Longitude { get; set; }
 
     [Column("createddate", TypeName = "timestamp without time zone")]
@@ -34,4 +34,8 @@ public partial class Physicianlocation
     [Column("address")]
     [StringLength(500)]
     public string? Address { get; set; }
+
+    [ForeignKey("Physicianid")]
+    [InverseProperty("Physicianlocations")]
+    public virtual Physician Physician { get; set; } = null!;
 }

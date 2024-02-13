@@ -6,17 +6,21 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.DataModels;
 
-[PrimaryKey("Userid", "Roleid")]
 [Table("aspnetuserroles")]
 public partial class Aspnetuserrole
 {
-    [Key]
     [Column("userid")]
     [StringLength(128)]
     public string Userid { get; set; } = null!;
 
     [Key]
     [Column("roleid")]
-    [StringLength(128)]
-    public string Roleid { get; set; } = null!;
+    public int Roleid { get; set; }
+
+    [InverseProperty("Role")]
+    public virtual ICollection<Admin> Admins { get; set; } = new List<Admin>();
+
+    [ForeignKey("Userid")]
+    [InverseProperty("Aspnetuserroles")]
+    public virtual Aspnetuser User { get; set; } = null!;
 }

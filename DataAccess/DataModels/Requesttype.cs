@@ -16,4 +16,7 @@ public partial class Requesttype
     [Column("name")]
     [StringLength(50)]
     public string Name { get; set; } = null!;
+
+    [InverseProperty("Requesttype")]
+    public virtual ICollection<Request> Requests { get; set; } = new List<Request>();
 }

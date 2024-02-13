@@ -14,9 +14,13 @@ public partial class Physiciannotification
     [Column("id")]
     public int Id { get; set; }
 
-    [Column("physicianid")]
-    public int Physicianid { get; set; }
+    [Column("pysicianid")]
+    public int Pysicianid { get; set; }
 
     [Column("isnotificationstopped", TypeName = "bit(1)")]
-    public BitArray? Isnotificationstopped { get; set; }
+    public BitArray Isnotificationstopped { get; set; } = null!;
+
+    [ForeignKey("Pysicianid")]
+    [InverseProperty("Physiciannotifications")]
+    public virtual Physician Pysician { get; set; } = null!;
 }

@@ -14,12 +14,8 @@ public partial class Business
     [Column("businessid")]
     public int Businessid { get; set; }
 
-    [Column("name")]
-    [StringLength(100)]
+    [Column("name", TypeName = "character varying")]
     public string Name { get; set; } = null!;
-
-    [Column("businesstypeid")]
-    public int? Businesstypeid { get; set; }
 
     [Column("address1")]
     [StringLength(500)]
@@ -53,13 +49,12 @@ public partial class Business
 
     [Column("createdby")]
     [StringLength(128)]
-    public string? Createdby { get; set; }
+    public string Createdby { get; set; } = null!;
 
     [Column("createddate", TypeName = "timestamp without time zone")]
     public DateTime Createddate { get; set; }
 
-    [Column("modifiedby")]
-    [StringLength(128)]
+    [Column("modifiedby", TypeName = "character varying")]
     public string? Modifiedby { get; set; }
 
     [Column("modifieddate", TypeName = "timestamp without time zone")]
@@ -74,4 +69,19 @@ public partial class Business
     [Column("ip")]
     [StringLength(20)]
     public string? Ip { get; set; }
+
+    [ForeignKey("Createdby")]
+    [InverseProperty("BusinessCreatedbyNavigations")]
+    public virtual Aspnetuser CreatedbyNavigation { get; set; } = null!;
+
+    [ForeignKey("Modifiedby")]
+    [InverseProperty("BusinessModifiedbyNavigations")]
+    public virtual Aspnetuser? ModifiedbyNavigation { get; set; }
+
+    [ForeignKey("Regionid")]
+    [InverseProperty("Businesses")]
+    public virtual Region? Region { get; set; }
+
+    [InverseProperty("Business")]
+    public virtual ICollection<Requestbusiness> Requestbusinesses { get; set; } = new List<Requestbusiness>();
 }

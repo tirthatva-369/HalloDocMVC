@@ -38,7 +38,7 @@ public partial class Requestclient
     public string? Address { get; set; }
 
     [Column("regionid")]
-    public int? Regionid { get; set; }
+    public int Regionid { get; set; }
 
     [Column("notimobile")]
     [StringLength(20)]
@@ -105,10 +105,18 @@ public partial class Requestclient
     public short? Isreservationremindersent { get; set; }
 
     [Column("latitude")]
-    [Precision(9, 0)]
+    [Precision(10, 3)]
     public decimal? Latitude { get; set; }
 
     [Column("longitude")]
-    [Precision(9, 0)]
+    [Precision(10, 3)]
     public decimal? Longitude { get; set; }
+
+    [ForeignKey("Regionid")]
+    [InverseProperty("Requestclients")]
+    public virtual Region Region { get; set; } = null!;
+
+    [ForeignKey("Requestid")]
+    [InverseProperty("Requestclients")]
+    public virtual Request Request { get; set; } = null!;
 }

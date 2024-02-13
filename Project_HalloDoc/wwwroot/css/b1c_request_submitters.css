@@ -124,7 +124,7 @@ label[for="file-upload"] {
     white-space: nowrap;
     overflow: hidden;
     border: #000;
-    /* background:darken(purple ,10%); */
+    border-block: thick;
 }
 
 .back:hover {
@@ -148,10 +148,6 @@ label[for="file-upload"] {
     bottom: 0;
     width: 32px;
     z-index: 1;
-}
-
-.file-name {
-    border-block:thick;
 }
 
 .input-group-text {

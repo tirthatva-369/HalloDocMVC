@@ -18,4 +18,8 @@ public partial class Rolemenu
 
     [Column("menuid")]
     public int Menuid { get; set; }
+
+    [ForeignKey("Menuid")]
+    [InverseProperty("Rolemenus")]
+    public virtual Menu Menu { get; set; } = null!;
 }

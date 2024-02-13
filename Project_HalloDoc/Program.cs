@@ -1,7 +1,6 @@
 using BusinessLogic.Interfaces;
 using BusinessLogic.Services;
 using DataAccess.DataContext;
-using DataAccess.DataModels;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ApplicationDbContext>();
@@ -9,7 +8,7 @@ builder.Services.AddDbContext<ApplicationDbContext>();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<ILoginInterface, LoginService>();
-//builder.Services.AddScoped<IPatientService, PatientService>();
+builder.Services.AddScoped<IPatientInterface, PatientService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

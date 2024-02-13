@@ -60,7 +60,7 @@ public partial class Request
     public string? Declinedby { get; set; }
 
     [Column("isurgentemailsent", TypeName = "bit(1)")]
-    public BitArray? Isurgentemailsent { get; set; }
+    public BitArray Isurgentemailsent { get; set; } = null!;
 
     [Column("lastwellnessdate", TypeName = "timestamp without time zone")]
     public DateTime? Lastwellnessdate { get; set; }
@@ -106,4 +106,46 @@ public partial class Request
 
     [Column("createduserid")]
     public int? Createduserid { get; set; }
+
+    [InverseProperty("Request")]
+    public virtual ICollection<Blockrequest> Blockrequests { get; set; } = new List<Blockrequest>();
+
+    [InverseProperty("Request")]
+    public virtual ICollection<Emaillog> Emaillogs { get; set; } = new List<Emaillog>();
+
+    [InverseProperty("Request")]
+    public virtual ICollection<Orderdetail> Orderdetails { get; set; } = new List<Orderdetail>();
+
+    [ForeignKey("Physicianid")]
+    [InverseProperty("Requests")]
+    public virtual Physician? Physician { get; set; }
+
+    [InverseProperty("Request")]
+    public virtual ICollection<Requestbusiness> Requestbusinesses { get; set; } = new List<Requestbusiness>();
+
+    [InverseProperty("Request")]
+    public virtual ICollection<Requestclient> Requestclients { get; set; } = new List<Requestclient>();
+
+    [InverseProperty("Request")]
+    public virtual ICollection<Requestclosed> Requestcloseds { get; set; } = new List<Requestclosed>();
+
+    [InverseProperty("Request")]
+    public virtual ICollection<Requestconcierge> Requestconcierges { get; set; } = new List<Requestconcierge>();
+
+    [InverseProperty("Request")]
+    public virtual ICollection<Requestnote> Requestnotes { get; set; } = new List<Requestnote>();
+
+    [InverseProperty("Request")]
+    public virtual ICollection<Requeststatuslog> Requeststatuslogs { get; set; } = new List<Requeststatuslog>();
+
+    [ForeignKey("Requesttypeid")]
+    [InverseProperty("Requests")]
+    public virtual Requesttype Requesttype { get; set; } = null!;
+
+    [InverseProperty("Request")]
+    public virtual ICollection<Requestwisefile> Requestwisefiles { get; set; } = new List<Requestwisefile>();
+
+    [ForeignKey("Userid")]
+    [InverseProperty("Requests")]
+    public virtual User? User { get; set; }
 }

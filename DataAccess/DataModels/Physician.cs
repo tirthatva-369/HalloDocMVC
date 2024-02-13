@@ -120,7 +120,7 @@ public partial class Physician
     public BitArray? Islicensedoc { get; set; }
 
     [Column("signature")]
-    [StringLength(100)]
+    [StringLength(500)]
     public string? Signature { get; set; }
 
     [Column("iscredentialdoc", TypeName = "bit(1)")]
@@ -132,4 +132,47 @@ public partial class Physician
     [Column("syncemailaddress")]
     [StringLength(50)]
     public string? Syncemailaddress { get; set; }
+
+    [ForeignKey("Aspnetuserid")]
+    [InverseProperty("PhysicianAspnetusers")]
+    public virtual Aspnetuser? Aspnetuser { get; set; }
+
+    [ForeignKey("Createdby")]
+    [InverseProperty("PhysicianCreatedbyNavigations")]
+    public virtual Aspnetuser CreatedbyNavigation { get; set; } = null!;
+
+    [InverseProperty("Physician")]
+    public virtual ICollection<Emaillog> Emaillogs { get; set; } = new List<Emaillog>();
+
+    [ForeignKey("Modifiedby")]
+    [InverseProperty("PhysicianModifiedbyNavigations")]
+    public virtual Aspnetuser? ModifiedbyNavigation { get; set; }
+
+    [InverseProperty("Physician")]
+    public virtual ICollection<Physicianlocation> Physicianlocations { get; set; } = new List<Physicianlocation>();
+
+    [InverseProperty("Pysician")]
+    public virtual ICollection<Physiciannotification> Physiciannotifications { get; set; } = new List<Physiciannotification>();
+
+    [InverseProperty("Physician")]
+    public virtual ICollection<Physicianregion> Physicianregions { get; set; } = new List<Physicianregion>();
+
+    [ForeignKey("Regionid")]
+    [InverseProperty("Physicians")]
+    public virtual Region? Region { get; set; }
+
+    [InverseProperty("Physician")]
+    public virtual ICollection<Request> Requests { get; set; } = new List<Request>();
+
+    [InverseProperty("Physician")]
+    public virtual ICollection<Requeststatuslog> RequeststatuslogPhysicians { get; set; } = new List<Requeststatuslog>();
+
+    [InverseProperty("Transtophysician")]
+    public virtual ICollection<Requeststatuslog> RequeststatuslogTranstophysicians { get; set; } = new List<Requeststatuslog>();
+
+    [InverseProperty("Physician")]
+    public virtual ICollection<Requestwisefile> Requestwisefiles { get; set; } = new List<Requestwisefile>();
+
+    [InverseProperty("Physician")]
+    public virtual ICollection<Shift> Shifts { get; set; } = new List<Shift>();
 }

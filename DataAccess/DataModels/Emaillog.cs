@@ -12,8 +12,7 @@ public partial class Emaillog
 {
     [Key]
     [Column("emaillogid")]
-    [Precision(9, 0)]
-    public decimal Emaillogid { get; set; }
+    public int Emaillogid { get; set; }
 
     [Column("emailtemplate", TypeName = "character varying")]
     public string Emailtemplate { get; set; } = null!;
@@ -59,4 +58,16 @@ public partial class Emaillog
 
     [Column("action")]
     public int? Action { get; set; }
+
+    [ForeignKey("Adminid")]
+    [InverseProperty("Emaillogs")]
+    public virtual Admin? Admin { get; set; }
+
+    [ForeignKey("Physicianid")]
+    [InverseProperty("Emaillogs")]
+    public virtual Physician? Physician { get; set; }
+
+    [ForeignKey("Requestid")]
+    [InverseProperty("Emaillogs")]
+    public virtual Request? Request { get; set; }
 }

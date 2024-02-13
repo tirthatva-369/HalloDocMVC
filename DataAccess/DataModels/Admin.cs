@@ -42,10 +42,6 @@ public partial class Admin
     [StringLength(500)]
     public string? Address2 { get; set; }
 
-    [Column("city")]
-    [StringLength(100)]
-    public string? City { get; set; }
-
     [Column("regionid")]
     public int? Regionid { get; set; }
 
@@ -79,4 +75,36 @@ public partial class Admin
 
     [Column("roleid")]
     public int? Roleid { get; set; }
+
+    [InverseProperty("Admin")]
+    public virtual ICollection<Adminregion> Adminregions { get; set; } = new List<Adminregion>();
+
+    [ForeignKey("Aspnetuserid")]
+    [InverseProperty("AdminAspnetusers")]
+    public virtual Aspnetuser Aspnetuser { get; set; } = null!;
+
+    [ForeignKey("Createdby")]
+    [InverseProperty("AdminCreatedbyNavigations")]
+    public virtual Aspnetuser CreatedbyNavigation { get; set; } = null!;
+
+    [InverseProperty("Admin")]
+    public virtual ICollection<Emaillog> Emaillogs { get; set; } = new List<Emaillog>();
+
+    [ForeignKey("Modifiedby")]
+    [InverseProperty("AdminModifiedbyNavigations")]
+    public virtual Aspnetuser? ModifiedbyNavigation { get; set; }
+
+    [ForeignKey("Regionid")]
+    [InverseProperty("Admins")]
+    public virtual Region? Region { get; set; }
+
+    [InverseProperty("Admin")]
+    public virtual ICollection<Requeststatuslog> Requeststatuslogs { get; set; } = new List<Requeststatuslog>();
+
+    [InverseProperty("Admin")]
+    public virtual ICollection<Requestwisefile> Requestwisefiles { get; set; } = new List<Requestwisefile>();
+
+    [ForeignKey("Roleid")]
+    [InverseProperty("Admins")]
+    public virtual Aspnetuserrole? Role { get; set; }
 }

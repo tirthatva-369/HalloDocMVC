@@ -68,4 +68,15 @@ public partial class Healthprofessional
     [Column("businesscontact")]
     [StringLength(100)]
     public string? Businesscontact { get; set; }
+
+    [InverseProperty("Vendor")]
+    public virtual ICollection<Orderdetail> Orderdetails { get; set; } = new List<Orderdetail>();
+
+    [ForeignKey("Profession")]
+    [InverseProperty("Healthprofessionals")]
+    public virtual Healthprofessionaltype? ProfessionNavigation { get; set; }
+
+    [ForeignKey("Regionid")]
+    [InverseProperty("Healthprofessionals")]
+    public virtual Region? Region { get; set; }
 }

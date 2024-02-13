@@ -9,6 +9,9 @@ namespace BusinessLogic.Interfaces
 {
     public interface IPatientInterface
     {
-        public void AddPatientModel();
+        void AddPatientInfo(PatientRequestModel PatientRequestModel);
+        void AddFamilyRequest(FamilyRequestModel familyReqModel);
+        void AddConciergeRequest(ConciergeRequestModel conciergeReqModel);
+        void AddBusinessRequest(BusinessRequestModel businessReqModel);
     }
 }

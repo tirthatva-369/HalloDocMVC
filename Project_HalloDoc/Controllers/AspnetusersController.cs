@@ -1,15 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BusinessLogic.Interfaces;
-using BusinessLogic.Services;
+﻿using BusinessLogic.Interfaces;
 using DataAccess.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using DataAccess.DataContext;
-using DataAccess.DataModels;
 using Project_HalloDoc.Models;
 using System.Diagnostics;
 
@@ -19,19 +10,26 @@ namespace Project_HalloDoc.Controllers
     {
         private readonly ILogger<AspnetusersController> _logger;
         private readonly ILoginInterface _loginService;
-        //private readonly IPatientService _patientService;
+        private readonly IPatientInterface _patientService;
+        private readonly IPatientInterface _familyService;
+        private readonly IPatientInterface _conciergeService;
+        private readonly IPatientInterface _businessService;
 
 
-        public AspnetusersController(ILogger<AspnetusersController> logger, ILoginInterface loginService)
+
+        public AspnetusersController(ILogger<AspnetusersController> logger, ILoginInterface loginService, IPatientInterface patientService, IPatientInterface familyService, IPatientInterface conciergeService, IPatientInterface businessService)
         {
             _logger = logger;
             _loginService = loginService;
-            //_patientService = patientService;
+            _patientService = patientService;
+            _familyService = familyService;
+            _conciergeService = conciergeService;
+            _businessService = businessService;
+
         }
 
         [HttpPost]
-        public IActionResult b1_submit_request_screen(LoginModel loginModel)
-
+        public IActionResult b1c1_patient_request(LoginModel loginModel)
         {
             if ((_loginService.EmailCheck(loginModel)) && (_loginService.PasswordCheck(loginModel)))
             {
@@ -41,6 +39,7 @@ namespace Project_HalloDoc.Controllers
             else if (!(_loginService.EmailCheck(loginModel)))
             {
                 TempData["Email"] = "Enter Valid Email";
+                TempData["Password"] = "Enter Valid Password";
                 return RedirectToAction("b2_registered_user", "Home");
             }
 
@@ -55,10 +54,32 @@ namespace Project_HalloDoc.Controllers
                 return RedirectToAction("b2_registered_user", "Home");
             }
         }
-        public IActionResult Index()
+
+        [HttpPost]
+        public IActionResult b1_submit_request_screen(PatientRequestModel patientRequestModel)
         {
-            return View();
+            _patientService.AddPatientInfo(patientRequestModel);
+            return RedirectToAction("b1_submit_request_screen", "Home");
         }
+
+        public IActionResult b1_submit_request_screen(FamilyRequestModel familyRequestModel)
+        {
+            _familyService.AddFamilyRequest(familyRequestModel);
+            return RedirectToAction("b1_submit_request_screen", "Home");
+        }
+
+        public IActionResult b1_submit_request_screen(ConciergeRequestModel conciergeRequestModel)
+        {
+            _familyService.AddConciergeRequest(conciergeRequestModel);
+            return RedirectToAction("b1_submit_request_screen", "Home");
+        }
+
+        public IActionResult b1_submit_request_screen(BusinessRequestModel businessRequestModel)
+        {
+            _familyService.AddBusinessRequest(businessRequestModel);
+            return RedirectToAction("b1_submit_request_screen", "Home");
+        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

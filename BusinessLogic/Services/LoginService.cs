@@ -1,20 +1,14 @@
 ﻿using BusinessLogic.Interfaces;
-using DataAccess.DataModels;
-using DataAccess.Models;
 using DataAccess.DataContext;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using DataAccess.Models;
 
 namespace BusinessLogic.Services
 {
     public class LoginService : ILoginInterface
     {
-        private readonly DataAccess.DataContext.ApplicationDbContext _db;
+        private readonly ApplicationDbContext _db;
 
-        public LoginService(DataAccess.DataContext.ApplicationDbContext db)
+        public LoginService(ApplicationDbContext db)
         {
             _db = db;
         }

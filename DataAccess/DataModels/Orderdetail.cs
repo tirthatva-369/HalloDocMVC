@@ -31,8 +31,7 @@ public partial class Orderdetail
     [StringLength(100)]
     public string? Businesscontact { get; set; }
 
-    [Column("prescription")]
-    [StringLength(1000)]
+    [Column("prescription", TypeName = "character varying")]
     public string? Prescription { get; set; }
 
     [Column("noofrefill")]
@@ -44,4 +43,12 @@ public partial class Orderdetail
     [Column("createdby")]
     [StringLength(100)]
     public string? Createdby { get; set; }
+
+    [ForeignKey("Requestid")]
+    [InverseProperty("Orderdetails")]
+    public virtual Request? Request { get; set; }
+
+    [ForeignKey("Vendorid")]
+    [InverseProperty("Orderdetails")]
+    public virtual Healthprofessional? Vendor { get; set; }
 }

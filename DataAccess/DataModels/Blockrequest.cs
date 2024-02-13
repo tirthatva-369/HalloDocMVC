@@ -16,11 +16,11 @@ public partial class Blockrequest
 
     [Column("phonenumber")]
     [StringLength(50)]
-    public string? Phonenumber { get; set; }
+    public string Phonenumber { get; set; } = null!;
 
     [Column("email")]
     [StringLength(50)]
-    public string? Email { get; set; }
+    public string Email { get; set; } = null!;
 
     [Column("isactive", TypeName = "bit(1)")]
     public BitArray? Isactive { get; set; }
@@ -29,16 +29,19 @@ public partial class Blockrequest
     public string? Reason { get; set; }
 
     [Column("requestid")]
-    [StringLength(50)]
-    public string? Requestid { get; set; }
+    public int Requestid { get; set; }
 
     [Column("ip")]
     [StringLength(20)]
     public string? Ip { get; set; }
 
     [Column("createddate", TypeName = "timestamp without time zone")]
-    public DateTime? Createddate { get; set; }
+    public DateTime Createddate { get; set; }
 
     [Column("modifieddate", TypeName = "timestamp without time zone")]
     public DateTime? Modifieddate { get; set; }
+
+    [ForeignKey("Requestid")]
+    [InverseProperty("Blockrequests")]
+    public virtual Request Request { get; set; } = null!;
 }

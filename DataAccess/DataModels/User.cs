@@ -16,7 +16,7 @@ public partial class User
 
     [Column("aspnetuserid")]
     [StringLength(128)]
-    public string? Aspnetuserid { get; set; }
+    public string Aspnetuserid { get; set; } = null!;
 
     [Column("firstname")]
     [StringLength(100)]
@@ -52,9 +52,9 @@ public partial class User
     [Column("regionid")]
     public int? Regionid { get; set; }
 
-    [Column("zipcode")]
+    [Column("zip")]
     [StringLength(10)]
-    public string? Zipcode { get; set; }
+    public string? Zip { get; set; }
 
     [Column("strmonth")]
     [StringLength(20)]
@@ -92,4 +92,15 @@ public partial class User
 
     [Column("isrequestwithemail", TypeName = "bit(1)")]
     public BitArray? Isrequestwithemail { get; set; }
+
+    [ForeignKey("Aspnetuserid")]
+    [InverseProperty("Users")]
+    public virtual Aspnetuser Aspnetuser { get; set; } = null!;
+
+    [ForeignKey("Regionid")]
+    [InverseProperty("Users")]
+    public virtual Region? Region { get; set; }
+
+    [InverseProperty("User")]
+    public virtual ICollection<Request> Requests { get; set; } = new List<Request>();
 }
