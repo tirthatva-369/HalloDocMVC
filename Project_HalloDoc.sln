@@ -9,12 +9,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project_HalloDoc", "Project
 		{BC2F7219-7F7D-4B99-9D56-830BFD292EF0} = {BC2F7219-7F7D-4B99-9D56-830BFD292EF0}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogic", "BusinessLogic\BusinessLogic.csproj", "{BC2F7219-7F7D-4B99-9D56-830BFD292EF0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLogic", "BusinessLogic\BusinessLogic.csproj", "{BC2F7219-7F7D-4B99-9D56-830BFD292EF0}"
 	ProjectSection(ProjectDependencies) = postProject
 		{30EE6614-663C-4C92-9880-701345FBA459} = {30EE6614-663C-4C92-9880-701345FBA459}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{30EE6614-663C-4C92-9880-701345FBA459}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\DataAccess.csproj", "{30EE6614-663C-4C92-9880-701345FBA459}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

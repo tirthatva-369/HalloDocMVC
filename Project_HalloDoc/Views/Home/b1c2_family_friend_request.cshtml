@@ -13,125 +13,125 @@
     </div>
 
     <div class="flex-column rounded shadow-lg p-4 pb-0">
-    <form asp-controller="Aspnetusers" asp-action="b1_submit_request_screen">
+        <form asp-controller="Aspnetusers" asp-action="b1_submit_request_screen">
 
-        <h4 class="form-headings mt-2 justify-content-start">
-            Family/Friend Information
-        </h4>
-        <div class="row row-cols-2">
-            <div class="form-floating col my-3 w-50">
-                <input type="text" class="form-control shadow-none px-4" id="floatingInput"
-                       placeholder="Your First Name" asp-for="firstName" />
-                <label for="floatingInput" class=" common mx-4">Your First Name</label>
+            <h4 class="form-headings mt-2 justify-content-start">
+                Family/Friend Information
+            </h4>
+            <div class="row row-cols-2">
+                <div class="form-floating col my-3 w-50">
+                    <input type="text" class="form-control shadow-none px-4" id="floatingInput"
+                           placeholder="Your First Name" asp-for="firstName" />
+                    <label for="floatingInput" class=" common mx-4">Your First Name</label>
+                </div>
+
+                <div class="form-floating col my-3 w-50">
+                    <input type="text" class="form-control px-4 shadow-none" id="floatingInput"
+                           placeholder="Your Last Name" asp-for="lastName" />
+                    <label for="floatingInput" class=" common mx-4">Your Last Name</label>
+                </div>
+
+                <div class="form-floating col my-3 w-50">
+                    <input type="text" class="form-control px-4 shadow-none" id="floatingInput"
+                           placeholder="Your Phone Number" asp-for="phoneNo" />
+                    <label for="floatingInput" class=" common mx-4">Your Phone Number</label>
+                </div>
+
+                <div class="form-floating col my-3 w-50">
+                    <input type="email" class="form-control px-4 shadow-none" id="floatingInput"
+                           placeholder="Your Email" asp-for="email" />
+                    <label for="floatingInput" class="common mx-4">Your Email</label>
+                </div>
+
+                <div class="form-floating col my-3 w-50">
+                    <input type="text" class="form-control px-4 shadow-none" id="floatingInput"
+                           placeholder="Relation With Patient" asp-for="relation" />
+                    <label for="floatingInput" class="common mx-4">Relation With Patient</label>
+                </div>
             </div>
 
-            <div class="form-floating col my-3 w-50">
-                <input type="text" class="form-control px-4 shadow-none" id="floatingInput"
-                       placeholder="Your Last Name" asp-for="lastName"/>
-                <label for="floatingInput" class=" common mx-4">Your Last Name</label>
+            <h4 class="form-headings mt-2 justify-content-start">
+                Patient Information
+            </h4>
+            <div class="row row-cols-2">
+                <div class="form-floating col w-100">
+                    <textarea class="form-control px-4 shadow-none" placeholder="Symptoms" id="floatingTextarea"
+                              style="height: 100px"></textarea>
+                    <label for="floatingTextarea" class=" common mx-4">
+                        Enter Brief Details of Symptoms
+                        (Optional)
+                    </label>
+                </div>
+
+                <div class="form-floating col my-3 w-50">
+                    <input type="text" class="form-control px-4 shadow-none" id="floatingInput"
+                           placeholder="First Name" asp-for="patientFirstName" />
+                    <label for="floatingInput" class=" common mx-4">First Name</label>
+                </div>
+
+                <div class="form-floating col my-3 w-50">
+                    <input type="text" class="form-control px-4 shadow-none" id="floatingInput"
+                           placeholder="Last Name" asp-for="patientLastName" />
+                    <label for="floatingInput" class=" common mx-4">Last Name</label>
+                </div>
+
+                <div class="form-floating col my-3 w-50">
+                    <input id="startDate" class="form-control px-4 shadow-none" type="date" asp-for="patientDob" />
+                    <label for="startDate" class=" common mx-4">Date of Birth</label>
+                </div>
             </div>
 
-            <div class="form-floating col my-3 w-50">
-                <input type="text" class="form-control px-4 shadow-none" id="floatingInput"
-                       placeholder="Your Phone Number" asp-for="phoneNo" />
-                <label for="floatingInput" class=" common mx-4">Your Phone Number</label>
+            <h4 class="form-headings mt-2 justify-content-start">
+                Patient Contact Information
+            </h4>
+            <div class="row row-cols-2">
+                <div class="form-floating col my-3 w-50">
+                    <input type="email" class="form-control px-4 shadow-none" id="floatingInput" placeholder="Email" asp-for="patientEmail" />
+                    <label for="floatingInput" class=" common mx-4">Email</label>
+                </div>
+
+                <div class="form-floating col my-3 w-50">
+                    <input type="text" class="form-control px-4 shadow-none" id="floatingInput"
+                           placeholder="Phone Number" asp-for="patientPhoneNo" />
+                    <label for="floatingInput" class="common mx-4">Phone Number</label>
+                </div>
             </div>
 
-            <div class="form-floating col my-3 w-50">
-                <input type="email" class="form-control px-4 shadow-none" id="floatingInput"
-                       placeholder="Your Email" asp-for="email"/>
-                <label for="floatingInput" class="common mx-4">Your Email</label>
+            <h4 class="form-headings mt-2 justify-content-start">
+                Patient Location
+            </h4>
+            <div class="row row-cols-2">
+                <div class="form-floating col my-3 w-50">
+                    <input type="text" class="form-control px-4 shadow-none" id="floatingInput" placeholder="Street" asp-for="street" />
+                    <label for="floatingInput" class=" common mx-4">Street</label>
+                </div>
+
+                <div class="form-floating col my-3 w-50">
+                    <input type="text" class="form-control px-4 shadow-none" id="floatingInput" placeholder="City" asp-for="city" />
+                    <label for="floatingInput" class=" common mx-4">City</label>
+                </div>
+
+                <div class="form-floating col my-3 w-50">
+                    <input type="text" class="form-control px-4 shadow-none" id="floatingInput" placeholder="State" asp-for="state" />
+                    <label for="floatingInput" class=" common mx-4">State</label>
+                </div>
+
+                <div class="form-floating col my-3 w-50">
+                    <input type="text" class="form-control px-4 shadow-none" id="floatingInput"
+                           placeholder="Zip Code" asp-for="zipCode" />
+                    <label for="floatingInput" class="common mx-4">Zip Code</label>
+                </div>
+
+                <div class="form-floating col my-3 w-50">
+                    <input type="text" class="form-control px-4 shadow-none" id="floatingInput"
+                           placeholder="Room # / Suite (Optional)" asp-for="roomSuite" />
+                    <label for="floatingInput" class="common mx-4">Room # / Suite (Optional)</label>
+                </div>
             </div>
 
-            <div class="form-floating col my-3 w-50">
-                <input type="text" class="form-control px-4 shadow-none" id="floatingInput"
-                       placeholder="Relation With Patient" asp-for="relation" />
-                <label for="floatingInput" class="common mx-4">Relation With Patient</label>
-            </div>
-        </div>
-
-        <h4 class="form-headings mt-2 justify-content-start">
-            Patient Information
-        </h4>
-        <div class="row row-cols-2">
-            <div class="form-floating col w-100">
-                <textarea class="form-control px-4 shadow-none" placeholder="Symptoms" id="floatingTextarea"
-                          style="height: 100px"></textarea>
-                <label for="floatingTextarea" class=" common mx-4">
-                    Enter Brief Details of Symptoms
-                    (Optional)
-                </label>
-            </div>
-
-            <div class="form-floating col my-3 w-50">
-                <input type="text" class="form-control px-4 shadow-none" id="floatingInput"
-                       placeholder="First Name" asp-for="patientFirstName" />
-                <label for="floatingInput" class=" common mx-4">First Name</label>
-            </div>
-
-            <div class="form-floating col my-3 w-50">
-                <input type="text" class="form-control px-4 shadow-none" id="floatingInput"
-                       placeholder="Last Name" asp-for="patientLastName" />
-                <label for="floatingInput" class=" common mx-4">Last Name</label>
-            </div>
-
-            <div class="form-floating col my-3 w-50">
-                <input id="startDate" class="form-control px-4 shadow-none" type="date" asp-for="patientDob"/>
-                <label for="startDate" class=" common mx-4">Date of Birth</label>
-            </div>
-        </div>
-
-        <h4 class="form-headings mt-2 justify-content-start">
-            Patient Contact Information
-        </h4>
-        <div class="row row-cols-2">
-            <div class="form-floating col my-3 w-50">
-                <input type="email" class="form-control px-4 shadow-none" id="floatingInput" placeholder="Email" asp-for="patientEmail"/>
-                <label for="floatingInput" class=" common mx-4">Email</label>
-            </div>
-
-            <div class="form-floating col my-3 w-50">
-                <input type="text" class="form-control px-4 shadow-none" id="floatingInput"
-                       placeholder="Phone Number" asp-for="patientPhoneNo"/>
-                <label for="floatingInput" class="common mx-4">Phone Number</label>
-            </div>
-        </div>
-
-        <h4 class="form-headings mt-2 justify-content-start">
-            Patient Location
-        </h4>
-        <div class="row row-cols-2">
-            <div class="form-floating col my-3 w-50">
-                <input type="text" class="form-control px-4 shadow-none" id="floatingInput" placeholder="Street" asp-for="street"/>
-                <label for="floatingInput" class=" common mx-4">Street</label>
-            </div>
-
-            <div class="form-floating col my-3 w-50">
-                <input type="text" class="form-control px-4 shadow-none" id="floatingInput" placeholder="City" asp-for="city" />
-                <label for="floatingInput" class=" common mx-4">City</label>
-            </div>
-
-            <div class="form-floating col my-3 w-50">
-                <input type="text" class="form-control px-4 shadow-none" id="floatingInput" placeholder="State" asp-for="state"/>
-                <label for="floatingInput" class=" common mx-4">State</label>
-            </div>
-
-            <div class="form-floating col my-3 w-50">
-                <input type="text" class="form-control px-4 shadow-none" id="floatingInput"
-                       placeholder="Zip Code" asp-for="zipCode"/>
-                <label for="floatingInput" class="common mx-4">Zip Code</label>
-            </div>
-
-            <div class="form-floating col my-3 w-50">
-                <input type="text" class="form-control px-4 shadow-none" id="floatingInput"
-                       placeholder="Room # / Suite (Optional)" asp-for="roomSuite" />
-                <label for="floatingInput" class="common mx-4">Room # / Suite (Optional)</label>
-            </div>
-        </div>
-
-        <h4 class="form-headings mt-2 justify-content-start">
-            (Optional) Upload Photo or Document
-        </h4>
+            <h4 class="form-headings mt-2 justify-content-start">
+                (Optional) Upload Photo or Document
+            </h4>
             <div class="row my-4 ms-1 justify-content-end">
                 <div class="input-group-text border-top border-bottom -border-start border-rounded-left px-3 py-2 col-11" id="file-name">Select File</div>
                 <div class="file-upload-container col-1 mx-0 px-0">
@@ -140,23 +140,19 @@
                 </div>
             </div>
 
-        <div class="row row-cols-2 mt-3 pb-3 justify-content-end">
-            <div class="col w-auto">
-                <a href=".\submit_request_screen.html">
+            <div class="row row-cols-2 mt-3 pb-3 justify-content-end">
+                <div class="col w-auto">
                     <button class="back btn btn-outline-info" type="submit">
                         Submit
                     </button>
-                </a>
-            </div>
+                </div>
 
-            <div class="col w-auto">
-                <a href=".\submit_request_screen.html">
-                    <button class="back btn btn-outline-info" type="button">
+                <div class="col w-auto">
+                    <button class="back btn btn-outline-info" type="reset">
                         Cancel
                     </button>
-                </a>
+                </div>
             </div>
-        </div>
         </form>
     </div>
 </div>

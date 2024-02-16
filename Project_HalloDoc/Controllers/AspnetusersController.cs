@@ -15,8 +15,6 @@ namespace Project_HalloDoc.Controllers
         private readonly IPatientInterface _conciergeService;
         private readonly IPatientInterface _businessService;
 
-
-
         public AspnetusersController(ILogger<AspnetusersController> logger, ILoginInterface loginService, IPatientInterface patientService, IPatientInterface familyService, IPatientInterface conciergeService, IPatientInterface businessService)
         {
             _logger = logger;
@@ -25,15 +23,14 @@ namespace Project_HalloDoc.Controllers
             _familyService = familyService;
             _conciergeService = conciergeService;
             _businessService = businessService;
-
         }
 
         [HttpPost]
-        public IActionResult b1c1_patient_request(LoginModel loginModel)
+        public IActionResult b2c1_patient_dashboard(LoginModel loginModel)
         {
             if ((_loginService.EmailCheck(loginModel)) && (_loginService.PasswordCheck(loginModel)))
             {
-                return RedirectToAction("b1c1_patient_request", "Home");
+                return RedirectToAction("b2c1_patient_dashboard", "Home");
             }
 
             else if (!(_loginService.EmailCheck(loginModel)))
@@ -80,6 +77,12 @@ namespace Project_HalloDoc.Controllers
             return RedirectToAction("b1_submit_request_screen", "Home");
         }
 
+        [HttpGet]
+        public async Task<IActionResult> CheckEmailExists(string email)
+        {
+            var emailExists = await _patientService.IsEmailExists(email);
+            return Json(new { emailExists });
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

@@ -54,6 +54,11 @@ namespace Project_HalloDoc.Controllers
             return View();
         }
 
+        public IActionResult b2c1_patient_dashboard()
+        {
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

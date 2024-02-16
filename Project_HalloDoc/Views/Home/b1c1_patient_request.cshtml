@@ -57,7 +57,16 @@
                 </div>
 
                 <div class="form-floating col my-3 w-50">
-                    <input asp-for="phoneNo" type="tel" class="form-control px-4 shadow-none" id="phone">
+                    <input type="tel" asp-for="phoneNo" class="form-control p-3 ps-5" class="phoneNumber" placeholder="(201) 555-0123">
+                </div>
+
+                <div id="passwordSection" class="col-6 input-div form-floating col my-3 w-50" style="display:none">
+                        <input type="password" class="form-control" id="floatingInput" placeholder="name@example.com">
+                        <label for="floatingInput" class="hidenpass">Password</label>
+                </div>
+                <div id="confirmPasswordSec" class="col-6 input-div form-floating col my-3 w-50" style="display:none">
+                        <input type="password" class="form-control" id="floatingInput" placeholder="name@example.com">
+                        <label for="floatingInput" class="hidenpass">Confirm Password</label>
                 </div>
 
             </div>
@@ -113,11 +122,9 @@
                 </div>
 
                 <div class="col w-auto">
-                    <a href=".\submit_request_screen.html">
-                        <button class="back btn btn-outline-info" type="button">
-                            Cancel
-                        </button>
-                    </a>
+                    <button class="back btn btn-outline-info" type="reset">
+                        Cancel
+                    </button>
                 </div>
             </div>
         </div>

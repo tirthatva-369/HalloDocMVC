@@ -196,5 +196,15 @@ namespace BusinessLogic.Services
             _db.Requestbusinesses.Add(requestbusiness);
             _db.SaveChanges();
         }
+
+        public Task<bool> IsEmailExists(string email)
+        {
+            bool isExist = _db.Aspnetusers.Any(x => x.Email == email);
+            if (isExist)
+            {
+                return Task.FromResult(true);
+            }
+            return Task.FromResult(false);
+        }
     }
 }

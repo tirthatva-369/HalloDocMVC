@@ -36,6 +36,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxiMV9zdWJtaXRfcmVxdWVzdF9zY3JlZW4uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Project/Project_HalloDoc/Project_HalloDoc/Views/Home/b2c1_patient_dashboard.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxiMmMxX3BhdGllbnRfZGFzaGJvYXJkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Project/Project_HalloDoc/Project_HalloDoc/Views/Home/b2c_forgot_password.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxiMmNfZm9yZ290X3Bhc3N3b3JkLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -62,6 +66,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/Project/Project_HalloDoc/Project_HalloDoc/Views/Shared/_b2.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9iMi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Project/Project_HalloDoc/Project_HalloDoc/Views/Shared/_b2c.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9iMmMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Project/Project_HalloDoc/Project_HalloDoc/Views/Shared/_ValidationScriptsPartial.cshtml]
