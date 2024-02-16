@@ -1,5 +1,5 @@
-﻿@model Project_HalloDoc.Views.Home.b2c1_patient_dashboardModel
-
+﻿@using DataAccess.Models
+@model MedicalHistoryList
 @{
     Layout = "~/Views/Shared/_b2c.cshtml";
 }
@@ -8,47 +8,306 @@
 <hr class="m-0 hr_line d-none d-lg-block">
 <nav class="navbr navbar navbar-expand-lg py-0 pt-2 bg-body" style="z-index: 10;">
     <div class="container-fluid">
-
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class=" bg-white ps-5 nav nav-underline" id="myTab" role="tablist">
-
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane"
                             type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">
                         Dashboard
                     </button>
                 </li>
-
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane"
                             type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">
                         Profile
                     </button>
                 </li>
-
             </ul>
         </div>
-
     </div>
 </nav>
 
-<div class="tab-content pt-5" id="tab-content">
 
-    <div class="tab-pane active" id="home-tab" role="tabpanel" aria-labelledby="simple-tab-0">
-        <div class="work-area container-fluid fixed">
-            <div class="row row-cols-2">
-                <div class="col-11 justify-content-center text-center my-5">
-                    <h2 class="my-5">I am a...</h2>
+<div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab"
+         tabindex="0">
 
+        <div class="tab-content container-fluid p-5" id="medicalHistory">
+            <div class="tab-pane fade show active" id="dashboard-tab-pane" role="tabpanel" aria-labelledby="dashboard-tab" tabindex="0">
+
+                <h3 class="mb-4">Medical History</h3>
+
+                <div class="container-fluid bg-white shadow p-3 rounded-3">
+
+                    <div class="text-end py-3">
+                        <button id="new-req" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" class="back btn btn-outline-info justify-content-start w-auto me-3">
+                            <Span class="py-2 d-none d-md-block">
+                                Create New Request
+                            </Span><i class="p-2 bi bi-plus-lg d-block d-md-none"></i>
+                        </button>
+                    </div>
+
+                    <div class="d-none d-md-block">
+                        <table class="table">
+                            <thead class="table-secondary">
+                                <tr>
+                                    <th scope="col">Created Date<i class="bi bi-arrow-down-short"></i></th>
+                                    <th scope="col">Current Status</th>
+                                    <th scope="col">Document</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                @* @foreach (var items in Model.medicalHistoriesList)
+                                {
+                                <tr>
+                                <td>@items.createdDate</td>
+                                <td>@items.currentStatus</td>
+                                <td>
+                                <a href="#" class="btn btn-outline-info fw-bold" onclick="swapDivs()">
+                                <span><i class="bi bi-file-earmark fw-bold"></i></span>
+                                <span>
+                                View Documents (@items.document.Count())
+                                @foreach (var docs in items.document)
+                                {
+                                @docs
+                                }
+                                </span>
+                                </a>
+                                </td>
+                                </tr>
+                                }*@
+
+                                <tr>
+                                    <td>21-03-2003</td>
+                                    <td>Pending</td>
+                                    <td>
+                                        <a href="#" class="btn btn-outline-info fw-bold" onclick="swapDivs()">
+                                            <span><i class="bi bi-file-earmark fw-bold"></i></span>
+                                            <span>
+                                                1.txt
+                                            </span>
+                                        </a>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="accordion accordion-flush d-block d-md-none" id="accordionFlushExample">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="flush-headingOne">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                    Created Date: Dec 5, 2023
+                                </button>
+                            </h2>
+                            <div id="flush-collapseOne" class="accordion-collapse collapse"
+                                 aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                <div class="accordion-body">
+                                    Placeholder content for this accordion, which is intended to demonstrate the
+                                    <code>.accordion-flush</code> class. This is the first item's accordion body.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="flush-headingTwo">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#flush-collapseTwo" aria-expanded="false"
+                                        aria-controls="flush-collapseTwo">
+                                    Created Date:
+                                </button>
+                            </h2>
+                            <div id="flush-collapseTwo" class="accordion-collapse collapse"
+                                 aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                                <div class="accordion-body">
+                                    Placeholder
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="flush-headingThree">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#flush-collapseThree" aria-expanded="false"
+                                        aria-controls="flush-collapseThree">
+                                    Created Date:
+                                </button>
+                            </h2>
+                            <div id="flush-collapseThree" class="accordion-collapse collapse"
+                                 aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                                <div class="accordion-body">
+                                    Placeholder
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid mt-5" style="background-color: aliceblue; display:none" id="viewdocs">
+            <div class="container bg-white p-4 ">
+                <div class="d-flex justify-content-between mb-4">
+                    <h3>Documents</h3>
+                    <button onclick="swapDivs()" id="backview">&lt; Back</button>
+                </div>
+                <div class="row">
+                    <p class="col-12">Patient Name</p>
+                    <p class="col-12">
+                        <span class="fw-bolder fs-4">Testing Test</span>
+                        <span>(F34R34T5GVR42)</span>
+                    </p>
+                    <p class="col-12 py-3">Check here for any files that you or the doctors of your subsequents requestors have attached for you to review</p>
+                    <div class="col-12 mb-4">
+                        <input class="form-control form-control-lg " id="formFileLg" type="file" multiple>
+                    </div>
+                    <div class="col-12 d-flex justify-content-between">
+                        <h3>Documents</h3>
+                        <button>Download All</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+        <form method="post" enctype="multipart/form-data" asp-controller="Patient" asp-action="AddPatient" class="container my-5 p-4" id="main-cont">
+
+            <div class="row">
+                <h5 class="col-12">General Information</h5>
+
+                <div class="col-6">
+                    <div class="input-div form-floating mb-3">
+                        <input type="text" class="form-control" id="floatingInput" placeholder="">
+                        <label for="floatingInput">First Name</label>
+                    </div>
                 </div>
 
-                @* <div class="col-1 my-5">
-                <a asp-controller="Home" asp-action="Index" type="button" class="back btn btn-outline-info justify-content-start mt-5">
-                &lt&nbspBack
-                </a>
-                </div> *@
+                <div class="col-6">
+                    <div class="input-div form-floating mb-3">
+                        <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+                        <label for="floatingInput">Last Name</label>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="input-div form-floating mb-3">
+                        <input type="date" class="form-control" id="floatingInput" placeholder="name@example.com">
+                        <label for="floatingInput">Date Of Birth</label>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <h5>Contact Information</h5>
+                </div>
+
+                <div class="col-2">
+                    <div class="form-floating">
+                        <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+                            <option selected>Type</option>
+                            <option value="1">Mobile</option>
+                            <option value="2">Landline</option>
+                        </select>
+                        <label for="floatingSelect">Works with selects</label>
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="input-div form-floating mb-3">
+                        <input type="tel" name="phone" class="form-control p-3 ps-5" id="floatingInput">
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="input-div form-floating mb-3">
+                        <input name="email" type="email" class="form-control" id="email" placeholder="name@example.com">
+                        <label for="floatingInput">Email</label>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-12">
+                    <h5>Patient Location</h5>
+                </div>
+
+                <div class="col-6">
+                    <div class="input-div form-floating mb-3">
+                        <input type="text" class="form-control" id="floatingInput" placeholder="">
+                        <label for="floatingInput">Street</label>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="input-div form-floating mb-3">
+                        <input type="text" class="form-control" id="floatingInput" placeholder="">
+                        <label for="floatingInput">City</label>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="input-div form-floating mb-3">
+                        <input type="text" class="form-control" id="floatingInput" placeholder="">
+                        <label for="floatingInput">State</label>
+                    </div>
+                </div>
+
+                <div class="col-5">
+                    <div class="input-div form-floating mb-3">
+                        <input type="text" class="form-control" id="floatingInput" placeholder="">
+                        <label for="floatingInput">Zip Code</label>
+                    </div>
+                </div>
+
+                <div class="col-1">
+                    <div class="form-floating mb-3">
+                        <button type="button" class="btn btn-outline-info w-100" style="height:3.4rem ;"> <i class="bi bi-geo-alt"></i> Map</button>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+@*-------------------------modal--------------------*@
+<div class="modal-dialog modal-dialog-centered">
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color:#00B7FF ; color:white">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Create a New Request</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Here, I Want to create new request for...
+                    <br />
+                    <div class="d-flex justify-content-center gap-3 my-3">
+                        <button class="modal-b back btn btn-outline-info me-3" id="button1" onclick="passId(event)">
+                            <span class="">Me</span>
+                        </button>
+                        <button class="modal-b back btn btn-outline-info me-3" id="button2" onclick="passId(event)">
+                            <span class="">Someone Else</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-end mb-3 me-3 gap-3">
+                    <button id="continue" class="modal-b back btn btn-outline-info me-3" onclick="redirect()">
+                        <span class="">Continue</span>
+                    </button>
+                    <button type="reset" class="modal-b back btn btn-outline-info me-3" data-bs-dismiss="modal">
+                        <span class="">Cancel</span>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 </div>
-

@@ -32,11 +32,9 @@
                 </div>
 
                 <div class="form-floating col my-3 w-50">
-                    <input type="text" class="form-control px-4 shadow-none" id="floatingInput"
-                           placeholder="Your Phone Number" asp-for="phoneNo" />
-                    <label for="floatingInput" class=" common mx-4">Your Phone Number</label>
+                    <input type="tel" asp-for="phoneNo" class="form-control shadow-none p-3 ps-5" class="phoneNumber" placeholder="(369) 936-0369">
                 </div>
-
+           
                 <div class="form-floating col my-3 w-50">
                     <input type="email" class="form-control px-4 shadow-none" id="floatingInput"
                            placeholder="Your Email" asp-for="email" />
@@ -46,7 +44,7 @@
                 <div class="form-floating col my-3 w-50">
                     <input type="text" class="form-control px-4 shadow-none" id="floatingInput"
                            placeholder="Relation With Patient" asp-for="relation" />
-                    <label for="floatingInput" class="common mx-4">Relation With Patient</label>
+                    <label for="floatingInput" class="common mx-4 z-0 position-absolute">Relation With Patient</label>
                 </div>
             </div>
 
@@ -57,7 +55,7 @@
                 <div class="form-floating col w-100">
                     <textarea class="form-control px-4 shadow-none" placeholder="Symptoms" id="floatingTextarea"
                               style="height: 100px"></textarea>
-                    <label for="floatingTextarea" class=" common mx-4">
+                    <label for="floatingTextarea" class="common mx-4 z-0 position-absolute">
                         Enter Brief Details of Symptoms
                         (Optional)
                     </label>
@@ -91,9 +89,7 @@
                 </div>
 
                 <div class="form-floating col my-3 w-50">
-                    <input type="text" class="form-control px-4 shadow-none" id="floatingInput"
-                           placeholder="Phone Number" asp-for="patientPhoneNo" />
-                    <label for="floatingInput" class="common mx-4">Phone Number</label>
+                    <input type="tel" asp-for="patientPhoneNo" class="form-control shadow-none p-3 ps-5" class="phoneNumber" placeholder="(369) 936-0369">
                 </div>
             </div>
 
@@ -108,7 +104,7 @@
 
                 <div class="form-floating col my-3 w-50">
                     <input type="text" class="form-control px-4 shadow-none" id="floatingInput" placeholder="City" asp-for="city" />
-                    <label for="floatingInput" class=" common mx-4">City</label>
+                    <label for="floatingInput" class="common mx-4 z-0 position-absolute">City</label>
                 </div>
 
                 <div class="form-floating col my-3 w-50">
@@ -119,7 +115,7 @@
                 <div class="form-floating col my-3 w-50">
                     <input type="text" class="form-control px-4 shadow-none" id="floatingInput"
                            placeholder="Zip Code" asp-for="zipCode" />
-                    <label for="floatingInput" class="common mx-4">Zip Code</label>
+                    <label for="floatingInput" class="common mx-4 z-0 position-absolute">Zip Code</label>
                 </div>
 
                 <div class="form-floating col my-3 w-50">

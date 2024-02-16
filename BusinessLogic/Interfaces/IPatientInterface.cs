@@ -13,7 +13,8 @@ namespace BusinessLogic.Interfaces
         void AddFamilyRequest(FamilyRequestModel familyReqModel);
         void AddConciergeRequest(ConciergeRequestModel conciergeReqModel);
         void AddBusinessRequest(BusinessRequestModel businessReqModel);
-
         Task<bool> IsEmailExists(string email);
+        List<PatientDashboard> GetPatientInfos();
+        List<MedicalHistory> GetMedicalHistory(string email);
     }
 }

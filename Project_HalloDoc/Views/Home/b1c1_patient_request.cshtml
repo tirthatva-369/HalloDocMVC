@@ -13,7 +13,7 @@
         </a>
     </div>
 
-    <form asp-controller="Aspnetusers" asp-action="b1_submit_request_screen">
+    <form asp-controller="Aspnetusers" asp-action="b1_submit_request_screen" enctype="multipart/form-data">
         <div class="flex-column rounded shadow-lg p-4 pb-0">
 
             <h4 class="form-headings mt-2 justify-content-start">
@@ -52,21 +52,21 @@
             </h4>
             <div class="row row-cols-2">
                 <div class="form-floating col my-3 w-50">
-                    <input asp-for="email" type="email" class="form-control px-4 shadow-none" id="floatingInput" placeholder="Email" />
+                    <input asp-for="email" type="email" class="form-control px-4 shadow-none" id="email" placeholder="Email" />
                     <label for="floatingInput" class=" common mx-4">Email</label>
                 </div>
 
                 <div class="form-floating col my-3 w-50">
-                    <input type="tel" asp-for="phoneNo" class="form-control p-3 ps-5" class="phoneNumber" placeholder="(201) 555-0123">
+                    <input type="tel" asp-for="phoneNo" class="form-control shadow-none p-3 ps-5" placeholder="(369) 936-0369">
                 </div>
 
                 <div id="passwordSection" class="col-6 input-div form-floating col my-3 w-50" style="display:none">
-                        <input type="password" class="form-control" id="floatingInput" placeholder="name@example.com">
-                        <label for="floatingInput" class="hidenpass">Password</label>
+                    <input type="password" class="form-control px-4 shadow-none" id="floatingInput" placeholder="name@example.com">
+                    <label for="floatingInput" class="hidenpass common mx-4">Password</label>
                 </div>
                 <div id="confirmPasswordSec" class="col-6 input-div form-floating col my-3 w-50" style="display:none">
-                        <input type="password" class="form-control" id="floatingInput" placeholder="name@example.com">
-                        <label for="floatingInput" class="hidenpass">Confirm Password</label>
+                    <input type="password" class="form-control px-4 shadow-none" id="floatingInput" placeholder="name@example.com">
+                    <label for="floatingInput" class="hidenpass common mx-4">Confirm Password</label>
                 </div>
 
             </div>
@@ -82,7 +82,7 @@
 
                 <div class="form-floating col my-3 w-50">
                     <input asp-for="city" type="text" class="form-control px-4 shadow-none" id="floatingInput" placeholder="City" />
-                    <label for="floatingInput" class=" common mx-4">City</label>
+                    <label for="floatingInput" class="common mx-4 z-0 position-absolute">City</label>
                 </div>
 
                 <div class="form-floating col my-3 w-50">
@@ -93,7 +93,7 @@
                 <div class="form-floating col my-3 w-50">
                     <input asp-for="zipCode" type="text" class="form-control px-4 shadow-none" id="floatingInput"
                            placeholder="Zip Code" />
-                    <label for="floatingInput" class="common mx-4">Zip Code</label>
+                    <label for="floatingInput" class="common mx-4 z-0 position-absolute">Zip Code</label>
                 </div>
 
                 <div class="form-floating col my-3 w-50">
@@ -110,7 +110,7 @@
                 <div class="input-group-text border-top border-bottom -border-start border-rounded-left px-3 py-2 col-11" id="file-name">Select File</div>
                 <div class="file-upload-container col-1 mx-0 px-0">
                     <label for="formFile" class="upload btn btn-info m-0 py-2">Upload</label>
-                    <input class="d-none" type="file" id="formFile">
+                    <input asp-for="file" class="d-none" type="file" id="formFile" multiple>
                 </div>
             </div>
 
@@ -130,3 +130,35 @@
         </div>
     </form>
 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<script>
+    $('#email').focusout(function () {
+        var email = $(this).val();
+        $.ajax({
+            url: '/Aspnetusers/CheckEmailExists',
+            type: 'GET',
+            contentType: 'application/json',
+            data: { email: email },
+            success: function (response) {
+                if (response.emailExists) {
+                    $('#passwordSection').hide();
+                    $('#confirmPasswordSec').hide();
+                } else {
+                    $('#passwordSection').show();
+                    $('#confirmPasswordSec').show();
+                }
+            }
+        });
+    });
+</script>
+<script>
+    const phoneInputField = document.querySelectorAll("input[type='tel']");
+    for (var i = 0; i < phoneInputField.length; i++) {
+        const phoneInput = window.intlTelInput(phoneInputField[i], {
+            utilsScript:
+                "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+        });
+    }
+</script>

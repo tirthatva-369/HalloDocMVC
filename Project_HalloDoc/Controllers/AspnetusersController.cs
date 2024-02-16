@@ -84,6 +84,13 @@ namespace Project_HalloDoc.Controllers
             return Json(new { emailExists });
         }
 
+        public IActionResult b2c1_patient_dashboard()
+        {
+            var infos = _patientService.GetMedicalHistory("1@g.c");
+            var viewmodel = new MedicalHistoryList { medicalHistoriesList = infos };
+            return View(viewmodel);
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

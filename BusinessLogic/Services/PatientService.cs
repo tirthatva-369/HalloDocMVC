@@ -1,13 +1,10 @@
 ﻿using BusinessLogic.Interfaces;
 using DataAccess.Models;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DataAccess.DataContext;
 using DataAccess.DataModels;
+using Microsoft.AspNetCore.Http;
+
 
 namespace BusinessLogic.Services
 {
@@ -47,7 +44,10 @@ namespace BusinessLogic.Services
             info.Zipcode = patientRequestModel.zipCode;
             info.Regionid = 1;
 
-            var user = _db.Aspnetusers.Where(x => x.Id == "1").FirstOrDefault();
+            _db.Requestclients.Add(info);
+            _db.SaveChanges();
+
+            var user = _db.Aspnetusers.Where(x => x.Email == patientRequestModel.email).FirstOrDefault();
 
             User u = new User();
             u.Aspnetuserid = user.Id;
@@ -65,8 +65,34 @@ namespace BusinessLogic.Services
             _db.Users.Add(u);
             _db.SaveChanges();
 
-            _db.Requestclients.Add(info);
-            _db.SaveChanges();
+            foreach (IFormFile file in patientRequestModel.file)
+            {
+                if (file != null && file.Length > 0)
+                {
+                    //get file name
+                    var fileName = Path.GetFileName(file.FileName);
+
+                    //define path
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "UploadedFiles", fileName);
+
+                    // Copy the file to the desired location
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        file.CopyTo(stream)
+               ;
+                    }
+
+                    Requestwisefile requestwisefile = new()
+                    {
+                        Filename = fileName,
+                        Requestid = request.Requestid,
+                        Createddate = DateTime.Now
+                    };
+
+                    _db.Requestwisefiles.Add(requestwisefile);
+                    _db.SaveChanges();
+                };
+            }
         }
 
         public void AddFamilyRequest(FamilyRequestModel familyRequestModel)
@@ -205,6 +231,36 @@ namespace BusinessLogic.Services
                 return Task.FromResult(true);
             }
             return Task.FromResult(false);
+        }
+
+        public List<PatientDashboard> GetPatientInfos()
+        {
+            var user = _db.Requests.Where(x => x.Email == "1@g.c").FirstOrDefault();
+            return new List<PatientDashboard>
+            {
+                new PatientDashboard {createdDate = user.Createddate, currentStatus = "Test", document = "test"},
+                new PatientDashboard {createdDate = DateTime.Now, currentStatus = "pending", document="myname.jpg"},
+                new PatientDashboard {createdDate = DateTime.Now, currentStatus = "active", document="hername.jpg"}
+            };
+        }
+
+        public List<MedicalHistory> GetMedicalHistory(string email)
+        {
+            var medicalhistory = (from request in _db.Requests
+                                  join requestfile in _db.Requestwisefiles
+                                  on request.Requestid equals requestfile.Requestid
+                                  where request.Email == email && request.Email != null
+                                  select new MedicalHistory
+                                  {
+                                      createdDate = request.Createddate,
+                                      currentStatus = request.Status.ToString(),
+                                      document = _db.Requestwisefiles
+                                  .Where(x => x.Requestid == request.Requestid)
+                                  .Select(x => x.Filename.ToString())
+                                  .ToList()
+                                  }).ToList();
+
+            return medicalhistory;
         }
     }
 }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Http;
 
 namespace DataAccess.Models
 {
@@ -19,7 +15,8 @@ namespace DataAccess.Models
         public string state { get; set; }
         public string zipCode { get; set; }
         public int roomSuite { get; set; }
-        public string uploadDocument { get; set; }
+        public List<IFormFile> file { get; set; }
+
     }
 
     public class FamilyRequestModel
@@ -81,5 +78,28 @@ namespace DataAccess.Models
         public string state { get; set; }
         public string zipCode { get; set; }
         public int roomSuite { get; set; }
+    }
+
+    public class PatientDashboard
+    {
+        public DateTime createdDate { get; set; }
+        public string currentStatus { get; set; }
+        public string document { get; set; }
+    }
+
+    public class PatientDashboardInfo
+    {
+        public List<PatientDashboard> patientDashboardItems { get; set; }
+    }
+
+    public class MedicalHistory
+    {
+        public DateTime createdDate { get; set; }
+        public string currentStatus { get; set; }
+        public List<string> document { get; set; }
+    }
+    public class MedicalHistoryList
+    {
+        public List<MedicalHistory> medicalHistoriesList { get; set; }
     }
 }

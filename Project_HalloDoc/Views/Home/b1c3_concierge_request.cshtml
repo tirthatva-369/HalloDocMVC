@@ -32,9 +32,7 @@
                 </div>
 
                 <div class="form-floating col my-3 w-50">
-                    <input asp-for="phoneNo" type="text" class="form-control px-4 shadow-none" id="floatingInput"
-                           placeholder="Your Phone Number" />
-                    <label for="floatingInput" class=" common mx-4">Your Phone Number</label>
+                    <input type="tel" asp-for="phoneNo" class="form-control shadow-none p-3 ps-5" class="phoneNumber" placeholder="(369) 936-0369">
                 </div>
 
                 <div class="form-floating col my-3 w-50">
@@ -46,7 +44,7 @@
                 <div class="form-floating col my-3 w-50">
                     <input asp-for="hotelName" type="text" class="form-control px-4 shadow-none" id="floatingInput"
                            placeholder="Relation With Patient" />
-                    <label for="floatingInput" class="common mx-4">Hotel/Property Name</label>
+                    <label for="floatingInput" class="common mx-4 z-0 position-absolute">Hotel/Property Name</label>
                 </div>
             </div>
 
@@ -56,7 +54,7 @@
             <div class="row row-cols-2">
                 <div class="form-floating col my-3 w-50">
                     <input asp-for="street" type="text" class="form-control px-4 shadow-none" id="floatingInput" placeholder="Street" />
-                    <label for="floatingInput" class=" common mx-4">Street</label>
+                    <label for="floatingInput" class="common mx-4 z-0 position-absolute">Street</label>
                 </div>
 
                 <div class="form-floating col my-3 w-50">
@@ -117,9 +115,7 @@
                 </div>
 
                 <div class="form-floating col my-3 w-50">
-                    <input asp-for="patientPhoneNo" type="text" class="form-control px-4 shadow-none" id="floatingInput"
-                           placeholder="Phone Number" />
-                    <label for="floatingInput" class="common mx-4">Phone Number</label>
+                    <input type="tel" asp-for="patientPhoneNo" class="form-control shadow-none p-3 ps-5" class="phoneNumber" placeholder="(369) 936-0369">
                 </div>
             </div>
 
