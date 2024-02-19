@@ -1,4 +1,5 @@
-﻿using DataAccess.Models;
+﻿using DataAccess.DataModels;
+using DataAccess.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,7 @@ namespace BusinessLogic.Interfaces
     {
         public bool EmailCheck(LoginModel loginModel);
         public bool PasswordCheck(LoginModel loginModel);
+        public User Login(LoginModel loginModel);
+
     }
 }

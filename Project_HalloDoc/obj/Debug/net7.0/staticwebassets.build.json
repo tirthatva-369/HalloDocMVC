@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Uu6U+wVz3PAEXh2JmQDCfhtlePVihd1mTTMT7vXj7Vg=",
+  "Hash": "oeWpPd46+HzMlaJqkFgObrX7T1XiK4lIIQRPPRjrgSE=",
   "Source": "Project_HalloDoc",
   "BasePath": "_content/Project_HalloDoc",
   "Mode": "Default",
@@ -1341,6 +1341,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\UploadedFiles\\Alt Tab_Refresh.ahk"
+    },
+    {
+      "Identity": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\UploadedFiles\\blur_doctor_art.png",
+      "SourceId": "Project_HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\",
+      "BasePath": "_content/Project_HalloDoc",
+      "RelativePath": "UploadedFiles/blur_doctor_art.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\UploadedFiles\\blur_doctor_art.png"
     },
     {
       "Identity": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\UploadedFiles\\dark.png",

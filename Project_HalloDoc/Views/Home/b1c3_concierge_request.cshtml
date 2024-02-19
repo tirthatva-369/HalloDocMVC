@@ -7,9 +7,9 @@
 <div class="con container">
 
     <div class="d-flex flex-row-reverse mb-3">
-        <a asp-controller="Home" asp-action="b1_submit_request_screen" type="button" class="back btn btn-outline-info">
+        <button onclick="location.href='@Url.Action("b1_submit_request_screen", "Home")'" type="button" class="back btn btn-outline-info">
             &lt&nbspBack
-        </a>
+        </button>
     </div>
     <form asp-controller="Aspnetusers" asp-action="b1_submit_request_screen">
 

@@ -92,14 +92,21 @@ namespace DataAccess.Models
         public List<PatientDashboard> patientDashboardItems { get; set; }
     }
 
+
     public class MedicalHistory
     {
+        public int reqId { get; set; }
         public DateTime createdDate { get; set; }
         public string currentStatus { get; set; }
         public List<string> document { get; set; }
-    }
-    public class MedicalHistoryList
-    {
-        public List<MedicalHistory> medicalHistoriesList { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public DateTime DateOfBirth { get; set; }
+        public string Email { get; set; }
+        public string PhoneNumber { get; set; }
+        public string Street { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public string ZipCode { get; set; }
     }
 }

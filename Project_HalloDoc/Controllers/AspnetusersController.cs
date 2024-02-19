@@ -26,10 +26,11 @@ namespace Project_HalloDoc.Controllers
         }
 
         [HttpPost]
-        public IActionResult b2c1_patient_dashboard(LoginModel loginModel)
+        public IActionResult b2_registered_user(LoginModel loginModel)
         {
             if ((_loginService.EmailCheck(loginModel)) && (_loginService.PasswordCheck(loginModel)))
             {
+
                 return RedirectToAction("b2c1_patient_dashboard", "Home");
             }
 
@@ -51,6 +52,13 @@ namespace Project_HalloDoc.Controllers
                 return RedirectToAction("b2_registered_user", "Home");
             }
         }
+
+        //public IActionResult b2c1_patient_dashboard()
+        //{
+        //    var infos = _patientService.GetMedicalHistory("1@g.c");
+        //    var viewmodel = new MedicalHistoryList { medicalHistoriesList = infos };
+        //    return View(viewmodel);
+        //}
 
         [HttpPost]
         public IActionResult b1_submit_request_screen(PatientRequestModel patientRequestModel)
@@ -84,12 +92,7 @@ namespace Project_HalloDoc.Controllers
             return Json(new { emailExists });
         }
 
-        public IActionResult b2c1_patient_dashboard()
-        {
-            var infos = _patientService.GetMedicalHistory("1@g.c");
-            var viewmodel = new MedicalHistoryList { medicalHistoriesList = infos };
-            return View(viewmodel);
-        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
