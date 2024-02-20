@@ -53,13 +53,6 @@ namespace Project_HalloDoc.Controllers
             }
         }
 
-        //public IActionResult b2c1_patient_dashboard()
-        //{
-        //    var infos = _patientService.GetMedicalHistory("1@g.c");
-        //    var viewmodel = new MedicalHistoryList { medicalHistoriesList = infos };
-        //    return View(viewmodel);
-        //}
-
         [HttpPost]
         public IActionResult b1_submit_request_screen(PatientRequestModel patientRequestModel)
         {
@@ -91,8 +84,6 @@ namespace Project_HalloDoc.Controllers
             var emailExists = await _patientService.IsEmailExists(email);
             return Json(new { emailExists });
         }
-
-
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

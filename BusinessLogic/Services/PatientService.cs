@@ -244,25 +244,6 @@ namespace BusinessLogic.Services
             };
         }
 
-        public List<MedicalHistory> GetMedicalHistory(string email)
-        {
-            var medicalhistory = (from request in _db.Requests
-                                  join requestfile in _db.Requestwisefiles
-                                  on request.Requestid equals requestfile.Requestid
-                                  where request.Email == email && request.Email != null
-                                  group requestfile by request.Requestid into groupedFiles
-                                  select new MedicalHistory
-                                  {
-                                      reqId = groupedFiles.Select(x => x.Request.Requestid).FirstOrDefault(),
-                                      createdDate = groupedFiles.Select(x => x.Request.Createddate).FirstOrDefault(),
-                                      currentStatus = groupedFiles.Select(x => x.Request.Status).FirstOrDefault().ToString(),
-                                      document = groupedFiles.Select(x => x.Filename.ToString()).ToList()
-                                  }).ToList();
-            return medicalhistory;
-        }
-
-
-
         public List<MedicalHistory> GetMedicalHistory(User user)
         {
             var medicalhistory = (from request in _db.Requests

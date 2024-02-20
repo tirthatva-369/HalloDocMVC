@@ -1,27 +1,30 @@
 ﻿using BusinessLogic.Interfaces;
 using BusinessLogic.Services;
+using DataAccess.DataContext;
 using DataAccess.DataModels;
 using DataAccess.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Project_HalloDoc.Models;
 using System.Diagnostics;
+using System.Globalization;
 
 namespace Project_HalloDoc.Controllers
 {
+
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ILoginInterface _loginService;
         private readonly IPatientInterface _patientService;
+        private readonly ApplicationDbContext _db;
 
-
-
-        public HomeController(ILogger<HomeController> logger, ILoginInterface loginService, IPatientInterface patientService)
+        public HomeController(ILogger<HomeController> logger, ILoginInterface loginService, IPatientInterface patientService, ApplicationDbContext db)
         {
             _logger = logger;
             _loginService = loginService;
             _patientService = patientService;
+            _db = db;
 
         }
         [HttpPost]
@@ -82,7 +85,6 @@ namespace Project_HalloDoc.Controllers
             return View();
         }
 
-
         public IActionResult b2_registered_user()
         {
             return View();
@@ -109,10 +111,31 @@ namespace Project_HalloDoc.Controllers
             return View(infos);
         }
 
+
         public IActionResult GetDcoumentsById(int requestId)
         {
             var list = _patientService.GetAllDocById(requestId);
             return PartialView("_DocumentList", list.ToList());
+        }
+
+        public IActionResult Edit(MedicalHistory medicalHistory)
+        {
+            var existingUser = _db.Users.FirstOrDefault(x => x.Email == medicalHistory.Email);
+            existingUser.Firstname = medicalHistory.FirstName;
+            existingUser.Lastname = medicalHistory.LastName;
+            //existingUser.dob = medicalHistory.DateOfBirth;
+            existingUser.Email = medicalHistory.Email;
+            //existingUser. = medicalHistory.ContactType;
+            existingUser.Mobile = medicalHistory.PhoneNumber;
+            existingUser.Street = medicalHistory.Street;
+            existingUser.City = medicalHistory.City;
+            existingUser.State = medicalHistory.State;
+            existingUser.Zip = medicalHistory.ZipCode;
+
+
+            _db.Users.Update(existingUser);
+            _db.SaveChanges();
+            return RedirectToAction("b2c1_patient_dashboard", "Home", existingUser);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

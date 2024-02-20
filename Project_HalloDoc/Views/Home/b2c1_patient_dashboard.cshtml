@@ -12,14 +12,12 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class=" bg-white ps-5 nav nav-underline" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane"
-                            type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">
+                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">
                         Dashboard
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane"
-                            type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">
+                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">
                         Profile
                     </button>
                 </li>
@@ -27,7 +25,6 @@
         </div>
     </div>
 </nav>
-
 
 <div class="tab-content" id="myTabContent">
     <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab"
@@ -145,259 +142,185 @@
 
             <div class="container bg-white p-4 ">
                 <div class="d-flex justify-content-between mb-4">
-                    <h3>documents</h3>
+                    <h3>Documents</h3>
                     <button onclick="swapDivs()" id="backview" class="back btn btn-outline-info">&lt; back</button>
                 </div>
                 <div class="row">
-                    <p class="col-12">patient name</p>
+                    <p class="col-12">Patient Name</p>
                     <p class="col-12">
-                        <span class="fw-bolder fs-4">@Model.FirstOrDefault().FirstName @Model.FirstOrDefault().LastName </span>
-                        <span>(f34r34t5gvr42)</span>
+                        <span class="fw-bolder fs-4">@Model.FirstOrDefault().FirstName @Model.FirstOrDefault().LastName</span>
+                        <span>@Model.FirstOrDefault().ConfirmationNumber</span>
                     </p>
                     <p class="col-12 py-3">check here for any files that you or the doctors of your subsequents requestors have attached for you to review</p>
                     <div class="col-12 mb-4">
                         <input class="form-control form-control-lg " id="formfilelg" type="file" multiple>
                     </div>
-
-                    <div class="row" id="docList">
-                        @* @await Html.PartialAsync("_documentlist",Model);*@
-                    </div>
-                    <!-- row--- -->
+                    <div class="row" id="docList"></div>
                 </div>
-
-                <!-- ----container    -->
             </div>
         </div>
     </div>
 
 
     <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-        <form method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="AddP atient" class="container my-5 p-4" id="main-cont">
+        <form asp-action="Edit" asp-controller="Home" method="post" class="container my-5 p-4" id="main-cont">
+            <div class="container bg-white p-4 rounded-4 shadow">
+                <div class="row">
+                    <h5 class="col-12">General Information</h5>
 
-            <div class="row">
-                <h5 class="col-12">General Information</h5>
-
-                <div class="col-6">
-                    <div class="input-div form-floating mb-3">
-                        <input asp-for="@Model.FirstOrDefault().FirstName" type="text" class="form-control" id="floatingInput" disabled>
-                        <label for="floatingInput">First Name</label>
+                    <div class="col-6">
+                        <div class="input-div form-floating mb-3">
+                            <input asp-for="@Model.FirstOrDefault().FirstName" type="text" class="form-control" id="floatingInput" disabled>
+                            <label for="floatingInput">First Name</label>
+                        </div>
 
                     </div>
-
-                </div>
-                <div class="col-6">
-                    <div class="input-div form-floating mb-3">
-                        <input asp-for="@Model.FirstOrDefault().LastName" type="text" class="form-control" id="floatingInput" placeholder="name@example.com" disabled>
-                        <label for="floatingInput">Last Name</label>
+                    <div class="col-6">
+                        <div class="input-div form-floating mb-3">
+                            <input asp-for="@Model.FirstOrDefault().LastName" type="text" class="form-control" id="floatingInput" placeholder="name@example.com" disabled>
+                            <label for="floatingInput">Last Name</label>
+                        </div>
                     </div>
-                </div>
-                <div class="col-6">
-                    <div class="input-div form-floating mb-3">
-                        <input asp-for="@Model.FirstOrDefault().DateOfBirth" type="date" class="form-control" id="floatingInput" placeholder="name@example.com" disabled>
-                        <label for="floatingInput">Date Of Birth</label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-12">
-                    <h5>Contact Information</h5>
-                </div>
-
-                <div class="col-2">
-                    <div class="form-floating">
-                        <input class="form-select" id="disabledTextInput" aria-label="Floating label select example">
-                        <label for="disabledTextInput">Select</label>
-                    </div>
-                </div>
-                <div class="col-4">
-                    <div class="input-div form-floating mb-3">
-                        <input asp-for="@Model.FirstOrDefault().PhoneNumber" type="tel" name="phone" class="form-control p-3 ps-5" id="floatingInput" disabled>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="input-div form-floating mb-3">
-                        <input asp-for="@Model.FirstOrDefault().Email" name="email" type="email" class="form-control" id="email" placeholder="name@example.com" disabled>
-                        <label for="floatingInput">Email</label>
+                    <div class="col-6">
+                        <div class="input-div form-floating mb-3">
+                            <input asp-for="@Model.FirstOrDefault().DateOfBirth" type="date" class="form-control" id="floatingInput" placeholder="name@example.com" disabled>
+                            <label for="floatingInput">Date Of Birth</label>
+                        </div>
                     </div>
                 </div>
 
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <h5>Patient Location</h5>
+                <div class="row">
+                    <div class="col-12">
+                        <h5>Contact Information</h5>
+                    </div>
+
+                    <div class="col-2">
+                        <div class="form-floating">
+                            <select asp-for="@Model.FirstOrDefault().ContactType" type="tel" name="phone" class="form-control p-3 ps-5" id="floatingInput" disabled>
+                                <option>Mobile</option>
+                                <option>Landline</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="input-div form-floating mb-3">
+                            <input asp-for="@Model.FirstOrDefault().PhoneNumber" type="tel" name="phone" class="form-control p-3 ps-5" id="floatingInput" disabled>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="input-div form-floating mb-3">
+                            <input asp-for="@Model.FirstOrDefault().Email" name="email" type="email" class="form-control" id="email" placeholder="name@example.com" disabled>
+                            <label for="floatingInput">Email</label>
+                        </div>
+                    </div>
+
                 </div>
-                <div class="col-6">
-                    <div class="input-div form-floating mb-3">
-                        <input asp-for="@Model.FirstOrDefault().Street" type="text" class="form-control" id="floatingInput" placeholder="" disabled>
-                        <label for="floatingInput">Street</label>
+                <div class="row">
+                    <div class="col-12">
+                        <h5>Patient Location</h5>
+                    </div>
+                    <div class="col-6">
+                        <div class="input-div form-floating mb-3">
+                            <input asp-for="@Model.FirstOrDefault().Street" type="text" class="form-control" id="floatingInput" placeholder="" disabled>
+                            <label for="floatingInput">Street</label>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="input-div form-floating mb-3">
+                            <input asp-for="@Model.FirstOrDefault().City" type="text" class="form-control" id="floatingInput" placeholder="" disabled>
+                            <label for="floatingInput">City</label>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="input-div form-floating mb-3">
+                            <input asp-for="@Model.FirstOrDefault().State" type="text" class="form-control" id="floatingInput" placeholder="" disabled>
+                            <label for="floatingInput">State</label>
+                        </div>
+                    </div>
+                    <div class="col-5">
+                        <div class="input-div form-floating mb-3">
+                            <input asp-for="@Model.FirstOrDefault().ZipCode" type="text" class="form-control" id="floatingInput" placeholder="" disabled>
+                            <label for="floatingInput">Zip Code</label>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <div class="form-floating mb-3">
+                            <button type="button" class="back btn btn-outline-info" style="height:3.4rem ;"> <i class="bi bi-geo-alt"></i> Map</button>
+                        </div>
                     </div>
                 </div>
-                <div class="col-6">
-                    <div class="input-div form-floating mb-3">
-                        <input asp-for="@Model.FirstOrDefault().City" type="text" class="form-control" id="floatingInput" placeholder="" disabled>
-                        <label for="floatingInput">City</label>
-                    </div>
+
+               @*  <div class="row row-cols-2 mt-3 pb-3 justify-content-end"> *@
+
+                <div class="col w-auto">
+                    <a role="button" class="back btn btn-outline-info" id="editButton">
+                        Edit
+                    </a>
                 </div>
-                <div class="col-6">
-                    <div class="input-div form-floating mb-3">
-                        <input asp-for="@Model.FirstOrDefault().State" type="text" class="form-control" id="floatingInput" placeholder="" disabled>
-                        <label for="floatingInput">State</label>
-                    </div>
+
+                <div class="col w-auto">
+                    <button class="back btn btn-outline-info" type="submit" id="saveButton" hidden>
+                        Save
+                    </button>
                 </div>
-                <div class="col-5">
-                    <div class="input-div form-floating mb-3">
-                        <input asp-for="@Model.FirstOrDefault().ZipCode" type="text" class="form-control" id="floatingInput" placeholder="" disabled>
-                        <label for="floatingInput">Zip Code</label>
-                    </div>
-                </div>
-                <div class="col-1">
-                    <div class="form-floating mb-3">
-                        <button type="button" class="btn btn-outline-primary" style="height:3.4rem ;"> <i class="bi bi-geo-alt"></i> Map</button>
-                    </div>
-                </div>
+                    
+                @* </div> *@
+
             </div>
         </form>
+        
     </div>
 
-
-    @* <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-        <form method="post" enctype="multipart/form-data" asp-controller="Patient" asp-action="AddPatient" class="container my-5 p-4" id="main-cont">
-
-            <div class="row">
-                <h5 class="col-12">General Information</h5>
-
-                <div class="col-6">
-                    <div class="input-div form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingInput" placeholder="">
-                        <label for="floatingInput">First Name</label>
+    @*-------------------------modal--------------------*@
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color:#00B7FF ; color:white">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Create a New Request</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                </div>
-
-                <div class="col-6">
-                    <div class="input-div form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
-                        <label for="floatingInput">Last Name</label>
+                    <div class="modal-body">
+                        Here, I Want to create new request for...
+                        <br />
+                        <div class="d-flex justify-content-center gap-3 my-3">
+                            <button class="modal-b back btn btn-outline-info me-3" id="button1" onclick="passId(event)">
+                                <span class="">Me</span>
+                            </button>
+                            <button class="modal-b back btn btn-outline-info me-3" id="button2" onclick="passId(event)">
+                                <span class="">Someone Else</span>
+                            </button>
+                        </div>
                     </div>
-                </div>
-
-                <div class="col-6">
-                    <div class="input-div form-floating mb-3">
-                        <input type="date" class="form-control" id="floatingInput" placeholder="name@example.com">
-                        <label for="floatingInput">Date Of Birth</label>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="row">
-                <div class="col-12">
-                    <h5>Contact Information</h5>
-                </div>
-
-                <div class="col-2">
-                    <div class="form-floating">
-                        <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
-                            <option selected>Type</option>
-                            <option value="1">Mobile</option>
-                            <option value="2">Landline</option>
-                        </select>
-                        <label for="floatingSelect">Works with selects</label>
-                    </div>
-                </div>
-
-                <div class="col-4">
-                    <div class="input-div form-floating mb-3">
-                        <input type="tel" name="phone" class="form-control p-3 ps-5" id="floatingInput">
-                    </div>
-                </div>
-
-                <div class="col-6">
-                    <div class="input-div form-floating mb-3">
-                        <input name="email" type="email" class="form-control" id="email" placeholder="name@example.com">
-                        <label for="floatingInput">Email</label>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="row">
-
-                <div class="col-12">
-                    <h5>Patient Location</h5>
-                </div>
-
-                <div class="col-6">
-                    <div class="input-div form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingInput" placeholder="">
-                        <label for="floatingInput">Street</label>
-                    </div>
-                </div>
-
-                <div class="col-6">
-                    <div class="input-div form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingInput" placeholder="">
-                        <label for="floatingInput">City</label>
-                    </div>
-                </div>
-
-                <div class="col-6">
-                    <div class="input-div form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingInput" placeholder="">
-                        <label for="floatingInput">State</label>
-                    </div>
-                </div>
-
-                <div class="col-5">
-                    <div class="input-div form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingInput" placeholder="">
-                        <label for="floatingInput">Zip Code</label>
-                    </div>
-                </div>
-
-                <div class="col-1">
-                    <div class="form-floating mb-3">
-                        <button type="button" class="upload btn btn-outline-info py-3">
-                            <i class="bi bi-geo-alt"></i> Map
+                    <div class="d-flex justify-content-end mb-3 me-3 gap-3">
+                        <button id="continue" class="modal-b back btn btn-outline-info me-3" onclick="redirect()">
+                            <span class="">Continue</span>
+                        </button>
+                        <button type="reset" class="modal-b back btn btn-outline-info me-3" data-bs-dismiss="modal">
+                            <span class="">Cancel</span>
                         </button>
                     </div>
-                </div>
-
-            </div>
-        </form>
-    </div> *@
-</div>
-
-@*-------------------------modal--------------------*@
-<div class="modal-dialog modal-dialog-centered">
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color:#00B7FF ; color:white">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Create a New Request</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Here, I Want to create new request for...
-                    <br />
-                    <div class="d-flex justify-content-center gap-3 my-3">
-                        <button class="modal-b back btn btn-outline-info me-3" id="button1" onclick="passId(event)">
-                            <span class="">Me</span>
-                        </button>
-                        <button class="modal-b back btn btn-outline-info me-3" id="button2" onclick="passId(event)">
-                            <span class="">Someone Else</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="d-flex justify-content-end mb-3 me-3 gap-3">
-                    <button id="continue" class="modal-b back btn btn-outline-info me-3" onclick="redirect()">
-                        <span class="">Continue</span>
-                    </button>
-                    <button type="reset" class="modal-b back btn btn-outline-info me-3" data-bs-dismiss="modal">
-                        <span class="">Cancel</span>
-                    </button>
                 </div>
             </div>
         </div>
     </div>
-</div>
+
+
+    <script>
+        $(document).ready(function () {
+            $('#editButton').click(function () {
+
+                // Remove disabled attribute to make inputs editable
+                // $('#name').prop('disabled', false);
+                // $('#age').prop('disabled', false);
+                $('input[type="text"]').removeAttr('disabled', false);
+                $('input[type="date"]').removeAttr('disabled', false);
+                $('input[type="tel"]').removeAttr('disabled', false);
+                $('input[type="email"]').removeAttr('disabled', false);
+                // Hide the edit button after clicking it
+                $(this).hide();
+                $('#saveButton').removeAttr('hidden', false);
+            });
+        });
+    </script>
