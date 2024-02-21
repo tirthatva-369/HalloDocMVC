@@ -13,7 +13,7 @@
     </div>
 
     <div class="flex-column rounded shadow-lg p-4 pb-0">
-        <form asp-controller="Aspnetusers" asp-action="b1_submit_request_screen">
+        <form asp-controller="Home" asp-action="b1_submit_request_screen">
 
             <h4 class="form-headings mt-2 justify-content-start">
                 Family/Friend Information
@@ -64,6 +64,7 @@
                 <div class="form-floating col my-3 w-50">
                     <input type="text" class="form-control px-4 shadow-none" id="floatingInput"
                            placeholder="First Name" asp-for="patientFirstName" />
+                    <span asp-validation-for="patientFirstName" class="text-danger ms-1"></span>
                     <label for="floatingInput" class=" common mx-4">First Name</label>
                 </div>
 

@@ -70,20 +70,7 @@
                                         </td>
                                     </tr>
                                 }
-
-                                <tr>
-                                    <td>21-03-2003</td>
-                                    <td>pending</td>
-                                    <td>
-                                        <a href="#" class="btn btn-outline-info fw-bold" onclick="swapdivs()">
-                                            <span><i class="bi bi-file-earmark fw-bold"></i></span>
-                                            <span>
-                                                1.txt
-                                            </span>
-                                        </a>
-                                    </td>
-                                </tr>
-
+                               
                             </tbody>
                         </table>
                     </div>
@@ -205,6 +192,8 @@
                     <div class="col-4">
                         <div class="input-div form-floating mb-3">
                             <input asp-for="@Model.FirstOrDefault().PhoneNumber" type="tel" name="phone" class="form-control p-3 ps-5" id="floatingInput" disabled>
+                            <label for="floatingInput">Contact Number</label>
+
                         </div>
                     </div>
 

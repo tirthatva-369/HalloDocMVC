@@ -13,7 +13,7 @@
         </button>
     </div>
 
-    <form asp-controller="Aspnetusers" asp-action="b1_submit_request_screen" enctype="multipart/form-data">
+    <form method="post" enctype="multipart/form-data">
         <div class="flex-column rounded shadow-lg p-4 pb-0">
 
             <h4 class="form-headings mt-2 justify-content-start">
@@ -30,14 +30,13 @@
                 </div>
 
                 <div class="form-floating col my-3 w-50">
-                    <input asp-for="firstName" type="text" class="form-control px-4 shadow-none" id="floatingInput"
-                           placeholder="First Name" />
+                    <input asp-for="firstName" type="text" class="form-control px-4 shadow-none" id="floatingInput" placeholder="First Name" />
+                    <span asp-validation-for="firstName" class="text-danger ms-1"></span>
                     <label for="floatingInput" class=" common mx-4">First Name</label>
                 </div>
 
                 <div class="form-floating col my-3 w-50">
-                    <input asp-for="lastName" type="text" class="form-control px-4 shadow-none" id="floatingInput"
-                           placeholder="Last Name" />
+                    <input asp-for="lastName" type="text" class="form-control px-4 shadow-none" id="floatingInput" placeholder="Last Name" />
                     <label for="floatingInput" class=" common mx-4">Last Name</label>
                 </div>
 
@@ -53,6 +52,7 @@
             <div class="row row-cols-2">
                 <div class="form-floating col my-3 w-50">
                     <input asp-for="email" type="email" class="form-control px-4 shadow-none" id="email" placeholder="Email" />
+                    <span asp-validation-for="email" class="text-danger ms-1"></span>
                     <label for="floatingInput" class=" common mx-4">Email</label>
                 </div>
 

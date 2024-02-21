@@ -7,7 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Project_HalloDoc.Models;
 using System.Diagnostics;
-using System.Globalization;
+using System.Net.Mail;
+using System.Net;
 
 namespace Project_HalloDoc.Controllers
 {
@@ -18,15 +19,21 @@ namespace Project_HalloDoc.Controllers
         private readonly ILoginInterface _loginService;
         private readonly IPatientInterface _patientService;
         private readonly ApplicationDbContext _db;
+        private readonly IPatientInterface _familyService;
+        private readonly IPatientInterface _conciergeService;
+        private readonly IPatientInterface _businessService;
 
-        public HomeController(ILogger<HomeController> logger, ILoginInterface loginService, IPatientInterface patientService, ApplicationDbContext db)
+        public HomeController(ILogger<HomeController> logger, ILoginInterface loginService, IPatientInterface patientService, ApplicationDbContext db, IPatientInterface familyService, IPatientInterface conciergeService, IPatientInterface businessService)
         {
             _logger = logger;
             _loginService = loginService;
             _patientService = patientService;
             _db = db;
-
+            _familyService = familyService;
+            _conciergeService = conciergeService;
+            _businessService = businessService;
         }
+
         [HttpPost]
         public IActionResult b2_registered_user(LoginModel loginModel)
         {
@@ -105,6 +112,62 @@ namespace Project_HalloDoc.Controllers
             return View();
         }
 
+        [HttpPost]
+        public IActionResult b1c1_patient_request(PatientRequestModel patientRequestModel)
+        {
+            if (ModelState.IsValid)
+            {
+                _patientService.AddPatientInfo(patientRequestModel);
+                return RedirectToAction("b1_submit_request_screen", "Home");
+            }
+            else
+            {
+                return View();
+            }
+        }
+
+        [HttpPost]
+        public IActionResult b1c2_family_friend_request(FamilyRequestModel familyRequestModel)
+        {
+            if (ModelState.IsValid)
+            {
+                _familyService.AddFamilyRequest(familyRequestModel);
+                return RedirectToAction("b1_submit_request_screen", "Home");
+            }
+            else
+            {
+                return View();
+            }
+        }
+
+        [HttpPost]
+        public IActionResult b1c3_concierge_request(ConciergeRequestModel conciergeRequestModel)
+        {
+            if (ModelState.IsValid)
+            {
+                _conciergeService.AddConciergeRequest(conciergeRequestModel);
+                return RedirectToAction("b1_submit_request_screen", "Home");
+            }
+            else
+            {
+                return View();
+            }
+        }
+
+        [HttpPost]
+        public IActionResult b1c4_business_partner_request(BusinessRequestModel businessRequestModel)
+        {
+            if (ModelState.IsValid)
+            {
+                _businessService.AddBusinessRequest(businessRequestModel);
+                return RedirectToAction("b1_submit_request_screen", "Home");
+            }
+            else
+            {
+                return View();
+            }
+        }
+
         public IActionResult b2c1_patient_dashboard(User user)
         {
             var infos = _patientService.GetMedicalHistory(user);
@@ -120,6 +183,7 @@ namespace Project_HalloDoc.Controllers
 
         public IActionResult Edit(MedicalHistory medicalHistory)
         {
+
             var existingUser = _db.Users.FirstOrDefault(x => x.Email == medicalHistory.Email);
             existingUser.Firstname = medicalHistory.FirstName;
             existingUser.Lastname = medicalHistory.LastName;
@@ -132,7 +196,6 @@ namespace Project_HalloDoc.Controllers
             existingUser.State = medicalHistory.State;
             existingUser.Zip = medicalHistory.ZipCode;
 
-
             _db.Users.Update(existingUser);
             _db.SaveChanges();
             return RedirectToAction("b2c1_patient_dashboard", "Home", existingUser);
@@ -142,6 +205,58 @@ namespace Project_HalloDoc.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public IActionResult PatientResetPasswordEmail(Aspnetuser user)
+        {
+            string Id = (_db.Aspnetusers.FirstOrDefault(x => x.Email == user.Email)).Id;
+            string resetPasswordUrl = GenerateResetPasswordUrl(Id);
+            SendEmail(user.Email, "Reset Your Password", $"Hello, reset your password using this link: {resetPasswordUrl}");
+
+            return RedirectToAction("b2_registered_user", "Home");
+        }
+
+
+        private string GenerateResetPasswordUrl(string userId)
+        {
+            string baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
+            string resetPasswordPath = Url.Action("SetPassword", "Home", new { id = userId });
+            return baseUrl + resetPasswordPath;
+        }
+
+
+
+        private Task SendEmail(string email, string subject, string message)
+        {
+            var mail = "tatva.dotnet.tirthpatel@outlook.com";
+            var password = "Prabodham@369";
+
+            var client = new SmtpClient("smtp.office365.com", 587)
+            {
+                EnableSsl = true,
+                Credentials = new NetworkCredential(mail, password)
+            };
+
+            return client.SendMailAsync(new MailMessage(from: mail, to: email, subject, message));
+        }
+
+        // Handle the reset password URL in the same controller or in a separate one
+
+
+        public IActionResult SetPassword(string id)
+        {
+            var aspuser = _db.Aspnetusers.FirstOrDefault(x => x.Id == id);
+            return View(aspuser);
+        }
+
+        [HttpPost]
+        public IActionResult SetPassword(Aspnetuser aspnetuser)
+        {
+            var aspuser = _db.Aspnetusers.FirstOrDefault(x => x.Id == aspnetuser.Id);
+            aspuser.Passwordhash = aspnetuser.Passwordhash;
+            _db.Aspnetusers.Update(aspuser);
+            _db.SaveChanges();
+            return RedirectToAction("b2_registered_user");
         }
 
 

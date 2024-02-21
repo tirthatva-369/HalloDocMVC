@@ -45,6 +45,14 @@
       "PackagePath": "staticwebassets\\UploadedFiles\\Alt Tab_Refresh.ahk"
     },
     {
+      "Id": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\UploadedFiles\\HalloDocMVC (2)",
+      "PackagePath": "staticwebassets\\UploadedFiles"
+    },
+    {
+      "Id": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\UploadedFiles\\Hallodoc_db.sql",
+      "PackagePath": "staticwebassets\\UploadedFiles\\Hallodoc_db.sql"
+    },
+    {
       "Id": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\UploadedFiles\\PostgreSQL - Database Backup & Restore using command.docx",
       "PackagePath": "staticwebassets\\UploadedFiles\\PostgreSQL - Database Backup & Restore using command.docx"
     },
@@ -63,6 +71,10 @@
     {
       "Id": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\UploadedFiles\\doctor_art.jpg",
       "PackagePath": "staticwebassets\\UploadedFiles\\doctor_art.jpg"
+    },
+    {
+      "Id": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\UploadedFiles\\hp",
+      "PackagePath": "staticwebassets\\UploadedFiles"
     },
     {
       "Id": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\UploadedFiles\\info.png",

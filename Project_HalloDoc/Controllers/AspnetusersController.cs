@@ -26,57 +26,57 @@ namespace Project_HalloDoc.Controllers
         }
 
         [HttpPost]
-        public IActionResult b2_registered_user(LoginModel loginModel)
-        {
-            if ((_loginService.EmailCheck(loginModel)) && (_loginService.PasswordCheck(loginModel)))
-            {
+        //public IActionResult b2_registered_user(LoginModel loginModel)
+        //{
+        //    if ((_loginService.EmailCheck(loginModel)) && (_loginService.PasswordCheck(loginModel)))
+        //    {
 
-                return RedirectToAction("b2c1_patient_dashboard", "Home");
-            }
+        //        return RedirectToAction("b2c1_patient_dashboard", "Home");
+        //    }
 
-            else if (!(_loginService.EmailCheck(loginModel)))
-            {
-                TempData["Email"] = "Enter Valid Email";
-                TempData["Password"] = "Enter Valid Password";
-                return RedirectToAction("b2_registered_user", "Home");
-            }
+        //    else if (!(_loginService.EmailCheck(loginModel)))
+        //    {
+        //        TempData["Email"] = "Enter Valid Email";
+        //        TempData["Password"] = "Enter Valid Password";
+        //        return RedirectToAction("b2_registered_user", "Home");
+        //    }
 
-            else if (!(_loginService.PasswordCheck(loginModel)))
-            {
-                TempData["Password"] = "Enter Valid Password";
-                return RedirectToAction("b2_registered_user", "Home");
-            }
+        //    else if (!(_loginService.PasswordCheck(loginModel)))
+        //    {
+        //        TempData["Password"] = "Enter Valid Password";
+        //        return RedirectToAction("b2_registered_user", "Home");
+        //    }
 
-            else
-            {
-                return RedirectToAction("b2_registered_user", "Home");
-            }
-        }
+        //    else
+        //    {
+        //        return RedirectToAction("b2_registered_user", "Home");
+        //    }
+        //}
 
-        [HttpPost]
-        public IActionResult b1_submit_request_screen(PatientRequestModel patientRequestModel)
-        {
-            _patientService.AddPatientInfo(patientRequestModel);
-            return RedirectToAction("b1_submit_request_screen", "Home");
-        }
+        //[HttpPost]
+        //public IActionResult b1_submit_request_screen(PatientRequestModel patientRequestModel)
+        //{
+        //    _patientService.AddPatientInfo(patientRequestModel);
+        //    return RedirectToAction("b1_submit_request_screen", "Home");
+        //}
 
-        public IActionResult b1_submit_request_screen(FamilyRequestModel familyRequestModel)
-        {
-            _familyService.AddFamilyRequest(familyRequestModel);
-            return RedirectToAction("b1_submit_request_screen", "Home");
-        }
+        //public IActionResult b1_submit_request_screen(FamilyRequestModel familyRequestModel)
+        //{
+        //    _familyService.AddFamilyRequest(familyRequestModel);
+        //    return RedirectToAction("b1_submit_request_screen", "Home");
+        //}
 
-        public IActionResult b1_submit_request_screen(ConciergeRequestModel conciergeRequestModel)
-        {
-            _familyService.AddConciergeRequest(conciergeRequestModel);
-            return RedirectToAction("b1_submit_request_screen", "Home");
-        }
+        //public IActionResult b1_submit_request_screen(ConciergeRequestModel conciergeRequestModel)
+        //{
+        //    _conciergeService.AddConciergeRequest(conciergeRequestModel);
+        //    return RedirectToAction("b1_submit_request_screen", "Home");
+        //}
 
-        public IActionResult b1_submit_request_screen(BusinessRequestModel businessRequestModel)
-        {
-            _familyService.AddBusinessRequest(businessRequestModel);
-            return RedirectToAction("b1_submit_request_screen", "Home");
-        }
+        //public IActionResult b1_submit_request_screen(BusinessRequestModel businessRequestModel)
+        //{
+        //    _businessService.AddBusinessRequest(businessRequestModel);
+        //    return RedirectToAction("b1_submit_request_screen", "Home");
+        //}
 
         [HttpGet]
         public async Task<IActionResult> CheckEmailExists(string email)

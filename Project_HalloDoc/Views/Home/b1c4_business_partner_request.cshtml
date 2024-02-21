@@ -11,7 +11,7 @@
             &lt&nbspBack
         </button>
     </div>
-    <form asp-controller="Aspnetusers" asp-action="b1_submit_request_screen">
+    <form method="post">
 
         <div class="flex-column rounded shadow-lg p-4 pb-0">
 
@@ -41,6 +41,7 @@
                 <div class="form-floating col my-3 w-50">
                     <input asp-for="businessName" type="text" class="form-control px-4 shadow-none" id="floatingInput"
                            placeholder="Business/Property Name" />
+                    <span asp-validation-for="businessName" class="text-danger ms-1"></span>
                     <label for="floatingInput" class="common mx-4 z-0 position-absolute">Business/Property Name</label>
                 </div>
 

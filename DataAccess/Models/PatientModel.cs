@@ -1,83 +1,98 @@
 ﻿using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
 
 namespace DataAccess.Models
 {
     public class PatientRequestModel
     {
-        public string symptoms { get; set; }
+        public string? symptoms { get; set; }
+        [Required(ErrorMessage = "First Name is Required")]
         public string firstName { get; set; }
-        public string lastName { get; set; }
-        public DateOnly dateOfBirth { get; set; }
+        public string? lastName { get; set; }
+        public DateTime? dateOfBirth { get; set; }
+        [Required(ErrorMessage = "Please Enter Patient's Email Address")]
         public string email { get; set; }
-        public string phoneNo { get; set; }
-        public string street { get; set; }
-        public string city { get; set; }
-        public string state { get; set; }
-        public string zipCode { get; set; }
-        public int roomSuite { get; set; }
-        public List<IFormFile> file { get; set; }
+        public string? phoneNo { get; set; }
+        public string? street { get; set; }
+        public string? city { get; set; }
+        public string? state { get; set; }
+        public string? zipCode { get; set; }
+        public string? roomSuite { get; set; }
+        [StringLength(15, MinimumLength = 4, ErrorMessage = "Password Have 4 to 15 Char")]
+        public string? password { get; set; }
+        [Compare("password", ErrorMessage = "Password Missmatch")]
+        public string? confirmPassword { get; set; }
+        public List<IFormFile>? file { get; set; }
 
     }
 
     public class FamilyRequestModel
     {
-        public string firstName { get; set; }
-        public string lastName { get; set; }
-        public string email { get; set; }
+        public string? firstName { get; set; }
+        public string? lastName { get; set; }
+        public string? email { get; set; }
         public string phoneNo { get; set; }
-        public string relation { get; set; }
-        public string symptoms { get; set; }
+        public string? relation { get; set; }
+        public string? symptoms { get; set; }
+        [Required(ErrorMessage = "Please Enter Your Name")]
         public string patientFirstName { get; set; }
-        public string patientLastName { get; set; }
-        public DateOnly patientDob { get; set; }
-        public string patientEmail { get; set; }
-        public string patientPhoneNo { get; set; }
-        public string street { get; set; }
-        public string city { get; set; }
-        public string state { get; set; }
-        public string zipCode { get; set; }
-        public int roomSuite { get; set; }
+        public string? patientLastName { get; set; }
+        public DateTime? patientDob { get; set; }
+        public string? patientEmail { get; set; }
+        public string? patientPhoneNo { get; set; }
+        public string? street { get; set; }
+        public string? city { get; set; }
+        public string? state { get; set; }
+        public string? zipCode { get; set; }
+        public string? roomSuite { get; set; }
     }
 
     public class ConciergeRequestModel
     {
+        [Required(ErrorMessage = "Please Enter Your First Name")]
         public string firstName { get; set; }
-        public string lastName { get; set; }
-        public string email { get; set; }
-        public string phoneNo { get; set; }
-        public string hotelName { get; set; }
-        public string symptoms { get; set; }
+        public string? lastName { get; set; }
+        public string? email { get; set; }
+        public string? phoneNo { get; set; }
+        public string? hotelName { get; set; }
+        public string? symptoms { get; set; }
+        [Required(ErrorMessage = "Please Enter Patient's First Name")]
         public string patientFirstName { get; set; }
-        public string patientLastName { get; set; }
+        public string? patientLastName { get; set; }
         public DateOnly patientDob { get; set; }
-        public string patientEmail { get; set; }
-        public string patientPhoneNo { get; set; }
+        public string? patientEmail { get; set; }
+        public string? patientPhoneNo { get; set; }
+        [Required(ErrorMessage = "Please Enter Street")]
         public string street { get; set; }
+        [Required(ErrorMessage = "Please Enter Your City")]
         public string city { get; set; }
+        [Required(ErrorMessage = "Please Enter Your State")]
         public string state { get; set; }
+        [Required(ErrorMessage = "Please Enter Your ZipCode")]
         public string zipCode { get; set; }
-        public int roomSuite { get; set; }
+        public string? roomSuite { get; set; }
     }
 
     public class BusinessRequestModel
     {
-        public string firstName { get; set; }
-        public string lastName { get; set; }
-        public string email { get; set; }
-        public string phoneNo { get; set; }
+        public string? firstName { get; set; }
+        public string? lastName { get; set; }
+        public string? email { get; set; }
+        public string? phoneNo { get; set; }
+        [Required(ErrorMessage = "Please Enter Business/Property Name")]
         public string businessName { get; set; }
-        public string caseNo { get; set; }
-        public string symptoms { get; set; }
-        public string patientFirstName { get; set; }
-        public string patientLastName { get; set; }
+        public string? caseNo { get; set; }
+        public string? symptoms { get; set; }
+        public string? patientFirstName { get; set; }
+        public string? patientLastName { get; set; }
         public DateOnly patientDob { get; set; }
-        public string patientEmail { get; set; }
-        public string patientPhoneNo { get; set; }
-        public string street { get; set; }
-        public string city { get; set; }
-        public string state { get; set; }
-        public string zipCode { get; set; }
-        public int roomSuite { get; set; }
+        public string? patientEmail { get; set; }
+        public string? patientPhoneNo { get; set; }
+        public string? street { get; set; }
+        public string? city { get; set; }
+        public string? state { get; set; }
+        public string? zipCode { get; set; }
+        public string? roomSuite { get; set; }
     }
 
     public class PatientDashboard
@@ -102,6 +117,9 @@ namespace DataAccess.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime DateOfBirth { get; set; }
+        public int? Day { get; set; }
+        public string Month { get; set; }
+        public int? Year { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public string Street { get; set; }

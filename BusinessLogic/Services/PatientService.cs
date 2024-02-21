@@ -19,7 +19,7 @@ namespace BusinessLogic.Services
         public void AddPatientInfo(PatientRequestModel patientRequestModel)
         {
             Request request = new Request();
-            request.Requesttypeid = 2;
+            request.Requesttypeid = 1;
             request.Status = 1;
             request.Createddate = DateTime.Now;
             request.Isurgentemailsent = new BitArray(1);
@@ -98,7 +98,7 @@ namespace BusinessLogic.Services
         public void AddFamilyRequest(FamilyRequestModel familyRequestModel)
         {
             Request request = new Request();
-            request.Requesttypeid = 3;
+            request.Requesttypeid = 2;
             request.Status = 1;
             request.Createddate = DateTime.Now;
             request.Isurgentemailsent = new BitArray(1);
@@ -122,16 +122,16 @@ namespace BusinessLogic.Services
             info.City = familyRequestModel.city;
             info.State = familyRequestModel.state;
             info.Zipcode = familyRequestModel.zipCode;
+            info.Regionid = 1;
 
             _db.Requestclients.Add(info);
             _db.SaveChanges();
         }
 
-
         public void AddConciergeRequest(ConciergeRequestModel conciergeReqModel)
         {
             Request request = new Request();
-            request.Requesttypeid = 4;
+            request.Requesttypeid = 3;
             request.Status = 1;
             request.Createddate = DateTime.Now;
             request.Isurgentemailsent = new BitArray(1);
@@ -151,8 +151,7 @@ namespace BusinessLogic.Services
             info.Lastname = conciergeReqModel.patientLastName;
             info.Phonenumber = conciergeReqModel.patientPhoneNo;
             info.Email = conciergeReqModel.patientEmail;
-
-
+            info.Regionid = 1;
 
             _db.Requestclients.Add(info);
             _db.SaveChanges();
@@ -181,7 +180,7 @@ namespace BusinessLogic.Services
         public void AddBusinessRequest(BusinessRequestModel businessReqModel)
         {
             Request request = new Request();
-            request.Requesttypeid = 1;
+            request.Requesttypeid = 4;
             request.Status = 1;
             request.Createddate = DateTime.Now;
             request.Isurgentemailsent = new BitArray(1);
@@ -201,6 +200,7 @@ namespace BusinessLogic.Services
             info.Lastname = businessReqModel.patientLastName;
             info.Phonenumber = businessReqModel.patientPhoneNo;
             info.Email = businessReqModel.patientEmail;
+            info.Regionid = 1;
 
             _db.Requestclients.Add(info);
             _db.SaveChanges();
@@ -211,6 +211,7 @@ namespace BusinessLogic.Services
             business.Phonenumber = businessReqModel.phoneNo;
             business.City = businessReqModel.city;
             business.Zipcode = businessReqModel.zipCode;
+            business.Createdby = businessReqModel.businessName;
 
             _db.Businesses.Add(business);
             _db.SaveChanges();
@@ -254,6 +255,13 @@ namespace BusinessLogic.Services
                                   select new MedicalHistory
                                   {
                                       FirstName = user.Firstname,
+                                      LastName = user.Lastname,
+                                      PhoneNumber = user.Mobile,
+                                      Email = user.Email,
+                                      Street = user.Street,
+                                      City = user.City,
+                                      State = user.State,
+                                      ZipCode = user.Zip,
                                       reqId = groupedFiles.Select(x => x.Request.Requestid).FirstOrDefault(),
                                       createdDate = groupedFiles.Select(x => x.Request.Createddate).FirstOrDefault(),
                                       currentStatus = groupedFiles.Select(x => x.Request.Status).FirstOrDefault().ToString(),

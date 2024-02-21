@@ -11,7 +11,7 @@
             &lt&nbspBack
         </button>
     </div>
-    <form asp-controller="Aspnetusers" asp-action="b1_submit_request_screen">
+    <form method="post">
 
         <div class="flex-column rounded shadow-lg p-4 pb-0">
 
@@ -22,6 +22,7 @@
                 <div class="form-floating col my-3 w-50">
                     <input asp-for="firstName" type="text" class="form-control shadow-none px-4" id="floatingInput"
                            placeholder="Your First Name" />
+                    <span asp-validation-for="firstName" class="text-danger ms-1"></span>
                     <label for="floatingInput" class=" common mx-4">Your First Name</label>
                 </div>
 
@@ -54,22 +55,26 @@
             <div class="row row-cols-2">
                 <div class="form-floating col my-3 w-50">
                     <input asp-for="street" type="text" class="form-control px-4 shadow-none" id="floatingInput" placeholder="Street" />
+                    <span asp-validation-for="street" class="text-danger ms-1"></span>
                     <label for="floatingInput" class="common mx-4 z-0 position-absolute">Street</label>
                 </div>
 
                 <div class="form-floating col my-3 w-50">
                     <input asp-for="city" type="text" class="form-control px-4 shadow-none" id="floatingInput" placeholder="City" />
+                    <span asp-validation-for="city" class="text-danger ms-1"></span>
                     <label for="floatingInput" class=" common mx-4">City</label>
                 </div>
 
                 <div class="form-floating col my-3 w-50">
                     <input asp-for="state" type="text" class="form-control px-4 shadow-none" id="floatingInput" placeholder="State" />
+                    <span asp-validation-for="state" class="text-danger ms-1"></span>
                     <label for="floatingInput" class=" common mx-4">State</label>
                 </div>
 
                 <div class="form-floating col my-3 w-50">
                     <input asp-for="zipCode" type="text" class="form-control px-4 shadow-none" id="floatingInput"
                            placeholder="Zip Code" />
+                    <span asp-validation-for="zipCode" class="text-danger ms-1"></span>
                     <label for="floatingInput" class="common mx-4">Zip Code</label>
                 </div>
             </div>
@@ -81,6 +86,7 @@
                 <div class="form-floating col w-100">
                     <textarea asp-for="symptoms" class="form-control px-4 shadow-none" placeholder="Symptoms" id="floatingTextarea"
                               style="height: 100px"></textarea>
+                    <span asp-validation-for="patientFirstName" class="text-danger ms-1"></span>
                     <label for="floatingTextarea" class=" common mx-4">
                         Enter Brief Details of Symptoms
                         (Optional)
