@@ -209,13 +209,12 @@ namespace Project_HalloDoc.Controllers
 
         public IActionResult PatientResetPasswordEmail(Aspnetuser user)
         {
-            string Id = (_db.Aspnetusers.FirstOrDefault(x => x.Email == user.Email)).Id;
+            string Id = _db.Aspnetusers.FirstOrDefault(x => x.Email == user.Email).Id;
             string resetPasswordUrl = GenerateResetPasswordUrl(Id);
             SendEmail(user.Email, "Reset Your Password", $"Hello, reset your password using this link: {resetPasswordUrl}");
 
             return RedirectToAction("b2_registered_user", "Home");
         }
-
 
         private string GenerateResetPasswordUrl(string userId)
         {
@@ -223,8 +222,6 @@ namespace Project_HalloDoc.Controllers
             string resetPasswordPath = Url.Action("SetPassword", "Home", new { id = userId });
             return baseUrl + resetPasswordPath;
         }
-
-
 
         private Task SendEmail(string email, string subject, string message)
         {
@@ -236,13 +233,10 @@ namespace Project_HalloDoc.Controllers
                 EnableSsl = true,
                 Credentials = new NetworkCredential(mail, password)
             };
-
             return client.SendMailAsync(new MailMessage(from: mail, to: email, subject, message));
         }
 
         // Handle the reset password URL in the same controller or in a separate one
-
-
         public IActionResult SetPassword(string id)
         {
             var aspuser = _db.Aspnetusers.FirstOrDefault(x => x.Id == id);
@@ -252,14 +246,11 @@ namespace Project_HalloDoc.Controllers
         [HttpPost]
         public IActionResult SetPassword(Aspnetuser aspnetuser)
         {
-            var aspuser = _db.Aspnetusers.FirstOrDefault(x => x.Id == aspnetuser.Id);
-            aspuser.Passwordhash = aspnetuser.Passwordhash;
-            _db.Aspnetusers.Update(aspuser);
+            var aspnuser = _db.Aspnetusers.FirstOrDefault(x => x.Id == aspnetuser.Id);
+            aspnuser.Passwordhash = aspnetuser.Passwordhash;
+            _db.Aspnetusers.Update(aspnuser);
             _db.SaveChanges();
             return RedirectToAction("b2_registered_user");
         }
-
-
     }
-
 }

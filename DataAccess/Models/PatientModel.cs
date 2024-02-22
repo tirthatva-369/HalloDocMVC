@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using DataAccess.DataModels;
+using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 
 namespace DataAccess.Models
@@ -106,7 +107,6 @@ namespace DataAccess.Models
     {
         public List<PatientDashboard> patientDashboardItems { get; set; }
     }
-
 
     public class MedicalHistory
     {

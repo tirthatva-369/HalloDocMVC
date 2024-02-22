@@ -37,7 +37,9 @@
     <script>
         var eye = document.getElementById('eye')
         var password = document.getElementById('see')
+
         eye.addEventListener('click', function () {
+
             if (password.type == 'password') {
                 eye.classList.remove('bi-eye-fill');
                 eye.classList.add('bi-eye-slash-fill');
@@ -49,6 +51,7 @@
                 password.type = 'password';
             }
         })
+       
     </script>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

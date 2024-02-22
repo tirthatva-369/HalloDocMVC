@@ -60,12 +60,14 @@
                     <input type="tel" asp-for="phoneNo" class="form-control shadow-none p-3 ps-5" placeholder="(369) 936-0369">
                 </div>
 
-                <div id="passwordSection" class="col-6 input-div form-floating col my-3 w-50" style="display:none">
-                    <input type="password" class="form-control px-4 shadow-none" id="floatingInput" placeholder="name@example.com">
+                <div id="passwordSection" class="col-6 input-div form-floating col my-3 w-50" style="display: none">
+                    <input asp-for="password" type="password" class="form-control px-4 shadow-none" id="floatingInput" placeholder="name@example.com">
+                    <span asp-validation-for="password" class="text-danger ms-1"></span>
                     <label for="floatingInput" class="hidenpass common mx-4">Password</label>
                 </div>
-                <div id="confirmPasswordSec" class="col-6 input-div form-floating col my-3 w-50" style="display:none">
-                    <input type="password" class="form-control px-4 shadow-none" id="floatingInput" placeholder="name@example.com">
+                <div id="confirmPasswordSec" class="col-6 input-div form-floating col my-3 w-50" style="display: none">
+                    <input asp-for="confirmPassword" type="password" class="form-control px-4 shadow-none" id="floatingInput" placeholder="name@example.com">
+                    <span asp-validation-for="confirmPassword" class="text-danger ms-1"></span>
                     <label for="floatingInput" class="hidenpass common mx-4">Confirm Password</label>
                 </div>
 
@@ -134,6 +136,31 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 <script>
+    $('#email').ready(function () {
+        var email = $(this).val();
+        $.ajax({
+            url: '/Aspnetusers/CheckEmailExists',
+            type: 'GET',
+            contentType: 'application/json',
+            data: { email: email },
+            success: function (response) {
+
+                if (response.email == NULL) {
+                    debugger;
+                    $('#passwordSection').hide();
+                    $('#confirmPasswordSec').hide();
+                }
+                else if (response.emailExists) {
+                    $('#passwordSection').hide();
+                    $('#confirmPasswordSec').hide();
+                } else {
+                    $('#passwordSection').show();
+                    $('#confirmPasswordSec').show();
+                }
+            }
+        });
+    });
+
     $('#email').focusout(function () {
         var email = $(this).val();
         $.ajax({

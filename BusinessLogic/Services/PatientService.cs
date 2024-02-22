@@ -15,7 +15,8 @@ namespace BusinessLogic.Services
         public PatientService(ApplicationDbContext db)
         {
             _db = db;
-        }
+        }       
+
         public void AddPatientInfo(PatientRequestModel patientRequestModel)
         {
             Request request = new Request();

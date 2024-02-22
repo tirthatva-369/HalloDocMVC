@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "e80EAte5ypkdGyWyx3tmF30jc7xUR7jcFE2O0poozdU=",
+  "Hash": "Zew4FjddCfxuj61SjvPA6uZGl4nSDLrq/zF/H3OjcLI=",
   "Source": "Project_HalloDoc",
   "BasePath": "_content/Project_HalloDoc",
   "Mode": "Default",
@@ -1343,23 +1343,6 @@
       "OriginalItemSpec": "wwwroot\\UploadedFiles\\Alt Tab_Refresh.ahk"
     },
     {
-      "Identity": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\UploadedFiles\\blur_doctor_art.png",
-      "SourceId": "Project_HalloDoc",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\",
-      "BasePath": "_content/Project_HalloDoc",
-      "RelativePath": "UploadedFiles/blur_doctor_art.png",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\UploadedFiles\\blur_doctor_art.png"
-    },
-    {
       "Identity": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\UploadedFiles\\dark.png",
       "SourceId": "Project_HalloDoc",
       "SourceType": "Discovered",
@@ -1392,40 +1375,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\UploadedFiles\\doctor_art.jpg"
-    },
-    {
-      "Identity": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\UploadedFiles\\Hallodoc_db.sql",
-      "SourceId": "Project_HalloDoc",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\",
-      "BasePath": "_content/Project_HalloDoc",
-      "RelativePath": "UploadedFiles/Hallodoc_db.sql",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\UploadedFiles\\Hallodoc_db.sql"
-    },
-    {
-      "Identity": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\UploadedFiles\\HalloDocMVC (2)",
-      "SourceId": "Project_HalloDoc",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\",
-      "BasePath": "_content/Project_HalloDoc",
-      "RelativePath": "UploadedFiles/HalloDocMVC (2)",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\UploadedFiles\\HalloDocMVC (2)"
     },
     {
       "Identity": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\UploadedFiles\\hp",
