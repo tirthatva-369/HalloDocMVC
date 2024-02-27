@@ -9,6 +9,7 @@ builder.Services.AddDbContext<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<ILoginInterface, LoginService>();
 builder.Services.AddScoped<IPatientInterface, PatientService>();
+builder.Services.AddScoped<IAdminInterface, AdminService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

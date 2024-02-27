@@ -73,6 +73,14 @@
       "PackagePath": "staticwebassets\\css\\a_patient_site.css"
     },
     {
+      "Id": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\css\\admin_dashboard.css",
+      "PackagePath": "staticwebassets\\css\\admin_dashboard.css"
+    },
+    {
+      "Id": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\css\\admin_login.css",
+      "PackagePath": "staticwebassets\\css\\admin_login.css"
+    },
+    {
       "Id": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\css\\b1_submit_request.css",
       "PackagePath": "staticwebassets\\css\\b1_submit_request.css"
     },
