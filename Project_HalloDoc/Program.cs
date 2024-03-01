@@ -1,12 +1,25 @@
 using BusinessLogic.Interfaces;
 using BusinessLogic.Services;
 using DataAccess.DataContext;
+using AspNetCoreHero.ToastNotification;
+using AspNetCoreHero.ToastNotification.Extensions;
+using AspNetCoreHero.ToastNotification.Toastify;
+using DataAccess.Models;
+using DataAccess.DataContext;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ApplicationDbContext>();
-
-// Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+options.UseNpgsql(builder.Configuration.GetConnectionString("ApplicationDbContext")));
+builder.Services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.TopRight; });
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(60);
+});
 builder.Services.AddScoped<ILoginInterface, LoginService>();
 builder.Services.AddScoped<IPatientInterface, PatientService>();
 builder.Services.AddScoped<IAdminInterface, AdminService>();

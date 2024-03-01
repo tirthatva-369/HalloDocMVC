@@ -1,9 +1,6 @@
-﻿@using DataAccess.Models
-
+﻿@model DataAccess.Models.MedicalHistoryList
 @{
 }
-
-@model IList<MedicalHistory>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -38,7 +35,7 @@
                 <div class="d-none d-sm-flex justify-content-center align-items-center">
                     <ul class="navbar-nav ms-auto d-flex flex-nowrap align-items-center gap-2">
                         <li class="nav-item">
-                            <span>Welcome, <span class="fw-bold">@Model.FirstOrDefault().FirstName</span> </span>
+                            <span>Welcome, <span class="fw-bold">@Model.medicalHistoriesList.FirstOrDefault().FirstName</span> </span>
                         </li>
                         <li class="nav-item p-2 fw-bolder">
                             <span class="d-flex gap-1">

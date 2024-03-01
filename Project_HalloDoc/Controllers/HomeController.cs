@@ -9,6 +9,7 @@ using Project_HalloDoc.Models;
 using System.Diagnostics;
 using System.Net.Mail;
 using System.Net;
+using System.Globalization;
 
 namespace Project_HalloDoc.Controllers
 {
@@ -115,6 +116,10 @@ namespace Project_HalloDoc.Controllers
         [HttpPost]
         public IActionResult b1c1_patient_request(PatientRequestModel patientRequestModel)
         {
+
+            _patientService.AddPatientInfo(patientRequestModel);
+            return RedirectToAction("b1_submit_request_screen", "Home");
+
             if (ModelState.IsValid)
             {
                 _patientService.AddPatientInfo(patientRequestModel);
@@ -167,27 +172,25 @@ namespace Project_HalloDoc.Controllers
                 return View();
             }
         }
-
-        public IActionResult b2c1_patient_dashboard(User user)
-        {
-            var infos = _patientService.GetMedicalHistory(user);
-            return View(infos);
-        }
-
-
         public IActionResult GetDcoumentsById(int requestId)
         {
             var list = _patientService.GetAllDocById(requestId);
             return PartialView("_DocumentList", list.ToList());
         }
 
+        public IActionResult b2c1_patient_dashboard(User user)
+        {
+            var infos = _patientService.GetMedicalHistory(user);
+            var viewmodel = new MedicalHistoryList { medicalHistoriesList = infos };
+            return View(viewmodel);
+        }
+
         public IActionResult Edit(MedicalHistory medicalHistory)
         {
-
             var existingUser = _db.Users.FirstOrDefault(x => x.Email == medicalHistory.Email);
             existingUser.Firstname = medicalHistory.FirstName;
             existingUser.Lastname = medicalHistory.LastName;
-            //existingUser.dob = medicalHistory.DateOfBirth;
+            
             existingUser.Email = medicalHistory.Email;
             //existingUser. = medicalHistory.ContactType;
             existingUser.Mobile = medicalHistory.PhoneNumber;
@@ -195,7 +198,9 @@ namespace Project_HalloDoc.Controllers
             existingUser.City = medicalHistory.City;
             existingUser.State = medicalHistory.State;
             existingUser.Zip = medicalHistory.ZipCode;
-
+            existingUser.Intyear = medicalHistory.DateOfBirth.Year;
+            existingUser.Intdate = medicalHistory.DateOfBirth.Day;
+            existingUser.Strmonth = medicalHistory.DateOfBirth.ToString("MMM");
             _db.Users.Update(existingUser);
             _db.SaveChanges();
             return RedirectToAction("b2c1_patient_dashboard", "Home", existingUser);

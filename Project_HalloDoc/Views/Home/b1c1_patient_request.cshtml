@@ -29,19 +29,20 @@
                     </label>
                 </div>
 
-                <div class="form-floating col my-3 w-50">
+                <div class="form-floating col mt-3 w-50">
                     <input asp-for="firstName" type="text" class="form-control px-4 shadow-none" id="floatingInput" placeholder="First Name" />
                     <span asp-validation-for="firstName" class="text-danger ms-1"></span>
                     <label for="floatingInput" class=" common mx-4">First Name</label>
                 </div>
 
-                <div class="form-floating col my-3 w-50">
+                <div class="form-floating col mt-3 w-50">
                     <input asp-for="lastName" type="text" class="form-control px-4 shadow-none" id="floatingInput" placeholder="Last Name" />
                     <label for="floatingInput" class=" common mx-4">Last Name</label>
                 </div>
 
-                <div class="form-floating col mb-3 w-50">
+                <div class="form-floating col mt-3 w-50">
                     <input asp-for="dateOfBirth" id="startDate" class="form-control px-4 shadow-none" type="date" />
+                    <span asp-validation-for="dateOfBirth" class="text-danger"></span>
                     <label for="startDate" class=" common mx-4">Date of Birth</label>
                 </div>
             </div>
@@ -133,7 +134,6 @@
     </form>
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 <script>
     $('#email').ready(function () {
@@ -146,7 +146,7 @@
             success: function (response) {
 
                 if (response.email == NULL) {
-                    debugger;
+                    
                     $('#passwordSection').hide();
                     $('#confirmPasswordSec').hide();
                 }
@@ -180,12 +180,4 @@
         });
     });
 </script>
-<script>
-    const phoneInputField = document.querySelectorAll("input[type='tel']");
-    for (var i = 0; i < phoneInputField.length; i++) {
-        const phoneInput = window.intlTelInput(phoneInputField[i], {
-            utilsScript:
-                "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
-        });
-    }
-</script>
+

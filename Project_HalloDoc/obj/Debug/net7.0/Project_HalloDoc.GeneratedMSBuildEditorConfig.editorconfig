@@ -32,32 +32,48 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cdmlld2Nhc2UuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Project/Project_HalloDoc/Project_HalloDoc/Views/Admin/_activerequest.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX2FjdGl2ZXJlcXVlc3QuY3NodG1s
+[D:/Project/Project_HalloDoc/Project_HalloDoc/Views/Admin/viewnotes.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cdmlld25vdGVzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Project/Project_HalloDoc/Project_HalloDoc/Views/Admin/_allrequest.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX2FsbHJlcXVlc3QuY3NodG1s
+[D:/Project/Project_HalloDoc/Project_HalloDoc/Views/Admin/_ActiveRequest.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX0FjdGl2ZVJlcXVlc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Project/Project_HalloDoc/Project_HalloDoc/Views/Admin/_concluderequest.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX2NvbmNsdWRlcmVxdWVzdC5jc2h0bWw=
+[D:/Project/Project_HalloDoc/Project_HalloDoc/Views/Admin/_AllRequest.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX0FsbFJlcXVlc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Project/Project_HalloDoc/Project_HalloDoc/Views/Admin/_newrequest.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX25ld3JlcXVlc3QuY3NodG1s
+[D:/Project/Project_HalloDoc/Project_HalloDoc/Views/Admin/_AssignCase.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX0Fzc2lnbkNhc2UuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Project/Project_HalloDoc/Project_HalloDoc/Views/Admin/_pendingrequest.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX3BlbmRpbmdyZXF1ZXN0LmNzaHRtbA==
+[D:/Project/Project_HalloDoc/Project_HalloDoc/Views/Admin/_BlockCase.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX0Jsb2NrQ2FzZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Project/Project_HalloDoc/Project_HalloDoc/Views/Admin/_tocloserequest.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX3RvY2xvc2VyZXF1ZXN0LmNzaHRtbA==
+[D:/Project/Project_HalloDoc/Project_HalloDoc/Views/Admin/_CancleCase.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX0NhbmNsZUNhc2UuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Project/Project_HalloDoc/Project_HalloDoc/Views/Admin/_unpaidrequest.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX3VucGFpZHJlcXVlc3QuY3NodG1s
+[D:/Project/Project_HalloDoc/Project_HalloDoc/Views/Admin/_ConcludeRequest.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX0NvbmNsdWRlUmVxdWVzdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Project/Project_HalloDoc/Project_HalloDoc/Views/Admin/_NewRequest.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX05ld1JlcXVlc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Project/Project_HalloDoc/Project_HalloDoc/Views/Admin/_PendingRequest.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX1BlbmRpbmdSZXF1ZXN0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Project/Project_HalloDoc/Project_HalloDoc/Views/Admin/_ToCloseRequest.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX1RvQ2xvc2VSZXF1ZXN0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Project/Project_HalloDoc/Project_HalloDoc/Views/Admin/_UnpaidRequest.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX1VucGFpZFJlcXVlc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Project/Project_HalloDoc/Project_HalloDoc/Views/Home/b1c1_patient_request.cshtml]

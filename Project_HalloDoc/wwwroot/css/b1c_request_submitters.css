@@ -32,7 +32,6 @@
 }
 
 .form-floating > .form-control:focus ~ label,
-
 .form-floating > .form-select ~ label {
     color: #00b8e6;
 }

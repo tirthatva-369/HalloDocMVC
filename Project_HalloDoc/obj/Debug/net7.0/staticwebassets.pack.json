@@ -69,6 +69,10 @@
       "PackagePath": "staticwebassets\\UploadedFiles\\info.png"
     },
     {
+      "Id": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\UploadedFiles\\table.png",
+      "PackagePath": "staticwebassets\\UploadedFiles\\table.png"
+    },
+    {
       "Id": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\css\\a_patient_site.css",
       "PackagePath": "staticwebassets\\css\\a_patient_site.css"
     },

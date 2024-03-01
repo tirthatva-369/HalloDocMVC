@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Project_HalloDoc.Views.Admin
 {
-    public class _concluderequestModel : PageModel
+    public class _ConcludeRequestModel : PageModel
     {
         public void OnGet()
         {

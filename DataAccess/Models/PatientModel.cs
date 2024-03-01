@@ -10,7 +10,7 @@ namespace DataAccess.Models
         [Required(ErrorMessage = "First Name is Required")]
         public string firstName { get; set; }
         public string? lastName { get; set; }
-        public DateTime? dateOfBirth { get; set; }
+        public DateTime dateOfBirth { get; set; }
         [Required(ErrorMessage = "Please Enter Patient's Email Address")]
         public string email { get; set; }
         public string? phoneNo { get; set; }
@@ -20,11 +20,13 @@ namespace DataAccess.Models
         public string? zipCode { get; set; }
         public string? roomSuite { get; set; }
         [StringLength(15, MinimumLength = 4, ErrorMessage = "Password Have 4 to 15 Char")]
-        public string? password { get; set; }
+        public string password { get; set; }
         [Compare("password", ErrorMessage = "Password Missmatch")]
         public string? confirmPassword { get; set; }
         public List<IFormFile>? file { get; set; }
-
+        public int IntDate { get; set; }
+        public string StrMonth { get; set; }
+        public int IntYear { get; set; }
     }
 
     public class FamilyRequestModel
@@ -117,9 +119,9 @@ namespace DataAccess.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime DateOfBirth { get; set; }
-        public int? Day { get; set; }
-        public string Month { get; set; }
-        public int? Year { get; set; }
+        public int? IntDate { get; set; }
+        public string StrMonth { get; set; }
+        public int? IntYear { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public string Street { get; set; }
@@ -129,4 +131,9 @@ namespace DataAccess.Models
         public string ContactType { get; set; }
         public string ConfirmationNumber { get; set; }
     }
+    public class MedicalHistoryList
+    {
+        public List<MedicalHistory> medicalHistoriesList { get; set; }
+    }
+
 }

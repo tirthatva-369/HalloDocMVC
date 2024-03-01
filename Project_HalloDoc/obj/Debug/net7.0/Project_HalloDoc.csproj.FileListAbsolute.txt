@@ -3,6 +3,7 @@ D:\Project\Project_HalloDoc\Project_HalloDoc\obj\Debug\net7.0\Project_HalloDoc.G
 D:\Project\Project_HalloDoc\Project_HalloDoc\obj\Debug\net7.0\Project_HalloDoc.AssemblyInfoInputs.cache
 D:\Project\Project_HalloDoc\Project_HalloDoc\obj\Debug\net7.0\Project_HalloDoc.AssemblyInfo.cs
 D:\Project\Project_HalloDoc\Project_HalloDoc\obj\Debug\net7.0\Project_HalloDoc.csproj.CoreCompileInputs.cache
+D:\Project\Project_HalloDoc\Project_HalloDoc\obj\Debug\net7.0\Project_HalloDoc.MvcApplicationPartsAssemblyInfo.cs
 D:\Project\Project_HalloDoc\Project_HalloDoc\obj\Debug\net7.0\Project_HalloDoc.MvcApplicationPartsAssemblyInfo.cache
 D:\Project\Project_HalloDoc\Project_HalloDoc\obj\Debug\net7.0\Project_HalloDoc.RazorAssemblyInfo.cache
 D:\Project\Project_HalloDoc\Project_HalloDoc\obj\Debug\net7.0\Project_HalloDoc.RazorAssemblyInfo.cs
@@ -14,6 +15,8 @@ D:\Project\Project_HalloDoc\Project_HalloDoc\bin\Debug\net7.0\Project_HalloDoc.d
 D:\Project\Project_HalloDoc\Project_HalloDoc\bin\Debug\net7.0\Project_HalloDoc.runtimeconfig.json
 D:\Project\Project_HalloDoc\Project_HalloDoc\bin\Debug\net7.0\Project_HalloDoc.dll
 D:\Project\Project_HalloDoc\Project_HalloDoc\bin\Debug\net7.0\Project_HalloDoc.pdb
+D:\Project\Project_HalloDoc\Project_HalloDoc\bin\Debug\net7.0\AspNetCoreHero.ToastNotification.Views.dll
+D:\Project\Project_HalloDoc\Project_HalloDoc\bin\Debug\net7.0\AspNetCoreHero.ToastNotification.dll
 D:\Project\Project_HalloDoc\Project_HalloDoc\bin\Debug\net7.0\Humanizer.dll
 D:\Project\Project_HalloDoc\Project_HalloDoc\bin\Debug\net7.0\Microsoft.AspNetCore.Razor.Language.dll
 D:\Project\Project_HalloDoc\Project_HalloDoc\bin\Debug\net7.0\Microsoft.Bcl.AsyncInterfaces.dll
