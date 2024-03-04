@@ -146,7 +146,7 @@
                                     @item.mobileNo
                                 </a>
                             </div>
-                            (patients)
+                            (@role)
 
 
                         </td>
@@ -200,13 +200,13 @@
                                     <button class="btn text-white border border-white py-1  dropdown-toggle w-50 d-flex justify-content-around align-items-center"
                                             id="chat_with_dropdown2" type="button" data-bs-toggle="dropdown"
                                             aria-expanded="false">
-                                        <span>
+                                        
                                             Actions
-                                        </span>
+                                      
                                     </button>
                                     <ul class="dropdown-menu table_dropdowns">
                                         <li>
-                                            <button onclick="showAssignCase(@item.reqId)">
+                                            <button class="dropdown-item" onclick="showAssignCase(@item.reqId)">
                                                 <i class="bi bi-card-checklist"></i>
                                                 Assign Case
                                             </button>
@@ -230,10 +230,11 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#blockModal" href="#">
+                                            <a class="dropdown-item" onclick="showBlockCase(@item.reqId)">
                                                 <i class="bi bi-ban"></i>
                                                 Block Patient
                                             </a>
+
                                         </li>
                                     </ul>
 

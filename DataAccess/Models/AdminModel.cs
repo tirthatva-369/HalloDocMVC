@@ -110,11 +110,29 @@ namespace DataAccess.Models
         public string? PatientFName { get; set; }
         public string? PatientLName { get; set; }
         public List<Casetag>? casetaglist { get; set; }
-
-
         public int? casetag { get; set; }
         public int? reqId { get; set; }
         public string? notes { get; set; }
     }
+
+    public class AssignCaseModel
+    {
+        public int? ReqId { get; set; }
+        public List<Region>? regionList { get; set; }
+        public List<Physician> physicianList { get; set; }
+        public int? selectRegionId { get; set; }
+        public int? selectPhysicianId { get; set; }
+        public string? description { get; set; }
+
+    }
+
+    public class BlockCaseModel
+    {
+        public int? ReqId { get; set; }
+        public string? reason { get; set; }
+        public string firstName { get; set; }
+        public string lastName { get; set; }
+    }
+
 
 }

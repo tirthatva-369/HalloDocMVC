@@ -1,0 +1,114 @@
+﻿@using DataAccess.Models;
+@{
+    ViewData["Title"] = "admin_login";
+    Layout = null;
+}
+
+@model AdminLoginModel
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <link rel="stylesheet" href="~/css/AdminLogin.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+<body>
+    <div class="contianer-fluid">
+        <div class="row">
+
+            <!-- left -->
+            <div class="col-lg-6 col-md-6 col-sm-12 left">
+                <img class="w-100 vh-100" src="/images/doctor_art.jpg" alt="banner">
+            </div>
+
+            <!-- right  -->
+            <div class="col-lg-6 col-md-6 col-sm-12 right">
+                <img onclick="darkMode()" class="d-mode" src="/images/dark.png" alt="dark">
+                <form asp-controller="Admin" asp-action="AdminLogin" class="login">
+                    <img id="logo" src="/images/logo.png" alt="logo">
+                    <h3>Login to your account</h3>
+
+                    <div class="row w-50 form-floating mb-3 mt-3">
+                        <input type="email" asp-for="email" class="form-control shadow-none border-info" id="floatingInput" placeholder="Email" />
+                        <i class="bi bi-person-circle login-icon w-auto fs-4"></i>
+                        <label for="floatingInput" class="input-box-text">Email</label>
+                        <span asp-validation-for="email" class="text-danger"></span>
+                    </div>
+
+                    <div class="row w-50 form-floating">
+                        <input type="password" asp-for="password" class="form-control shadow-none border-info" id="see" placeholder="Password" />
+                        <label for="floatingPassword" class="input-box-text">Password</label>
+                        <span asp-validation-for="password" class="text-danger"></span>
+                        <i class="bi bi-eye-fill login-icon w-auto fs-4" id="eye"></i>
+                    </div>
+                    <button type="submit" class="row btn btn-info text-white font-weight-bold fs-5 mt-3 w-50 p-3">
+                        Log In
+                    </button>
+                </form>
+
+                <div class="row mt-5 text-center">
+                    <p>
+                        <a asp-controller="Admin" asp-action="admin_resetpassword" type="button" id="forget-pass" class="text-primary link-opacity-100 link-underline link-underline-opacity-0 w-100">
+                            Forgot
+                            Password?
+                        </a>
+                    </p>
+                </div>
+
+                <footer>
+                    <div class="row justify-content-center">
+                        <div class="col-5 text-right w-auto">
+                            <a class="link-opacity-100 link-underline link-underline-opacity-0 text-reset text-decoration-none" href="#">Terms of Conditions</a>
+                        </div>
+                        <div class="col-2 text-center w-auto">
+                            <p>|</p>
+                        </div>
+                        <div class="col-5 text-left w-auto">
+                            <a class="link-opacity-100 link-underline link-underline-opacity-0 text-reset text-decoration-none" href="#">Privacy Policy</a>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- script  -->
+    <script>
+        function darkMode() {
+            var element = document.body;
+            element.classList.toggle("dark-mode");
+            var img = element.querySelector(".d-mode");
+            img.src.includes("dark") ? img.src = "../images/light.png" : img.src = "../images/dark.png";
+        }
+    </script>
+    <script>
+        var eye = document.getElementById('eye')
+        var password = document.getElementById('see')
+        eye.addEventListener('click', function () {
+            if (password.type == 'password') {
+                eye.classList.remove('bi-eye-fill');
+                eye.classList.add('bi-eye-slash-fill');
+                password.type = 'text';
+            }
+            else {
+                eye.classList.remove('bi-eye-slash-fill');
+                eye.classList.add('bi-eye-fill');
+                password.type = 'password';
+            }
+        })
+    </script>
+</body>
+</html>

@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.CodeAnalysis.Elfie.Serialization;
 using DataAccess.Enums;
 using DataAccess.Enum;
+using System.Collections;
 
 namespace BusinessLogic.Services
 {
@@ -114,7 +115,7 @@ namespace BusinessLogic.Services
             return statusCount;
         }
 
-        public ViewCaseViewModel ViewCase(int reqClientId)
+        public ViewCaseViewModel ViewCase(int reqClientId, int RequestTypeId)
         {
             var data = _db.Requestclients.FirstOrDefault(x => x.Requestclientid == reqClientId);
             var requestData = _db.Requests.FirstOrDefault(x => x.Requestid == data.Requestid);
@@ -135,7 +136,7 @@ namespace BusinessLogic.Services
                 Phonenumber = data.Phonenumber,
                 City = data.City,
                 State = data.State,
-                RequestTypeId = requestData.Requesttypeid,
+                RequestTypeId = RequestTypeId,
                 Street = data.Street,
                 Zipcode = data.Zipcode,
                 RegionName = regionData.Name,
@@ -144,6 +145,7 @@ namespace BusinessLogic.Services
                 IntYear = userData.Intyear,
                 IntDate = userData.Intdate,
                 StrMonth = userData.Strmonth,
+
             };
             return viewdata;
         }
@@ -194,5 +196,182 @@ namespace BusinessLogic.Services
                 return false;
             }
         }
+        public CancelCaseModel CancelCase(int reqId)
+        {
+            var casetags = _db.Casetags.ToList();
+            var request = _db.Requests.Where(x => x.Requestid == reqId).FirstOrDefault();
+            CancelCaseModel model = new()
+            {
+                PatientFName = request.Firstname,
+                PatientLName = request.Lastname,
+                casetaglist = casetags
+
+            };
+            return model;
+        }
+
+        public bool SubmitCancelCase(CancelCaseModel cancelCaseModel)
+        {
+            try
+            {
+                var req = _db.Requests.Where(x => x.Requestid == cancelCaseModel.reqId).FirstOrDefault();
+                req.Status = (int)StatusEnum.Cancelled;
+                req.Casetag = cancelCaseModel.casetag.ToString();
+                req.Modifieddate = DateTime.Now;
+                var reqStatusLog = _db.Requeststatuslogs.Where(x => x.Requestid == cancelCaseModel.reqId).FirstOrDefault();
+                if (reqStatusLog == null)
+                {
+                    Requeststatuslog rsl = new Requeststatuslog();
+                    rsl.Requestid = (int)cancelCaseModel.reqId;
+                    rsl.Status = (int)StatusEnum.Cancelled;
+                    rsl.Notes = cancelCaseModel.notes;
+                    rsl.Createddate = DateTime.Now;
+                    _db.Requeststatuslogs.Add(rsl);
+                    _db.Requests.Update(req);
+                    _db.SaveChanges();
+                    return true;
+                }
+                else
+                {
+                    reqStatusLog.Status = (int)StatusEnum.Cancelled;
+                    reqStatusLog.Notes = cancelCaseModel.notes;
+
+                    _db.Requeststatuslogs.Update(reqStatusLog);
+                    _db.Requests.Update(req);
+                    _db.SaveChanges();
+                    return true;
+                }
+
+
+
+
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
+        }
+
+        public AssignCaseModel AssignCase(int reqId)
+        {
+
+            var regionlist = _db.Regions.ToList();
+            AssignCaseModel assignCaseModel = new()
+            {
+                regionList = regionlist,
+
+            };
+            return assignCaseModel;
+        }
+
+        public List<Physician> GetPhysicianByRegion(int Regionid)
+        {
+
+            var physicianList = _db.Physicianregions.Where(x => x.Regionid == Regionid).Select(x => x.Physician).ToList();
+
+            return physicianList;
+
+
+        }
+
+        public bool SubmitAssignCase(AssignCaseModel assignCaseModel)
+        {
+            try
+            {
+
+                var req = _db.Requests.Where(x => x.Requestid == assignCaseModel.ReqId).FirstOrDefault();
+                req.Status = (int)StatusEnum.Accepted;
+                req.Physicianid = assignCaseModel.selectPhysicianId;
+                req.Modifieddate = DateTime.Now;
+
+                var reqStatusLog = _db.Requeststatuslogs.Where(x => x.Requestid == assignCaseModel.ReqId).FirstOrDefault();
+                if (reqStatusLog == null)
+                {
+                    Requeststatuslog rsl = new Requeststatuslog();
+                    rsl.Requestid = (int)assignCaseModel.ReqId;
+                    rsl.Status = (int)StatusEnum.Accepted;
+                    rsl.Notes = assignCaseModel.description;
+                    rsl.Createddate = DateTime.Now;
+                    _db.Requeststatuslogs.Add(rsl);
+                    _db.Requests.Update(req);
+                    _db.SaveChanges();
+                    return true;
+                }
+                else
+                {
+                    reqStatusLog.Status = (int)StatusEnum.Accepted;
+                    reqStatusLog.Notes = assignCaseModel.description;
+                    _db.Requeststatuslogs.Update(reqStatusLog);
+                    _db.Requests.Update(req);
+                    _db.SaveChanges();
+                    return true;
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
+        }
+
+        public BlockCaseModel BlockCase(int reqId)
+        {
+            var reqClient = _db.Requestclients.Where(x => x.Requestid == reqId).FirstOrDefault();
+            BlockCaseModel model = new()
+            {
+                ReqId = reqId,
+                firstName = reqClient.Firstname,
+                lastName = reqClient.Lastname,
+                reason = null
+            };
+
+            return model;
+        }
+
+        public bool SubmitBlockCase(BlockCaseModel blockCaseModel)
+        {
+            try
+            {
+                var request = _db.Requests.FirstOrDefault(r => r.Requestid == blockCaseModel.ReqId);
+                if (request != null)
+                {
+                    if (request.Isdeleted == null)
+                    {
+                        request.Isdeleted = new BitArray(1);
+                        request.Isdeleted[0] = true;
+                        request.Status = (int)StatusEnum.Clear;
+                        request.Modifieddate = DateTime.Now;
+
+                        _db.Requests.Update(request);
+
+                    }
+                    Blockrequest blockrequest = new Blockrequest();
+
+                    blockrequest.Phonenumber = request.Phonenumber == null ? "+91" : request.Phonenumber;
+                    blockrequest.Email = request.Email;
+                    blockrequest.Reason = blockCaseModel.reason;
+                    blockrequest.Requestid = (int)blockCaseModel.ReqId;
+                    blockrequest.Createddate = DateTime.Now;
+
+                    _db.Blockrequests.Add(blockrequest);
+                    _db.SaveChanges();
+                    return true;
+
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+
     }
 }

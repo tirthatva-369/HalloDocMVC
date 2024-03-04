@@ -21,7 +21,9 @@ namespace BusinessLogic.Services
 
         public bool PasswordCheck(LoginModel loginModel)
         {
-            return _db.Aspnetusers.Any(x => x.Passwordhash == loginModel.Passwordhash);
+            var check = _db.Aspnetusers.FirstOrDefault(x => x.Email == loginModel.Email);
+            if (check.Passwordhash == loginModel.Passwordhash) { return true; }
+            else { return false; }
         }
 
         public User Login(LoginModel loginModel)

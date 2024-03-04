@@ -73,16 +73,16 @@
       "PackagePath": "staticwebassets\\UploadedFiles\\table.png"
     },
     {
+      "Id": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\css\\AdminDashboard.css",
+      "PackagePath": "staticwebassets\\css\\AdminDashboard.css"
+    },
+    {
+      "Id": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\css\\AdminLogin.css",
+      "PackagePath": "staticwebassets\\css\\AdminLogin.css"
+    },
+    {
       "Id": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\css\\a_patient_site.css",
       "PackagePath": "staticwebassets\\css\\a_patient_site.css"
-    },
-    {
-      "Id": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\css\\admin_dashboard.css",
-      "PackagePath": "staticwebassets\\css\\admin_dashboard.css"
-    },
-    {
-      "Id": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\css\\admin_login.css",
-      "PackagePath": "staticwebassets\\css\\admin_login.css"
     },
     {
       "Id": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\css\\b1_submit_request.css",

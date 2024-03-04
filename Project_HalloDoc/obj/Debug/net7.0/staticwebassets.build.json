@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Vx3PLGggPdadkCVwuqCrsXkIxhHUi/BVDrWocvjSB0Y=",
+  "Hash": "wQ2KfwZqrRin51+Nt+Owpq0AiRTI+bGpwITJ16jFTbk=",
   "Source": "Project_HalloDoc",
   "BasePath": "_content/Project_HalloDoc",
   "Mode": "Default",
@@ -136,12 +136,12 @@
       "OriginalItemSpec": "wwwroot\\css\\a_patient_site.css"
     },
     {
-      "Identity": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\css\\admin_dashboard.css",
+      "Identity": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\css\\AdminDashboard.css",
       "SourceId": "Project_HalloDoc",
       "SourceType": "Discovered",
       "ContentRoot": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\",
       "BasePath": "_content/Project_HalloDoc",
-      "RelativePath": "css/admin_dashboard.css",
+      "RelativePath": "css/AdminDashboard.css",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -150,15 +150,15 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\css\\admin_dashboard.css"
+      "OriginalItemSpec": "wwwroot\\css\\AdminDashboard.css"
     },
     {
-      "Identity": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\css\\admin_login.css",
+      "Identity": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\css\\AdminLogin.css",
       "SourceId": "Project_HalloDoc",
       "SourceType": "Discovered",
       "ContentRoot": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\",
       "BasePath": "_content/Project_HalloDoc",
-      "RelativePath": "css/admin_login.css",
+      "RelativePath": "css/AdminLogin.css",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -167,7 +167,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\css\\admin_login.css"
+      "OriginalItemSpec": "wwwroot\\css\\AdminLogin.css"
     },
     {
       "Identity": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\css\\b1_submit_request.css",

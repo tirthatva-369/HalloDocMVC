@@ -180,3 +180,8 @@ label[for="file-upload"] {
     border-start-start-radius: 0%;
     -webkit-overflow-scrolling: touch;
 }
+
+.dark-mode {
+    background-color: rgb(63, 63, 63);
+    color: white;
+}
