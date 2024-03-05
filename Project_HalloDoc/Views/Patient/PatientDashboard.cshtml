@@ -1,0 +1,406 @@
+﻿﻿@using DataAccess.Models;
+@{
+    ViewData["Title"] = "PatientDashboard";
+
+}
+@{
+    string[] Status = { "Unassigned", "Accepted" , "Cancelled" , "MDEnRoute" , "MDEnRoute" , "MDOnSite" ,
+                "Conclude" , "CancelledByPatient" , "Closed" , "Unpaid" , "Clear"   };
+}
+
+@model MedicalHistoryList;
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dashboard</title>
+    <link rel="stylesheet" href="~/css/PatientDashboard.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.js" integrity="sha512-+k1pnlgt4F1H8L7t3z95o3/KO+o78INEcXTbnoJQ/F2VqDVhWoaiVml/OEHv9HsVgxUaVW+IbiZPUJQfF/YxZw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+</head>
+
+<body style="background-color: aliceblue;">
+
+
+
+    <nav class="bg-white navbr navbar navbar-expand w-100 ">
+
+        <div class="container-fluid">
+            <div class="d-flex align-items-center">
+                <button class="navbar-toggler d-block d-lg-none" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation" style="height: 50%;">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <img class="navbar-brand ms-3" id="logo" src="/images/logo.png" alt="logo">
+
+            </div>
+            <div>
+                <ul class="navbar-nav ms-auto d-flex flex-nowrap align-items-center gap-2">
+                    <div class="d-none d-sm-flex  justify-content-center align-items-center ">
+                    <li class="nav-item">
+                        <span>Welcome</span>
+                    </li>
+                    <li class="nav-item p-2 fw-bolder">
+                        <span class="d-flex gap-1">
+                            <span>@Model.firstName</span>
+                            <span>@Model.lastName</span>
+                        </span>
+                    </li>
+            </div>
+            <li class="nav-item">
+                <button id="logout" class="px-3">
+                    <span class=" d-none d-md-block">Logout</span><i class="bi bi-box-arrow-right d-md-none d-block"></i>
+                </button>
+
+            </li>
+            <li class="nav-item">
+                <img onclick="darkMode()" class="light" src="/images/dark.png" alt="">
+            </li>
+            </ul>
+        </div>
+        </div>
+
+
+
+    </nav>
+
+
+
+
+
+
+    <hr class="m-0 hr_line d-none d-lg-block">
+    <nav class="navbr navbar navbar-expand-lg py-0 pt-2 bg-body" style="z-index: 10;">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class=" bg-white ps-5 nav nav-underline" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane"
+                                type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">
+                            Dashboard
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane"
+                                type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false" onclick="ShowProfile(@Model.id)">
+                            Profile
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab"
+             tabindex="0">
+            <div class=" tab-content container-fluid p-5" id="medicalHistory">
+                <div class="tab-pane fade show active" id="dashboard-tab-pane" role="tabpanel"
+                     aria-labelledby="dashboard-tab" tabindex="0">
+                    <h3 class="mb-4">Medical History</h3>
+                    <div class="container-fluid bg-white shadow p-3 rounded-3">
+                        <div class="text-end py-3">
+                            <button id="new-req" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                <Span class="py-2 d-none d-md-block">
+                                    Create New Request
+                                </Span><i class="p-2  bi bi-plus-lg d-block d-md-none"></i>
+                            </button>
+                        </div>
+                        <div class="d-none d-md-block">
+                            <table class="table data-table">
+                                <thead class="table-secondary">
+                                    <tr>
+                                        <th scope="col">Created Date<i class="bi bi-arrow-down-short"></i></th>
+                                        <th scope="col">Current Status</th>
+                                        <th scope="col">Document</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model.medicalHistoriesList.Count != 0)
+                                    {
+
+                                        foreach (var items in Model.medicalHistoriesList)
+                                        {
+
+                                            <tr>
+                                                <td>@items.createdDate.ToString("MMM dd, yyyy")</td>
+                                                <td>@Status[items.currentStatus]</td>
+                                                <td>
+                                                    <a class="btn btn-outline-info fw-bold" asp-controller="Patient" asp-action="DocumentList" asp-route-reqId=@items.reqId>
+                                                        <span><i class="bi bi-file-earmark fw-bold"></i></span>
+                                                        <span>
+                                                            View Documents (@items.document.Count())
+
+                                                        </span>
+                                                    </a>
+                                                </td>
+
+                                            </tr>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr>No Items found</tr>
+                                    }
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                        <div class="accordion accordion-flush d-block d-md-none" id="accordionFlushExample">
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="container-fluid mt-5" style="background-color: aliceblue; display:none" id="viewdocs">
+
+                <div class="container bg-white p-4 ">
+                    <div class="d-flex justify-content-between mb-4">
+                        <h3>documents</h3>
+                        <button onclick="swapDivs()" id="backview">&lt; back</button>
+                    </div>
+                    <div class="row">
+                        <p class="col-12">patient name</p>
+                        <p class="col-12">
+                            <span class="fw-bolder fs-4">@Model.firstName @Model.lastName</span>
+                            <span>(f34r34t5gvr44)</span>
+                        </p>
+                        <p class="col-12 py-3">check here for any files that you or the doctors of your subsequents requestors have attached for you to review</p>
+                        <div class="col-12 mb-4">
+                            <form class="input-group" method="post" enctype="multipart/form-data">
+                                <input name="file" type="file" class="form-control" id="formFileLg" multiple>
+                                <button class="input-group-text bg-primary text-white" for="inputGroupFile02"><i class="bi bi-cloud-arrow-up m-1"></i>&nbsp;Upload</button>
+                                <br />
+                            </form>
+                        </div>
+
+                        <div class="row" id="docList">
+                        </div>
+                        <!-- row--- -->
+                    </div>
+
+                    <!-- ----container    -->
+                </div>
+            </div>
+
+        </div>
+
+        @*--------------------profile--------------- *@
+        <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+        </div>
+
+
+    </div>
+
+    @*-------------------------model--------------------*@
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color:#00B7FF ; color:white">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Create a New Request</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Here, I Want to create new request for...
+                        <br />
+                        <div class="d-flex justify-content-center gap-3 my-3">
+                            <button class="px-3 modal-b" id="button1" onclick="passId(event)">
+                                <span class="">Me</span>
+                            </button>
+                            <button class="px-3 modal-b" id="button2" onclick="passId(event)">
+                                <span class="">Some one Else</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-end mb-3 me-3 gap-3">
+
+                        <button id="continue" class="px-3 modal-b" onclick="redirect()">
+                            <span class="">Continue</span>
+                        </button>
+                        <button type="reset" class="px-3 modal-b" data-bs-dismiss="modal">
+                            <span class="">Cancel</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.js" integrity="sha512-+k1pnlgt4F1H8L7t3z95o3/KO+o78INEcXTbnoJQ/F2VqDVhWoaiVml/OEHv9HsVgxUaVW+IbiZPUJQfF/YxZw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        $(document).ready(function () {
+            // Convert table rows to accordions in mobile view
+            if ($(window).width() < 768) {
+                $('.data-table tbody tr').each(function (index) {
+                    var $accordionItem = $('<div class="accordion-item">');
+                    var $accordionHeader = $('<h2 class="accordion-header">');
+                    var $accordionButton = $('<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse">');
+                    var $accordionCollapse = $('<div class="accordion-collapse collapse">');
+                    var $accordionBody = $('<div class="accordion-body">');
+
+                    // Extract data from table row
+                    var createdDate = $(this).find('td:eq(0)').text();
+                    var currentStatus = $(this).find('td:eq(1)').text();
+                    var documentLink = $(this).find('td:eq(2)').html();
+
+                    // Set accordion header text
+                    $accordionButton.text('Created Date: ' + createdDate);
+
+                    // Set accordion body content
+                    $accordionBody.append('<p><strong>Current Status:</strong> ' + currentStatus + '</p>');
+                    $accordionBody.append('<p><strong>Document:</strong> ' + documentLink + '</p>');
+
+                    // Append elements to accordion item
+                    $accordionHeader.append($accordionButton);
+                    $accordionCollapse.append($accordionBody);
+                    $accordionItem.append($accordionHeader).append($accordionCollapse);
+
+                    $('#accordionFlushExample').append($accordionItem);
+                });
+
+                // Toggle accordion content on header click
+                $('.accordion-button').click(function () {
+                    $(this).closest('.accordion-item').find('.accordion-collapse').collapse('toggle');
+                });
+            }
+        });
+
+        // Resize event listener to update accordion on window resize
+        $(window).resize(function () {
+            $('#accordionFlushExample').empty();
+            if ($(window).width() < 768) {
+                $('.data-table tbody tr').each(function (index) {
+                    var $accordionItem = $('<div class="accordion-item">');
+                    var $accordionHeader = $('<h2 class="accordion-header">');
+                    var $accordionButton = $('<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse">');
+                    var $accordionCollapse = $('<div class="accordion-collapse collapse">');
+                    var $accordionBody = $('<div class="accordion-body">');
+
+                    // Extract data from table row
+                    var createdDate = $(this).find('td:eq(0)').text();
+                    var currentStatus = $(this).find('td:eq(1)').text();
+                    var documentLink = $(this).find('td:eq(2)').html();
+
+                    // Set accordion header text
+                    $accordionButton.text('Created Date: ' + createdDate);
+
+                    // Set accordion body content
+                    $accordionBody.append('<p><strong>Current Status:</strong> ' + currentStatus + '</p>');
+                    $accordionBody.append('<p><strong>Document:</strong> ' + documentLink + '</p>');
+
+                    // Append elements to accordion item
+                    $accordionHeader.append($accordionButton);
+                    $accordionCollapse.append($accordionBody);
+                    $accordionItem.append($accordionHeader).append($accordionCollapse);
+
+                    $('#accordionFlushExample').append($accordionItem);
+                });
+
+                // Toggle accordion content on header click
+                $('.accordion-button').click(function () {
+                    $(this).closest('.accordion-item').find('.accordion-collapse').collapse('toggle');
+                });
+            }
+        });
+
+
+        const phoneInputField = document.querySelectorAll("input[type='tel']");
+        for (var i = 0; i < phoneInputField.length; i++) {
+            const phoneInput = window.intlTelInput(phoneInputField[i], {
+                utilsScript:
+                    "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+            });
+        }
+
+        //----------model-----------
+        $('.modal').css('top', $(window).outerHeight() / 4 - ($(".modal-dialog").outerHeight()) / 2 + 'px');
+
+        let buttonId = null;
+
+        function passId(event) {
+            buttonId = event.target.id;
+
+        }
+
+        function redirect() {
+            if (buttonId == 'button1') {
+                location.assign('SubmitMeInfo');
+            }
+            else if (buttonId == 'button2') {
+                location.assign('patientsomeoneelse');
+            } else {
+                // Default redirection if buttonId is not set or unexpected
+            }
+        }
+
+
+        function swapDivs() {
+
+            // Get references to the div elements
+            document.getElementById("medicalHistory").style.display = "block";
+            document.getElementById("viewdocs").style.display = "none";
+
+
+
+
+        }
+
+        function showDocuments(requestId) {
+
+            $.ajax({
+                url: '/Patient/GetDcoumentsById',
+                type: 'GET',
+                data: { requestId: requestId },
+                success: function (response) {
+
+                    $("#docList").html(response);
+                }
+            });
+            document.getElementById('medicalHistory').style.display = 'none';
+            document.getElementById('viewdocs').style.display = 'block';
+        }
+
+
+
+
+        function ShowProfile(userid) {
+
+            $.ajax({
+                url: '/Patient/ShowProfile',
+                type: 'GET',
+                data: { userid: userid },
+                success: function (response) {
+
+                    $("#profile-tab-pane").html(response);
+                }
+            });
+        }
+
+
+    </script>
+
+
+
+</body>
+
+
+
+</html>

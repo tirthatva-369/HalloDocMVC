@@ -16,13 +16,13 @@ namespace BusinessLogic.Services
 
         public bool EmailCheck(LoginModel loginModel)
         {
-            return _db.Aspnetusers.Any(x => x.Email == loginModel.Email);
+            return _db.Aspnetusers.Any(x => x.Email == loginModel.email);
         }
 
         public bool PasswordCheck(LoginModel loginModel)
         {
-            var check = _db.Aspnetusers.FirstOrDefault(x => x.Email == loginModel.Email);
-            if (check.Passwordhash == loginModel.Passwordhash) { return true; }
+            var check = _db.Aspnetusers.FirstOrDefault(x => x.Email == loginModel.email);
+            if (check.Passwordhash == loginModel.password) { return true; }
             else { return false; }
         }
 
@@ -33,7 +33,7 @@ namespace BusinessLogic.Services
 
             foreach (var item in obj)
             {
-                if (item.Email == loginModel.Email && item.Passwordhash == loginModel.Passwordhash)
+                if (item.Email == loginModel.email && item.Passwordhash == loginModel.password)
                 {
                     user = _db.Users.FirstOrDefault(u => u.Aspnetuserid == item.Id);
                     return user;

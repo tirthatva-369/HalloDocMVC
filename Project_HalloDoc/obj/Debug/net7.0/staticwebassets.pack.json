@@ -69,6 +69,10 @@
       "PackagePath": "staticwebassets\\UploadedFiles\\info.png"
     },
     {
+      "Id": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\UploadedFiles\\t.png",
+      "PackagePath": "staticwebassets\\UploadedFiles\\t.png"
+    },
+    {
       "Id": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\UploadedFiles\\table.png",
       "PackagePath": "staticwebassets\\UploadedFiles\\table.png"
     },
@@ -81,20 +85,52 @@
       "PackagePath": "staticwebassets\\css\\AdminLogin.css"
     },
     {
-      "Id": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\css\\a_patient_site.css",
-      "PackagePath": "staticwebassets\\css\\a_patient_site.css"
+      "Id": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\css\\AdminViewNote.css",
+      "PackagePath": "staticwebassets\\css\\AdminViewNote.css"
     },
     {
-      "Id": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\css\\b1_submit_request.css",
-      "PackagePath": "staticwebassets\\css\\b1_submit_request.css"
+      "Id": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\css\\CreateBusinessPartnerReq.css",
+      "PackagePath": "staticwebassets\\css\\CreateBusinessPartnerReq.css"
     },
     {
-      "Id": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\css\\b1c_request_submitters.css",
-      "PackagePath": "staticwebassets\\css\\b1c_request_submitters.css"
+      "Id": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\css\\CreateConciergeReq.css",
+      "PackagePath": "staticwebassets\\css\\CreateConciergeReq.css"
     },
     {
-      "Id": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\css\\b2_registered_user.css",
-      "PackagePath": "staticwebassets\\css\\b2_registered_user.css"
+      "Id": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\css\\CreateFamilyFrndReq.css",
+      "PackagePath": "staticwebassets\\css\\CreateFamilyFrndReq.css"
+    },
+    {
+      "Id": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\css\\CreatePatientReq.css",
+      "PackagePath": "staticwebassets\\css\\CreatePatientReq.css"
+    },
+    {
+      "Id": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\css\\DarkMode.css",
+      "PackagePath": "staticwebassets\\css\\DarkMode.css"
+    },
+    {
+      "Id": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\css\\ForgetPassword.css",
+      "PackagePath": "staticwebassets\\css\\ForgetPassword.css"
+    },
+    {
+      "Id": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\css\\Login.css",
+      "PackagePath": "staticwebassets\\css\\Login.css"
+    },
+    {
+      "Id": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\css\\PatientDashboard.css",
+      "PackagePath": "staticwebassets\\css\\PatientDashboard.css"
+    },
+    {
+      "Id": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\css\\PatientRequest.css",
+      "PackagePath": "staticwebassets\\css\\PatientRequest.css"
+    },
+    {
+      "Id": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\css\\RequestModal.css",
+      "PackagePath": "staticwebassets\\css\\RequestModal.css"
+    },
+    {
+      "Id": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\css\\RequestScreen.css",
+      "PackagePath": "staticwebassets\\css\\RequestScreen.css"
     },
     {
       "Id": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\css\\international-telephone-input.css",

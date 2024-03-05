@@ -38,7 +38,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Views\Aspnetusers\" />
 	  <Folder Include="wwwroot\UploadedFiles\" />
 	</ItemGroup>
 

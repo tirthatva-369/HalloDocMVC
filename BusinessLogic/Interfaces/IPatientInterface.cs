@@ -1,10 +1,12 @@
 ﻿using DataAccess.DataModels;
 using DataAccess.Models;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BusinessLogic.Interfaces
 {
@@ -15,8 +17,10 @@ namespace BusinessLogic.Interfaces
         void AddConciergeRequest(ConciergeRequestModel conciergeReqModel);
         void AddBusinessRequest(BusinessRequestModel businessReqModel);
         Task<bool> IsEmailExists(string email);
-        List<PatientDashboard> GetPatientInfos();
-        List<MedicalHistory> GetMedicalHistory(User user);
+        MedicalHistoryList GetMedicalHistory(int userid);
         IQueryable<Requestwisefile>? GetAllDocById(int requestId);
+        Profile GetProfile(int userid);
+        bool EditProfile(Profile profile);
+        void AddFile(IFormFile file, int reqId);
     }
 }
