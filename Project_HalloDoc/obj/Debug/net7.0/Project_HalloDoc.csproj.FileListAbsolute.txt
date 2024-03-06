@@ -236,3 +236,12 @@ D:\Project\Project_HalloDoc\Project_HalloDoc\obj\Debug\net7.0\refint\Project_Hal
 D:\Project\Project_HalloDoc\Project_HalloDoc\obj\Debug\net7.0\Project_HalloDoc.pdb
 D:\Project\Project_HalloDoc\Project_HalloDoc\obj\Debug\net7.0\Project_HalloDoc.genruntimeconfig.cache
 D:\Project\Project_HalloDoc\Project_HalloDoc\obj\Debug\net7.0\ref\Project_HalloDoc.dll
+D:\Project\Project_HalloDoc\Project_HalloDoc\obj\Debug\net7.0\Project_HalloDoc.MvcApplicationPartsAssemblyInfo.cs
+D:\Project\Project_HalloDoc\Project_HalloDoc\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+D:\Project\Project_HalloDoc\Project_HalloDoc\bin\Debug\net7.0\Microsoft.IdentityModel.Abstractions.dll
+D:\Project\Project_HalloDoc\Project_HalloDoc\bin\Debug\net7.0\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\Project\Project_HalloDoc\Project_HalloDoc\bin\Debug\net7.0\Microsoft.IdentityModel.Logging.dll
+D:\Project\Project_HalloDoc\Project_HalloDoc\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.dll
+D:\Project\Project_HalloDoc\Project_HalloDoc\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+D:\Project\Project_HalloDoc\Project_HalloDoc\bin\Debug\net7.0\Microsoft.IdentityModel.Tokens.dll
+D:\Project\Project_HalloDoc\Project_HalloDoc\bin\Debug\net7.0\System.IdentityModel.Tokens.Jwt.dll

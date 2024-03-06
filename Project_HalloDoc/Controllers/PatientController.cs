@@ -13,6 +13,7 @@ using System.Text;
 using BusinessLogic.Services;
 using DataAccess.DataModels;
 
+
 namespace HalloDoc.mvc.Controllers
 {
 
@@ -61,8 +62,6 @@ namespace HalloDoc.mvc.Controllers
         [HttpPost]
         public IActionResult Login(LoginModel loginModel)
         {
-
-
             if (ModelState.IsValid)
             {
                 //string passwordhash = GenerateSHA256(loginModel.password);
@@ -83,7 +82,6 @@ namespace HalloDoc.mvc.Controllers
                 else
                 {
                     _notyf.Error("Invalid Credentials");
-
                     //ViewBag.AuthFailedMessage = "Please enter valid username and password !!";
                 }
                 return View();
@@ -98,7 +96,6 @@ namespace HalloDoc.mvc.Controllers
         [HttpPost]
         public IActionResult AddPatient(PatientRequestModel patientInfoModel)
         {
-
             if (ModelState.IsValid)
             {
                 if (patientInfoModel.password != null)
@@ -114,7 +111,6 @@ namespace HalloDoc.mvc.Controllers
                 return View(patientInfoModel);
             }
         }
-
 
         [HttpGet]
         public async Task<IActionResult> CheckEmailExists(string email)
@@ -229,25 +225,8 @@ namespace HalloDoc.mvc.Controllers
             }
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         public IActionResult PatientResetPasswordEmail(Aspnetuser user)
-
         {
-
             var usr = _db.Aspnetusers.FirstOrDefault(x => x.Email == user.Email);
             if (usr != null)
             {
@@ -260,8 +239,6 @@ namespace HalloDoc.mvc.Controllers
                 _notyf.Error("Email Id Not Registered");
                 return RedirectToAction("ForgotPassword", "Patient");
             }
-
-
             return RedirectToAction("Login");
         }
 
@@ -302,17 +279,9 @@ namespace HalloDoc.mvc.Controllers
             return RedirectToAction("Login");
         }
 
-
-
-
-
-
-
-
         public IActionResult PatientDashboard()
         {
             int? userid = HttpContext.Session.GetInt32("UserId");
-
             var infos = _patientService.GetMedicalHistory((int)userid);
 
             return View(infos);
@@ -322,20 +291,30 @@ namespace HalloDoc.mvc.Controllers
         {
             HttpContext.Session.SetInt32("rid", reqId);
             var y = _patientService.GetAllDocById(reqId);
-            return View(y)
-     ;
+            return View(y);
         }
 
         [HttpPost]
-        public IActionResult DocumentList()
+        public IActionResult UploadDocuments(DocumentModel model)
         {
             var rid = (int)HttpContext.Session.GetInt32("rid");
-            var file = HttpContext.Request.Form.Files.FirstOrDefault();
-            _patientService.AddFile(file, rid);
-            return RedirectToAction("DocumentList", "Patient", new { reqId = rid });
+            if (model.uploadedFiles == null)
+            {
+                _notyf.Error("First Upload Files");
+                return RedirectToAction("DocumentList", "Patient", new { reqId = rid });
+            }
+            bool isUploaded = _patientService.UploadDocuments(model.uploadedFiles, rid);
+            if (isUploaded)
+            {
+                _notyf.Success("Uploaded Successfully");
+                return RedirectToAction("DocumentList", "Patient", new { reqId = rid });
+            }
+            else
+            {
+                _notyf.Error("Upload Failed");
+                return RedirectToAction("DocumentList", "Patient", new { reqId = rid });
+            }
         }
-
-
 
         public IActionResult ShowProfile(int userid)
         {
@@ -360,10 +339,10 @@ namespace HalloDoc.mvc.Controllers
                 return RedirectToAction("PatientDashboard");
             }
         }
+
         public IActionResult SubmitMeInfo()
         {
             return View();
         }
-
     }
 }

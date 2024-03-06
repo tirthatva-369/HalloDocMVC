@@ -152,4 +152,14 @@ namespace DataAccess.Models
         public string? Email { get; set; }
         public int? userId { get; set; }
     }
+
+    public class DocumentModel
+    {
+        public List<Requestwisefile>? files { get; set; }
+        public string? firstName { get; set; }
+        public string? lastName { get; set; }
+        public int? ReqId { get; set; }
+        public List<IFormFile>? uploadedFiles { get; set; }
+        public string? ConfirmationNumber { get; set; }
+    }
 }

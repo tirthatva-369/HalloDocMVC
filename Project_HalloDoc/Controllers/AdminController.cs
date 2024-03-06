@@ -7,6 +7,9 @@ using System.Text;
 using AspNetCore;
 using AspNetCoreHero.ToastNotification.Abstractions;
 using System.Security.Cryptography;
+using System.Net.Mail;
+using System.Net;
+using Project_HalloDoc.Auth;
 
 namespace HalloDoc.mvc.Controllers
 {
@@ -15,12 +18,14 @@ namespace HalloDoc.mvc.Controllers
         private readonly ILogger<AdminController> _logger;
         private readonly IAdminInterface _adminService;
         private readonly INotyfService _notyf;
+        private readonly IJwtService _jwtService;
 
-        public AdminController(ILogger<AdminController> logger, IAdminInterface adminService, INotyfService notyf)
+        public AdminController(ILogger<AdminController> logger, IAdminInterface adminService, INotyfService notyf, IJwtService jwtService)
         {
             _logger = logger;
             _adminService = adminService;
             _notyf = notyf;
+            _jwtService = jwtService;
         }
 
         public IActionResult Index()
@@ -37,6 +42,9 @@ namespace HalloDoc.mvc.Controllers
                 {
                     if (aspnetuser.Passwordhash == adminLoginModel.password)
                     {
+                        var jwtToken = _jwtService.GetJwtToken(aspnetuser);
+                        Response.Cookies.Append("jwt", jwtToken);
+
                         _notyf.Success("Logged in Successfully");
                         return RedirectToAction("AdminDashboard", "Admin");
                     }
@@ -56,6 +64,7 @@ namespace HalloDoc.mvc.Controllers
             }
         }
 
+        [CustomAuthorize("Admin")]
         public IActionResult AdminDashboard()
         {
 
@@ -201,6 +210,71 @@ namespace HalloDoc.mvc.Controllers
             return RedirectToAction("AdminDashboard", "Admin");
         }
 
+        public IActionResult DeleteAllFiles(List<string> selectedFiles)
+        {
+            var rid = (int)HttpContext.Session.GetInt32("rid");
+            bool isDeleted = _adminService.DeleteAllFiles(selectedFiles, rid);
+            if (isDeleted)
+            {
+                _notyf.Success("Deleted Successfully");
+                return RedirectToAction("ViewUploads", "Admin", new { reqId = rid });
+            }
+            _notyf.Error("SomeThing Went Wrong");
+            return RedirectToAction("ViewUploads", "Admin", new { reqId = rid });
 
+        }
+
+        public IActionResult SendAllFiles(List<string> selectedFiles)
+        {
+            var rid = (int)HttpContext.Session.GetInt32("rid");
+            var message = string.Join(", ", selectedFiles);
+
+
+            SendEmail("yashvariya23@gmail.com", "Documents", message);
+            _notyf.Success("Send Mail Successfully");
+            return RedirectToAction("ViewUploads", "Admin", new { reqId = rid });
+        }
+
+        private Task SendEmail(string email, string subject, string message)
+        {
+            var mail = "tatva.dotnet.tirthpatel@outlook.com";
+            var password = "Prabodham@369";
+
+            var client = new SmtpClient("smtp.office365.com", 587)
+            {
+                EnableSsl = true,
+                Credentials = new NetworkCredential(mail, password)
+            };
+            return client.SendMailAsync(new MailMessage(from: mail, to: email, subject, message));
+        }
+
+        public IActionResult ViewUploads(int reqId)
+        {
+            HttpContext.Session.SetInt32("rid", reqId);
+            var model = _adminService.GetAllDocById(reqId);
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult UploadFiles(ViewUploadModel model)
+        {
+            var rid = (int)HttpContext.Session.GetInt32("rid");
+            if (model.uploadedFiles == null)
+            {
+                _notyf.Error("First Upload Files");
+                return RedirectToAction("ViewUploads", "Admin", new { reqId = rid });
+            }
+            bool isUploaded = _adminService.UploadFiles(model.uploadedFiles, rid);
+            if (isUploaded)
+            {
+                _notyf.Success("Uploaded Successfully");
+                return RedirectToAction("ViewUploads", "Admin", new { reqId = rid });
+            }
+            else
+            {
+                _notyf.Error("Upload Failed");
+                return RedirectToAction("ViewUploads", "Admin", new { reqId = rid });
+            }
+        }
     }
 }

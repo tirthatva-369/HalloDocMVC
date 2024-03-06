@@ -14,6 +14,7 @@ using Microsoft.CodeAnalysis.Elfie.Serialization;
 using DataAccess.Enums;
 using DataAccess.Enum;
 using System.Collections;
+using Microsoft.AspNetCore.Http;
 
 namespace BusinessLogic.Services
 {
@@ -241,45 +242,48 @@ namespace BusinessLogic.Services
                     _db.SaveChanges();
                     return true;
                 }
-
-
-
-
             }
             catch (Exception ex)
             {
                 return false;
             }
+        }
+
+        public ViewUploadModel GetAllDocById(int requestId)
+        {
+
+            var list = _db.Requestwisefiles.Where(x => x.Requestid == requestId).ToList();
+            var reqClient = _db.Requestclients.Where(x => x.Requestid == requestId).FirstOrDefault();
+            ViewUploadModel result = new()
+            {
+                files = list,
+                firstName = reqClient.Firstname,
+                lastName = reqClient.Lastname,
+            };
+            return result;
 
         }
 
         public AssignCaseModel AssignCase(int reqId)
         {
-
             var regionlist = _db.Regions.ToList();
             AssignCaseModel assignCaseModel = new()
             {
                 regionList = regionlist,
-
             };
             return assignCaseModel;
         }
 
         public List<Physician> GetPhysicianByRegion(int Regionid)
         {
-
             var physicianList = _db.Physicianregions.Where(x => x.Regionid == Regionid).Select(x => x.Physician).ToList();
-
             return physicianList;
-
-
         }
 
         public bool SubmitAssignCase(AssignCaseModel assignCaseModel)
         {
             try
             {
-
                 var req = _db.Requests.Where(x => x.Requestid == assignCaseModel.ReqId).FirstOrDefault();
                 req.Status = (int)StatusEnum.Accepted;
                 req.Physicianid = assignCaseModel.selectPhysicianId;
@@ -307,14 +311,11 @@ namespace BusinessLogic.Services
                     _db.SaveChanges();
                     return true;
                 }
-
-
             }
             catch (Exception ex)
             {
                 return false;
             }
-
         }
 
         public BlockCaseModel BlockCase(int reqId)
@@ -327,7 +328,6 @@ namespace BusinessLogic.Services
                 lastName = reqClient.Lastname,
                 reason = null
             };
-
             return model;
         }
 
@@ -346,10 +346,9 @@ namespace BusinessLogic.Services
                         request.Modifieddate = DateTime.Now;
 
                         _db.Requests.Update(request);
-
                     }
-                    Blockrequest blockrequest = new Blockrequest();
 
+                    Blockrequest blockrequest = new Blockrequest();
                     blockrequest.Phonenumber = request.Phonenumber == null ? "+91" : request.Phonenumber;
                     blockrequest.Email = request.Email;
                     blockrequest.Reason = blockCaseModel.reason;
@@ -359,7 +358,6 @@ namespace BusinessLogic.Services
                     _db.Blockrequests.Add(blockrequest);
                     _db.SaveChanges();
                     return true;
-
                 }
                 else
                 {
@@ -372,6 +370,90 @@ namespace BusinessLogic.Services
             }
         }
 
+        public bool UploadFiles(List<IFormFile> files, int reqId)
+        {
+            try
+            {
+                if (files != null)
+                {
+                    foreach (IFormFile file in files)
+                    {
+                        if (file != null && file.Length > 0)
+                        {
+                            //get file name
+                            var fileName = Path.GetFileName(file.FileName);
+                            //define path
+                            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "UploadedFiles", fileName);
+                            // Copy the file to the desired location
+                            using (var stream = new FileStream(filePath, FileMode.Create))
+                            {
+                                file.CopyTo(stream);
+                            }
+                            Requestwisefile requestwisefile = new()
+                            {
+                                Filename = fileName,
+                                Requestid = reqId,
+                                Createddate = DateTime.Now
+                            };
+                            _db.Requestwisefiles.Add(requestwisefile);
+                        }
+                    }
+                    _db.SaveChanges();
+                    return true;
+                }
+                else { return false; }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public bool DeleteFileById(int reqFileId)
+        {
+            try
+            {
+                var reqWiseFile = _db.Requestwisefiles.Where(x => x.Requestwisefileid == reqFileId).FirstOrDefault();
+                if (reqWiseFile != null)
+                {
+                    _db.Requestwisefiles.Remove(reqWiseFile);
+                    _db.SaveChanges();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public bool DeleteAllFiles(List<string> filenames, int reqId)
+        {
+            try
+            {
+                var list = _db.Requestwisefiles.Where(x => x.Requestid == reqId).ToList();
+
+                foreach (var filename in filenames)
+                {
+                    var existFile = list.Where(x => x.Filename == filename && x.Requestid == reqId).FirstOrDefault();
+                    if (existFile != null)
+                    {
+                        list.Remove(existFile);
+                        _db.Requestwisefiles.Remove(existFile);
+                    }
+                }
+                _db.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
 
     }
 }

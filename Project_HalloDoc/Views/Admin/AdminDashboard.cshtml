@@ -65,8 +65,6 @@
             </ul>
         </div>
         </div>
-
-
         <!-- tabs -->
     </nav>
 
@@ -199,8 +197,6 @@
             if (tabName == 'tab6') {
                 showNewRequests(6);
             }
-
-
         }
 
         $(document).ready(function () {
@@ -236,7 +232,6 @@
                     var address = $(this).find('td:eq(5)').text();
                     var requestor = $(this).find('td:eq(2)').text();
 
-
                     var accordionItem = `
                                             <div class="accordion-item">
 
@@ -252,9 +247,6 @@
                 });
             }
         });
-
-
-
 
         function showNewRequests(status) {
             $.ajax({
@@ -288,13 +280,11 @@
             $.ajax({
                 url: '/Admin/GetCount',
                 type: 'GET',
-
                 success: function (response) {
                     $("#home-tab-pane").html(response);
                 }
             });
         }
-
 
         function showCancelCase(reqId) {
             $.ajax({
@@ -302,27 +292,20 @@
                 type: 'GET',
                 data: { reqId: reqId },
                 success: function (response) {
-
                     $("#modelContent").html(response);
-
                     $('#cancelModal').modal('show');
-
                 }
             });
         }
 
         function showAssignCase(reqId) {
-
             $.ajax({
                 url: '/Admin/AssignCase',
                 type: 'GET',
                 data: { reqId: reqId },
                 success: function (response) {
-
                     $("#modelContent").html(response);
-
                     $('#assignModal').modal('show');
-
                 }
             });
         }
@@ -333,22 +316,11 @@
                 type: 'GET',
                 data: { reqId: reqId },
                 success: function (response) {
-
                     $("#modelContent").html(response);
-
                     $('#blockModal').modal('show');
-
                 }
             });
         }
-
-
-
     </script>
-
-
 </body>
-
-
-
 </html>

@@ -1,6 +1,5 @@
-﻿﻿@using DataAccess.DataModels
-@model IQueryable<Requestwisefile>;
-
+﻿﻿@using DataAccess.Models
+@model DocumentModel
 <style>
     #downloadSelected {
         color: rgb(0, 183, 255);
@@ -14,6 +13,7 @@
             color: white;
         }
 </style>
+
 <link rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
 <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -24,34 +24,29 @@
         crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
-
 <link rel="stylesheet" href="~/css/PatientDashboard.css">
 
-
-
 <div class="container my-5 bg-white">
-
     <div class="container bg-white p-4 ">
         <div class="d-flex justify-content-between mb-4">
             <h2>Documents</h2>
-            <button onclick="swapDivs()" id="backview">&lt; Back</button>
+            <button onclick="location.href='@Url.Action("PatientDashboard", "Patient")'" id="back-btn">&lt; Back</button>
         </div>
         <div class="row">
             <p class="col-12">Patient Name</p>
             <p class="col-12">
-                <span class="fw-bolder fs-4"> first last </span>
-                <span>(f34r34t5gvr44)</span>
+                <span class="fw-bolder fs-4">@Model.firstName @Model.lastName </span>
+                <span>@Model.ConfirmationNumber</span>
             </p>
             <p class="col-12 py-3">check here for any files that you or the doctors of your subsequents requestors have attached for you to review</p>
-
-            <!-- row--- -->
+            <!-- row----->
         </div>
-
-        <!-- ----container    -->
+        <!-- ----container-->
     </div>
 
-    <form class="input-group my-5 mt-3" method="post" enctype="multipart/form-data">
-        <input name="file" type="file" class="form-control" id="formFileLg" multiple>
+    <form method="post" asp-action="UploadDocuments" asp-controller="Patient" class="input-group my-5 mt-3" enctype="multipart/form-data">
+        @*<input name="file" type="file" class="form-control" id="formFileLg" multiple>*@
+        <input asp-for="uploadedFiles" type="file" class="form-control" id="formFileLg" multiple>
         <button type="submit" class="input-group-text bg-primary text-white" for="inputGroupFile02"><i class="bi bi-cloud-arrow-up m-1"></i>&nbsp;Upload</button>
         <br />
     </form>
@@ -85,30 +80,29 @@
                 </tr>
             </thead>
             <tbody>
-                @if (Model != null && Model.Count() > 0)
+                @if (Model != null && Model.files.Count() > 0)
                 {
-                    @foreach (Requestwisefile rwf in Model)
+                    @foreach (var item in Model.files)
                     {
                         <tr>
                             <td>
-                                <input type="checkbox" name="selectedFiles" value="@rwf.Filename">
+                                <input type="checkbox" name="selectedFiles" value="@item.Filename">
                             </td>
 
                             <td>
                                 <i class="bi bi-file-earmark-fill" style="color:red"></i>
-                                @rwf.Filename
+                                @item.Filename
                             </td>
-                            <td>@rwf.Requestid</td>
-                            <td>@rwf.Createddate.ToString("MMM dd, yyyy")</td>
+                            <td>@item.Requestid</td>
+                            <td>@item.Createddate.ToString("MMM dd, yyyy")</td>
                             <td>
 
-                                <a href="~/UploadedFiles/@rwf.Filename" class="btn px-2 py-1 btn-outline-info shadow-none night-mode-btn" download>
+                                <a href="~/UploadedFiles/@item.Filename" class="btn px-2 py-1 btn-outline-info shadow-none night-mode-btn" download>
                                     <i class="bi bi-cloud-download"></i>
                                 </a>
 
                             </td>
                         </tr>
-
                     }
                 }
                 else
@@ -149,13 +143,11 @@
 
         // Construct URLs for all selected files and initiate download
         for (var j = 0; j < selectedFiles.length; j++) {
-
             var fileUrl = '/UploadedFiles/' + selectedFiles[j];
             var link = document.createElement('a');
             link.href = fileUrl;
             link.setAttribute('download', ''); // This attribute triggers the download
             link.click(); // Simulate a click event to initiate the download
         }
-
     }
 </script>

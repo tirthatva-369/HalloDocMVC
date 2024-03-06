@@ -61,7 +61,7 @@
                     </li>
             </div>
             <li class="nav-item">
-                <button id="logout" class="px-3">
+                <button id="logout" onclick="location.href='@Url.Action("Login", "Patient")'" class="px-3">
                     <span class=" d-none d-md-block">Logout</span><i class="bi bi-box-arrow-right d-md-none d-block"></i>
                 </button>
 
@@ -170,36 +170,37 @@
 
             </div>
 
-            <div class="container-fluid mt-5" style="background-color: aliceblue; display:none" id="viewdocs">
+            @* <div class="container-fluid mt-5" style="background-color: aliceblue; display:none"  id="viewdocs">
 
-                <div class="container bg-white p-4 ">
-                    <div class="d-flex justify-content-between mb-4">
-                        <h3>documents</h3>
-                        <button onclick="swapDivs()" id="backview">&lt; back</button>
-                    </div>
-                    <div class="row">
-                        <p class="col-12">patient name</p>
-                        <p class="col-12">
-                            <span class="fw-bolder fs-4">@Model.firstName @Model.lastName</span>
-                            <span>(f34r34t5gvr44)</span>
-                        </p>
-                        <p class="col-12 py-3">check here for any files that you or the doctors of your subsequents requestors have attached for you to review</p>
-                        <div class="col-12 mb-4">
-                            <form class="input-group" method="post" enctype="multipart/form-data">
-                                <input name="file" type="file" class="form-control" id="formFileLg" multiple>
-                                <button class="input-group-text bg-primary text-white" for="inputGroupFile02"><i class="bi bi-cloud-arrow-up m-1"></i>&nbsp;Upload</button>
-                                <br />
-                            </form>
-                        </div>
-
-                        <div class="row" id="docList">
-                        </div>
-                        <!-- row--- -->
-                    </div>
-
-                    <!-- ----container    -->
-                </div>
+            <div class="container bg-white p-4 ">
+            <div class="d-flex justify-content-between mb-4">
+            <h3>documents</h3>
+            <button onclick="swapDivs()" id="backview">&lt; back</button>
             </div>
+            <div class="row">
+            <p class="col-12">patient name</p>
+            <p class="col-12">
+            <span class="fw-bolder fs-4">@Model.firstName @Model.lastName</span>
+            <span>(f34r34t5gvr44)</span>
+            </p>
+            <p class="col-12 py-3">check here for any files that you or the doctors of your subsequents requestors have attached for you to review</p>
+            <div class="col-12 mb-4">
+            <form class="input-group" method="post"  enctype="multipart/form-data">
+            <input name="file" type="file" class="form-control" id="formFileLg" multiple>
+            <button  class="input-group-text bg-primary text-white" for="inputGroupFile02"><i class="bi bi-cloud-arrow-up m-1"></i>&nbsp;Upload</button>
+            <br />
+            </form>
+            </div>
+
+            <div class="row" id="docList">
+
+            </div>
+            <!-- row--- -->
+            </div>
+
+            <!-- ----container    -->
+            </div>
+            </div>*@
 
         </div>
 
@@ -352,31 +353,25 @@
         }
 
 
-        function swapDivs() {
+        //function swapDivs() {
+        //    document.getElementById("medicalHistory").style.display = "block";
+        //    document.getElementById("viewdocs").style.display = "none";
+        //}
 
-            // Get references to the div elements
-            document.getElementById("medicalHistory").style.display = "block";
-            document.getElementById("viewdocs").style.display = "none";
+        //function showDocuments( requestId) {
 
+        //    $.ajax({
+        //        url: '/Patient/GetDcoumentsById',
+        //        type: 'GET',
+        //        data: { requestId: requestId },
+        //        success: function (response) {
 
-
-
-        }
-
-        function showDocuments(requestId) {
-
-            $.ajax({
-                url: '/Patient/GetDcoumentsById',
-                type: 'GET',
-                data: { requestId: requestId },
-                success: function (response) {
-
-                    $("#docList").html(response);
-                }
-            });
-            document.getElementById('medicalHistory').style.display = 'none';
-            document.getElementById('viewdocs').style.display = 'block';
-        }
+        //            $("#docList").html(response);
+        //        }
+        //    });
+        //    document.getElementById('medicalHistory').style.display = 'none';
+        //    document.getElementById('viewdocs').style.display = 'block';
+        //}
 
 
 

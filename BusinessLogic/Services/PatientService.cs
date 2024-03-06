@@ -333,12 +333,19 @@ namespace BusinessLogic.Services
             return medicalHistoryList;
         }
 
-        public IQueryable<Requestwisefile>? GetAllDocById(int requestId)
+        public DocumentModel GetAllDocById(int requestId)
         {
-            var data = from request in _db.Requestwisefiles
-                       where request.Requestid == requestId
-                       select request;
-            return data;
+            var list = _db.Requestwisefiles.Where(x => x.Requestid == requestId).ToList();
+            var reqClient = _db.Requestclients.Where(x => x.Requestid == requestId).FirstOrDefault();
+            var req = _db.Requests.Where(x => x.Requestid == requestId).FirstOrDefault();
+            DocumentModel result = new()
+            {
+                files = list,
+                firstName = reqClient.Firstname,
+                lastName = reqClient.Lastname,
+                ConfirmationNumber = req.Confirmationnumber,
+            };
+            return result;
         }
 
         public void AddFile(IFormFile file, int reqId)
@@ -363,7 +370,6 @@ namespace BusinessLogic.Services
             _db.SaveChanges();
         }
 
-
         public Profile GetProfile(int userid)
         {
             var user = _db.Users.FirstOrDefault(x => x.Userid == userid);
@@ -377,21 +383,17 @@ namespace BusinessLogic.Services
                 City = user.City,
                 Street = user.Street,
                 ZipCode = user.Zip,
-
-
             };
             return profile;
         }
 
         public bool EditProfile(Profile profile)
         {
-
             try
             {
                 var existingUser = _db.Users.Where(x => x.Userid == profile.userId).FirstOrDefault();
                 if (existingUser != null)
                 {
-
                     existingUser.Firstname = profile.FirstName;
                     existingUser.Lastname = profile.LastName;
                     existingUser.Mobile = profile.PhoneNo;
@@ -410,6 +412,48 @@ namespace BusinessLogic.Services
                 }
             }
             catch (Exception ex) { return false; }
+        }
+
+        public bool UploadDocuments(List<IFormFile> files, int reqId)
+        {
+            try
+            {
+                if (files != null)
+                {
+                    foreach (IFormFile file in files)
+                    {
+                        if (file != null && file.Length > 0)
+                        {
+                            //get file name
+                            var fileName = Path.GetFileName(file.FileName);
+
+                            //define path
+                            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "UploadedFiles", fileName);
+
+                            // Copy the file to the desired location
+                            using (var stream = new FileStream(filePath, FileMode.Create))
+                            {
+                                file.CopyTo(stream);
+                            }
+
+                            Requestwisefile requestwisefile = new()
+                            {
+                                Filename = fileName,
+                                Requestid = reqId,
+                                Createddate = DateTime.Now
+                            };
+                            _db.Requestwisefiles.Add(requestwisefile);
+                        }
+                    }
+                    _db.SaveChanges();
+                    return true;
+                }
+                else { return false; }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
     }
 }

@@ -6,6 +6,9 @@ using AspNetCoreHero.ToastNotification.Extensions;
 using AspNetCoreHero.ToastNotification.Toastify;
 using DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ApplicationDbContext>();
@@ -22,6 +25,31 @@ builder.Services.AddSession(options =>
 builder.Services.AddScoped<ILoginInterface, LoginService>();
 builder.Services.AddScoped<IPatientInterface, PatientService>();
 builder.Services.AddScoped<IAdminInterface, AdminService>();
+builder.Services.AddScoped<IJwtService, JwtService>();
+
+
+
+
+//Jwt configuration starts here
+var jwtIssuer = builder.Configuration.GetSection("Jwt:Issuer").Get<string>();
+var jwtKey = builder.Configuration.GetSection("Jwt:Key").Get<string>();
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+ .AddJwtBearer(options =>
+ {
+     options.TokenValidationParameters = new TokenValidationParameters
+     {
+         ValidateIssuer = true,
+         ValidateAudience = true,
+         ValidateLifetime = true,
+         ValidateIssuerSigningKey = true,
+         ValidIssuer = jwtIssuer,
+         ValidAudience = jwtIssuer,
+         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
+     };
+ });
+//Jwt configuration ends here
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -37,6 +65,9 @@ app.UseStaticFiles();
 app.UseSession();
 
 app.UseRouting();
+app.UseAuthentication();
+
+
 
 app.UseAuthorization();
 

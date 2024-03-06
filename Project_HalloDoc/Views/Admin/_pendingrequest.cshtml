@@ -1,4 +1,4 @@
-﻿﻿@using DataAccess.Models;
+﻿@using DataAccess.Models;
 @using DataAccess.Enums;
 @model List<AdminDashTableModel>;
 
@@ -202,13 +202,13 @@
                                     </button>
                                     <ul class="dropdown-menu table_dropdowns">
                                         <li>
-                                            <a class="dropdown-item" href="@Url.Action("ViewCase",  new {Requestclientid = item.reqClientId, RequestTypeId = item.requestTypeId})">
+                                            <a class="dropdown-item" href="@Url.Action("ViewCase",  new {Requestclientid = item.reqId, RequestTypeId = item.requestTypeId})">
                                                 <i class="bi bi-file-earmark-text"></i>
                                                 View Case
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="#">
+                                            <a class="dropdown-item" asp-controller="Admin" asp-action="ViewUploads" asp-route-reqId=@item.reqId>
                                                 <i class="bi bi-file-earmark-text"></i>
                                                 View Uploads
                                             </a>

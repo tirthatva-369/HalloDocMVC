@@ -18,9 +18,9 @@ namespace BusinessLogic.Interfaces
         void AddBusinessRequest(BusinessRequestModel businessReqModel);
         Task<bool> IsEmailExists(string email);
         MedicalHistoryList GetMedicalHistory(int userid);
-        IQueryable<Requestwisefile>? GetAllDocById(int requestId);
+        DocumentModel GetAllDocById(int requestId);
         Profile GetProfile(int userid);
         bool EditProfile(Profile profile);
-        void AddFile(IFormFile file, int reqId);
+        bool UploadDocuments(List<IFormFile> files, int reqId);
     }
 }
