@@ -10,6 +10,7 @@ using System.Security.Cryptography;
 using System.Net.Mail;
 using System.Net;
 using Project_HalloDoc.Auth;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace HalloDoc.mvc.Controllers
 {
@@ -67,11 +68,14 @@ namespace HalloDoc.mvc.Controllers
         [CustomAuthorize("Admin")]
         public IActionResult AdminDashboard()
         {
-
             return View();
         }
 
-
+        public IActionResult Logout()
+        {
+            Response.Cookies.Delete("jwt");
+            return RedirectToAction("AdminLogin");
+        }
 
         public IActionResult GetCount()
         {
@@ -92,6 +96,15 @@ namespace HalloDoc.mvc.Controllers
             HttpContext.Session.SetInt32("RNId", ReqId);
             ViewNotesModel data = _adminService.ViewNotes(ReqId);
             return View(data);
+        }
+
+        public IActionResult Orders()
+        {
+            //var profession = _adminService.GetAllProfessions();
+            //var model = new OrdersModel { Profession = profession };
+            //ViewBag.Profession = new SelectList(profession);
+            var Profession = _adminService.GetAllProfessions();
+            return View(Profession);
         }
 
         public IActionResult GetRequestsByStatus(int tabNo)
@@ -276,5 +289,6 @@ namespace HalloDoc.mvc.Controllers
                 return RedirectToAction("ViewUploads", "Admin", new { reqId = rid });
             }
         }
+
     }
 }

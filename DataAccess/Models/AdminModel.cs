@@ -8,6 +8,8 @@ using DataAccess.Enums;
 using DataAccess.Enum;
 using DataAccess.DataModels;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
+
 
 namespace DataAccess.Models
 {
@@ -142,6 +144,17 @@ namespace DataAccess.Models
         public string? lastName { get; set; }
         public int? ReqId { get; set; }
         public List<IFormFile>? uploadedFiles { get; set; }
+    }
+
+    public class OrdersModel
+    {
+        public List<string> ProfessionList { get; set; }
+        public List<string> BusinessList { get; set; }
+        public string BusinessContact { get; set; }
+        public string Email { get; set; }
+        public string FaxNumber { get; set; }
+        public string Prescription { get; set; }
+        public int Refills { get; set; }
     }
 
 }

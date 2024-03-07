@@ -29,7 +29,7 @@ namespace BusinessLogic.Services
 
         public Aspnetuser GetAspnetuser(string email)
         {
-            var aspNetUser = _db.Aspnetusers.FirstOrDefault(x => x.Email == email);
+            var aspNetUser = _db.Aspnetusers.Include(x => x.Aspnetuserroles).FirstOrDefault(x => x.Email == email);
             return aspNetUser;
         }
 
@@ -454,6 +454,17 @@ namespace BusinessLogic.Services
                 return false;
             }
         }
+
+        public OrdersModel OrderDetais()
+        {
+            OrdersModel Order = new OrdersModel()
+            {
+                ProfessionList = _db.Healthprofessionaltypes.Select(x => x.Professionname).ToList(),
+                BusinessList = _db.Healthprofessionals.Select(x => x.Vendorname).ToList(),
+            };
+            return Order;
+        }
+
 
     }
 }
