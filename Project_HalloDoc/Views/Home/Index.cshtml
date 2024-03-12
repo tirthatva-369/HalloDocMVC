@@ -1,7 +1,7 @@
-﻿﻿@{
-    ViewData["Title"] = "Index";
+﻿@{
+    ViewData["Title"] = "PatientDashboard";
 }
-<link rel="stylesheet" href="~/css/DarkMode.css" />
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,32 +10,25 @@
     <title>Patient Request</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/css/PatientRequest.css">
+    <link rel="stylesheet" href="~/css/site.css">
+    <link rel="stylesheet" href="~/css/DarkMode.css" />
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
 </head>
 <body>
     <div class="container d-flex flex-column justify-content-between min-vh-100 ">
         <img class="float-right" onclick="toggleDarkMode()" id="d-mode" src="/images/dark.png" alt="dark">
         <div class="registration d-flex flex-column justify-content-center align-items-center">
-            <img id="logo" src="/images/logo.png" alt="logo">
+            <a asp-controller="Home" asp-action="Index">
+                <img id="logo" src="/images/logo.png" alt="logo">
+            </a>
 
             <button onclick="location.href='@Url.Action("RequestScreen", "Patient")'" class="light-blue">Submit A Request</button>
-
             <button onclick="location.href='@Url.Action("Login", "Patient")'" class="dark-blue">Register Patients</button>
-            <a asp-controller="Admin" asp-action="AdminLogin">Admin</a>
+            <button onclick="location.href='@Url.Action("AdminLogin", "Admin")'" class="light-yellow">Admin</button>
         </div>
         <footer class="mb-3">Terms of Conditions | Privacy Policy</footer>
     </div>
 
     <script src="~/js/DarkMode.js"></script>
-    <!-- script  -->
-    @*<script>
-    function darkMode() {
-    var element = document.body;
-    element.classList.toggle("dark-mode");
-
-    var img = element.querySelector("#d-mode")
-    img.src.includes("dark") ? img.src = "../images/light.png" : img.src = "../images/dark.png";
-    }
-    </script>*@
 </body>
 </html>

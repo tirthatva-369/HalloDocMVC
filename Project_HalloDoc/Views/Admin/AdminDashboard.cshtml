@@ -310,6 +310,7 @@
                 }
             });
         }
+        
 
         function showBlockCase(reqId) {
             $.ajax({
@@ -319,6 +320,30 @@
                 success: function (response) {
                     $("#modelContent").html(response);
                     $('#blockModal').modal('show');
+                }
+            });
+        }
+
+        function showTransferCase(reqId) {
+            $.ajax({
+                url: '/Admin/TransferCase',
+                type: 'GET',
+                data: { reqId: reqId },
+                success: function (response) {
+                    $("#modelcontent2").html(response);
+                    $('#transferModal').modal('show');
+                }
+            });
+        }
+
+        function showSendAgreement(reqId) {
+            $.ajax({
+                url: '/Admin/SendAgreement',
+                type: 'GET',
+                data: { reqId: reqId },
+                success: function (response) {
+                    $("#modelcontent2").html(response);
+                    $('#sendAgreementModal').modal('show');
                 }
             });
         }

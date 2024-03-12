@@ -1,11 +1,10 @@
-﻿﻿@{
-    ViewData["Title"] = "RequestScreen";
-}
+﻿
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
+    <title>Request Screen</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
     <link rel="stylesheet" href="~/css/RequestScreen.css">
@@ -17,7 +16,7 @@
 
         <partial name="_navbar" />
         <button onclick="location.href='@Url.Action("Index", "Home")'" id="back-btn">&lt; Back</button>
-        <div class="container">
+        <div class="container mt-5">
 
             <h2 class="mt-5">I am a ...</h2>
             <button onclick="location.href='@Url.Action("CreatePatientReq", "Patient")'" class="req-btn purple">PATIENT</button>

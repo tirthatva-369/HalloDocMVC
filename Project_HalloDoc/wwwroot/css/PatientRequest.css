@@ -45,13 +45,18 @@ button {
 }
 
 .dark-blue {
-    background-color: blue;
-    border-color: blue;
+    background-color: rgb(0, 148, 255);
+    border-color: rgb(0, 148, 255);
 }
 
 .light-blue {
-    background-color: rgb(0, 183, 255);
-    border-color: rgb(0, 183, 255);
+    background-color: rgb(115, 215, 255);
+    border-color: rgb(115, 215, 255);
+}
+
+.light-yellow {
+    background-color: rgb(0, 38, 255);
+    border-color: rgb(0, 38, 255);
 }
 
 #d-mode {

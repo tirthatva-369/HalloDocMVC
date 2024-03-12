@@ -108,7 +108,7 @@ namespace HalloDoc.mvc.Controllers
             }
             else
             {
-                return View(patientInfoModel);
+                return RedirectToAction("CreatePatientReq", patientInfoModel);
             }
         }
 

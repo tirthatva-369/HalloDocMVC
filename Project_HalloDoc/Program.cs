@@ -52,6 +52,24 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 var app = builder.Build();
 
+app.Use(async (context, next) =>
+{
+    if (context.Request.Path.StartsWithSegments("/Admin"))
+    {
+        context.Response.Headers.Add("Cache-Control", "no-cache, no-store, must-revalidate");
+        context.Response.Headers.Add("Pragma", "no-cache");
+        context.Response.Headers.Add("Expires", "0");
+    }
+
+    if (context.Request.Path.StartsWithSegments("/Patient"))
+    {
+        context.Response.Headers.Add("Cache-Control", "no-cache, no-store, must-revalidate");
+        context.Response.Headers.Add("Pragma", "no-cache");
+        context.Response.Headers.Add("Expires", "0");
+    }
+
+    await next.Invoke();
+});
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -76,3 +94,5 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+
+

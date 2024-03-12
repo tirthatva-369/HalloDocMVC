@@ -146,15 +146,18 @@ namespace DataAccess.Models
         public List<IFormFile>? uploadedFiles { get; set; }
     }
 
-    public class OrdersModel
+    public class Order
     {
-        public List<string> ProfessionList { get; set; }
-        public List<string> BusinessList { get; set; }
-        public string BusinessContact { get; set; }
-        public string Email { get; set; }
-        public string FaxNumber { get; set; }
-        public string Prescription { get; set; }
-        public int Refills { get; set; }
+        public int? ReqId { get; set; }
+        public List<Healthprofessionaltype> Profession { get; set; }
+        public List<Healthprofessional> Business { get; set; }
+        public string BusineesContact { get; set; }
+        public string email { get; set; }
+        public string faxnumber { get; set; }
+        public string orderdetail { get; set; }
+        public int refills { get; set; }
+        public int vendorid { get; set; }
+        public string uName { get; set; }
     }
 
 }

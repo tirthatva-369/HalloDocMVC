@@ -15,6 +15,7 @@ using DataAccess.Enums;
 using DataAccess.Enum;
 using System.Collections;
 using Microsoft.AspNetCore.Http;
+using System.Text.Json.Nodes;
 
 namespace BusinessLogic.Services
 {
@@ -261,7 +262,38 @@ namespace BusinessLogic.Services
                 lastName = reqClient.Lastname,
             };
             return result;
+        }
 
+        public Order FetchProfession()
+        {
+
+
+            var Healthprofessionaltype = _db.Healthprofessionaltypes.ToList();
+
+            Order order = new()
+            {
+                Profession = Healthprofessionaltype
+
+            };
+            return order;
+        }
+        public JsonArray FetchVendors(int proffesionId)
+        {
+            var result = new JsonArray();
+            IEnumerable<Healthprofessional> businesses = _db.Healthprofessionals.Where(prof => prof.Profession == proffesionId);
+
+            foreach (Healthprofessional business in businesses)
+            {
+                result.Add(new { businessId = business.Vendorid, businessName = business.Vendorname });
+            }
+            return result;
+        }
+
+        public Healthprofessional VendorDetails(int selectedValue)
+        {
+            Healthprofessional business = _db.Healthprofessionals.First(prof => prof.Vendorid == selectedValue);
+
+            return business;
         }
 
         public AssignCaseModel AssignCase(int reqId)
@@ -455,16 +487,73 @@ namespace BusinessLogic.Services
             }
         }
 
-        public OrdersModel OrderDetais()
+        public Orderdetail SendOrderDetails(Order order)
         {
-            OrdersModel Order = new OrdersModel()
+            var reqData = _db.Requests.Where(x => x.Requestid == order.ReqId).FirstOrDefault();
+            var usersData = _db.Users.Where(x => x.Userid == reqData.Userid).FirstOrDefault();
+            var aspnetusersData = _db.Aspnetusers.Where(x => x.Id == usersData.Aspnetuserid).FirstOrDefault();
+            Orderdetail orderDetail = new()
             {
-                ProfessionList = _db.Healthprofessionaltypes.Select(x => x.Professionname).ToList(),
-                BusinessList = _db.Healthprofessionals.Select(x => x.Vendorname).ToList(),
+                Vendorid = order.vendorid,
+                Requestid = order.ReqId,
+                Faxnumber = order.faxnumber,
+                Email = order.email,
+                Businesscontact = order.BusineesContact,
+                Prescription = order.orderdetail,
+                Noofrefill = order.refills,
+                Createddate = DateTime.Now,
+                Createdby = aspnetusersData.Username,
             };
-            return Order;
+            _db.Orderdetails.Add(orderDetail);
+            _db.SaveChanges();
+
+            return orderDetail;
         }
 
+        public bool SendOrder(Order order)
+        {
+            try
+            {
+                Orderdetail od = new Orderdetail();
+                od.Vendorid = order.vendorid;
+                od.Requestid = order.ReqId;
+                od.Faxnumber = order.faxnumber;
+                od.Email = order.email;
+                od.Businesscontact = order.BusineesContact;
+                od.Prescription = order.orderdetail;
+                od.Noofrefill = order.refills;
+                od.Createddate = DateTime.Now;
+                od.Createdby = "Admin";
 
+                _db.Orderdetails.Add(od);
+                _db.SaveChanges();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public bool ClearCase(int reqId)
+        {
+            try
+            {
+                var request = _db.Requests.FirstOrDefault(x => x.Requestid == reqId);
+                if (request != null)
+                {
+                    request.Status = (int)StatusEnum.Clear;
+                    _db.Requests.Update(request);
+                    _db.SaveChanges();
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
     }
 }

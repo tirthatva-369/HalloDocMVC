@@ -1,23 +1,15 @@
-﻿﻿@using DataAccess.Models;
-@{
-    ViewData["Title"] = "PatientDashboard";
-
-}
+﻿<!DOCTYPE html>
+<html lang="en">
+﻿@using DataAccess.Models;
+@model MedicalHistoryList;
 @{
     string[] Status = { "Unassigned", "Accepted" , "Cancelled" , "MDEnRoute" , "MDEnRoute" , "MDOnSite" ,
                 "Conclude" , "CancelledByPatient" , "Closed" , "Unpaid" , "Clear"   };
 }
 
-@model MedicalHistoryList;
-
-<!DOCTYPE html>
-<html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8" />
     <title>dashboard</title>
-    <link rel="stylesheet" href="~/css/PatientDashboard.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
@@ -28,15 +20,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.js" integrity="sha512-+k1pnlgt4F1H8L7t3z95o3/KO+o78INEcXTbnoJQ/F2VqDVhWoaiVml/OEHv9HsVgxUaVW+IbiZPUJQfF/YxZw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="~/css/PatientDashboard.css">
+    <link rel="stylesheet" href="~/css/site.css">
 
 </head>
 
 <body style="background-color: aliceblue;">
-
-
-
     <nav class="bg-white navbr navbar navbar-expand w-100 ">
-
         <div class="container-fluid">
             <div class="d-flex align-items-center">
                 <button class="navbar-toggler d-block d-lg-none" type="button" data-bs-toggle="collapse"
@@ -55,13 +45,13 @@
                     </li>
                     <li class="nav-item p-2 fw-bolder">
                         <span class="d-flex gap-1">
-                            <span>@Model.firstName</span>
-                            <span>@Model.lastName</span>
+                            <span>@(Model.firstName)</span>
+                            <span>@(Model.lastName)</span>
                         </span>
                     </li>
             </div>
             <li class="nav-item">
-                <button id="logout" onclick="location.href='@Url.Action("Login", "Patient")'" class="px-3">
+                <button id="logout" onclick="location.href='@(Url.Action("Login", "Patient"))'" class="px-3">
                     <span class=" d-none d-md-block">Logout</span><i class="bi bi-box-arrow-right d-md-none d-block"></i>
                 </button>
 
@@ -138,13 +128,13 @@
                                         {
 
                                             <tr>
-                                                <td>@items.createdDate.ToString("MMM dd, yyyy")</td>
-                                                <td>@Status[items.currentStatus]</td>
+                                                <td>@(items.createdDate.ToString("MMM dd, yyyy"))</td>
+                                                <td>@(Status[items.currentStatus])</td>
                                                 <td>
-                                                    <a class="btn btn-outline-info fw-bold" asp-controller="Patient" asp-action="DocumentList" asp-route-reqId=@items.reqId>
+                                                    <a class="btn btn-outline-info fw-bold" asp-controller="Patient" asp-action="DocumentList" asp-route-reqId=@(items.reqId)>
                                                         <span><i class="bi bi-file-earmark fw-bold"></i></span>
                                                         <span>
-                                                            View Documents (@items.document.Count())
+                                                            View Documents (@(items.document.Count()))
 
                                                         </span>
                                                     </a>

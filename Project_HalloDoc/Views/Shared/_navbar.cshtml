@@ -1,17 +1,13 @@
-﻿﻿
-@*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@
-<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+﻿<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 <style>
     .dark-mode {
         background-color: rgb(46, 44, 44);
-        color: white;
+        color: black;
     }
 
     #navbar {
-        background-color: #FFFFFF;
-        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .2);
+/*         background-color: #FFFFFF;
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .2); */
         position: fixed;
     }
 
@@ -30,14 +26,17 @@
         width: 9rem;
         margin-left: 5rem;
     }
-
 </style>
+
 <link rel="stylesheet" href="~/css/DarkMode.css" />
 
 <nav id="navbar" class="fixed-top">
-    <img id="nav-logo" src="/images/logo.png" alt="logo">
+    <a asp-controller="Home" asp-action="Index">
+        <img id="nav-logo" src="/images/logo.png" alt="logo">
+    </a>
     <img onclick="toggleDarkMode()" class="light" src="/images/dark.png" alt="">
 </nav>
+
 <script src="~/js/DarkMode.js"></script>
 
 <script>
@@ -54,28 +53,20 @@
         const e4 = document.getElementById('main-cont');
         e4.classList.toggle('dark-mode');
 
-
-
-
         if (e1.classList.contains('dark-mode')) {
             e2.style.backgroundColor = 'black';
             e3.style.backgroundColor = 'black';
             e4.style.backgroundColor = 'rgba(255, 255, 255, 0.884)';
             e4.style.color = 'black';
-
-
-        } else {
+        } 
+        else {
             e2.style.backgroundColor = 'white';
             e3.style.backgroundColor = '';
             e4.style.backgroundColor = '';
             e4.style.color = ''
-
         }
 
         var img = e1.querySelector(".light")
         img.src.includes("dark") ? img.src = "../images/light.png" : img.src = "../images/dark.png";
-
-
-
     }
 </script>

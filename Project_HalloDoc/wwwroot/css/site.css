@@ -5,7 +5,11 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
-
+@supports not (-apple-trailing-word: inherit) {
+    div[data-slate-editor] {
+        -webkit-user-modify: read-write !important;
+    }
+}
 
 .iti {
     width: 100%;

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 
 namespace BusinessLogic.Interfaces
@@ -28,6 +29,11 @@ namespace BusinessLogic.Interfaces
         bool UploadFiles(List<IFormFile> files, int reqId);
         bool DeleteFileById(int reqFileId);
         bool DeleteAllFiles(List<string> filename, int reqId);
-        public OrdersModel OrderDetails();
+        Order FetchProfession();
+        JsonArray FetchVendors(int selectedValue);
+        Healthprofessional VendorDetails(int selectedValue);
+        Orderdetail SendOrderDetails(Order order);
+        bool SendOrder(Order order);
+        bool ClearCase(int reqId);
     }
 }

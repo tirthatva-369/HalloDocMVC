@@ -1,0 +1,175 @@
+﻿@using DataAccess.Models
+@model Order
+
+<style>
+    .select-wrapper {
+        position: relative;
+    }
+
+        .select-wrapper::after {
+            content: 'U+F282';
+            font-size: 1rem;
+            top: 20px;
+            right: 10px;
+            position: absolute;
+        }
+</style>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="~/css/AdminDashboard.css">
+</head>
+
+<body class="bg-white">
+    <partial name="_navbar" />
+
+    <div class="container mt-5 pt-5">
+        <div class="d-flex flex-row-reverse mb-3 justify-content-between">
+            <button onclick="location.href='@Url.Action("AdminDashboard", "Admin") type="button" class="back btn btn-outline-info">
+                &lt&nbspBack
+            </button>
+            <h3 class="fw-bolder mt-2 justify-content-start">
+                Send Order
+            </h3>
+        </div>
+        <form method="post" asp-action="OrderDetails" asp-controller="Admin" asp-route-requestId=@Model.ReqId class="container mb-5 p-0" id="main-cont">
+            <div class="container bg-white p-4 rounded-3 shadow">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-floating">
+                            <select class="form-control p-3 shadow-none" id="Healthprofessionalid">
+                                <option disabled selected value="false">Select Profession</option>
+                                @if (Model.Profession != null)
+                                {
+                                    @foreach (var items in Model.Profession)
+                                    {
+                                        <option value="@items.Healthprofessionalid">@items.Professionname</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-floating">
+                            <select asp-for="vendorid" class="form-control p-3 shadow-none" id="Vendorid">
+                                <option disabled selected value="false">Select Business</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="input-div form-floating my-3">
+                            <input  type="text" class="form-control shadow-none" id="businessContact" placeholder="" disabled>
+                            <input asp-for="BusineesContact" type="text" class="form-control shadow-none" id="businessContactHid" placeholder="" hidden readonly>
+                            <label for="floatingInput">Business Contact</label>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="input-div form-floating my-3">
+                            <input type="email" class="form-control shadow-none" id="businessEmail" placeholder="" disabled>
+                            <input type="email" asp-for="email" class="form-control shadow-none" id="businessEmailHid" placeholder="" hidden readonly>
+                            <label for="floatingInput">Email</label>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="input-div form-floating mb-3">
+                            <input type="text" class="form-control shadow-none" id="businessFaxNumber" placeholder="" disabled>
+                            <input asp-for="faxnumber" type="text" class="form-control shadow-none" id="businessFaxNumberHid" placeholder="" hidden readonly>
+                            <label for="floatingInput">Fax Number</label>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="input-div form-floating mb-3">
+                            <textarea asp-for="orderdetail" class="form-control shadow-none" placeholder="" id="floatingTextarea2"
+                                      style="height: 100px"></textarea>
+                            <label for="floatingInput">Prescription or Order Details</label>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-floating">
+                            <select asp-for="refills" class="form-control p-3 shadow-none" id="floatingSelect">
+                                <option disabled selected value="false">Number of Refills</option>
+                                <option>5</option>
+                                <option>10</option>
+                                <option>15</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex col w-auto mt-3 justify-content-end">
+                    <button role="button" class="back btn btn-outline-info me-3" type="submit">
+                        Submit
+                    </button>
+                    <button class="back btn btn-outline-info" type="reset">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+
+    $('#Healthprofessionalid').on('change', function () {
+        let selectedValue = $('option:selected', this).val();
+        $.ajax({
+            url: '/Admin/FetchBusiness',
+            method: 'GET',
+            data: { proffesionId: selectedValue },
+            success: function (response) {
+                $('#Vendorid').empty();
+                $('#businessContact').val("");
+                $('#businessContactHid').val("");
+                $('#businessFaxNumber').val("");
+                $('#businessFaxNumberHid').val("");
+                $('#businessEmail').val("");
+                $('#businessEmailHid').val("");
+
+                $('#Vendorid').html("<option>" + "Select Business" + "</option>");
+                for (var i = 0; i < response.length; i++) {
+                    $("#Vendorid").append('<option value = "' + response[i].businessId + '" >' + response[i].businessName + '</option>');
+                }
+            },
+            error: function (error) {
+                console.error('Error fetching data: ' + error);
+            }
+        });
+    });
+
+    $('#Vendorid').change(function () {
+        var selectedValue = $('option:selected', this).val();
+        $.ajax({
+            url: '/Admin/VendorDetails',
+            type: 'GET',
+            data: {
+                selectedValue: selectedValue,
+            },
+            success: function (result) {
+                console.log(result);
+                $('#businessFaxNumber').val(result["faxnumber"]);
+                $('#businessFaxNumberHid').val(result["faxnumber"]);
+                $('#businessContact').val(result["businesscontact"]);
+                $('#businessContactHid').val(result["businesscontact"]);
+                $('#businessEmail').val(result["email"]);
+                $('#businessEmailHid').val(result["email"]);
+            },
+            error: function (err) {
+                console.error(err);
+            }
+        });
+    });
+
+</script>

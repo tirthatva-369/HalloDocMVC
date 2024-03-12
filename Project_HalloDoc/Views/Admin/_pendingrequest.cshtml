@@ -202,40 +202,40 @@
                                     </button>
                                     <ul class="dropdown-menu table_dropdowns">
                                         <li>
-                                            <a class="dropdown-item" href="@Url.Action("ViewCase",  new {Requestclientid = item.reqId, RequestTypeId = item.requestTypeId})">
+                                            <a class="dropdown-item" href="@Url.Action("viewcase",  new {Requestclientid = item.reqClientId , RequestTypeId = item.requestTypeId})">
                                                 <i class="bi bi-file-earmark-text"></i>
                                                 View Case
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" asp-controller="Admin" asp-action="ViewUploads" asp-route-reqId=@item.reqId>
+                                            <a class="dropdown-item" asp-controller="Admin" asp-action="viewuploads" asp-route-reqId=@item.reqId>
                                                 <i class="bi bi-file-earmark-text"></i>
                                                 View Uploads
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="@Url.Action("ViewNote", new {ReqId = item.reqId})">
+                                            <a class="dropdown-item" href="@Url.Action("viewnotes", new {ReqId = item.reqId})">
                                                 <i class="bi bi-file-earmark-text"></i>
                                                 View Notes
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="#">
+                                            <button class="dropdown-item" onclick="showTransferCase(@item.reqId)">
                                                 <i class="bi bi-card-checklist"></i>
                                                 Transfer
-                                            </a>
+                                            </button>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="#">
+                                            <button class="dropdown-item" onclick="showCancelCase(@item.reqId)">
                                                 <i class="bi bi-x-circle"></i>
                                                 Cancel Case
-                                            </a>
+                                            </button>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="#">
+                                            <button class="dropdown-item" onclick="showSendAgreement(@item.reqId)">
                                                 <i class="bi bi-file-earmark-text"></i>
                                                 Send Agreement
-                                            </a>
+                                            </button>
                                         </li>
 
                                     </ul>
@@ -249,6 +249,9 @@
     </table>
 </div>
 
+<div id="modelcontent2"></div>
+
 <!-- accordions -->
 <div class="accordion accordion-flush d-block d-md-none" id="accordionFlushExample">
 </div>
+

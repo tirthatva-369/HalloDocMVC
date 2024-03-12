@@ -11,6 +11,8 @@ using System.Net.Mail;
 using System.Net;
 using Project_HalloDoc.Auth;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis.Elfie.Serialization;
+using System.Text.Json.Nodes;
 
 namespace HalloDoc.mvc.Controllers
 {
@@ -98,14 +100,6 @@ namespace HalloDoc.mvc.Controllers
             return View(data);
         }
 
-        public IActionResult Orders()
-        {
-            //var profession = _adminService.GetAllProfessions();
-            //var model = new OrdersModel { Profession = profession };
-            //ViewBag.Profession = new SelectList(profession);
-            var Profession = _adminService.GetAllProfessions();
-            return View(Profession);
-        }
 
         public IActionResult GetRequestsByStatus(int tabNo)
         {
@@ -175,6 +169,34 @@ namespace HalloDoc.mvc.Controllers
                 return RedirectToAction("AdminDashboard", "Admin");
             }
             return View();
+        }
+        public IActionResult Order(int reqId)
+        {
+            var order = _adminService.FetchProfession();
+            order.ReqId = reqId;
+            return View(order);
+        }
+
+        [HttpPost]
+        public IActionResult OrderDetails(Order order, int requestId)
+        {
+            order.ReqId = requestId;
+            _adminService.SendOrderDetails(order);
+            return RedirectToAction("AdminDashboard", "Admin");
+        }
+
+        [HttpGet]
+        public JsonArray FetchBusiness(int proffesionId)
+        {
+            var result = _adminService.FetchVendors(proffesionId);
+            return result;
+        }
+
+        [HttpGet]
+        public Healthprofessional VendorDetails(int selectedValue)
+        {
+            var result = _adminService.VendorDetails(selectedValue);
+            return result;
         }
 
         public IActionResult AssignCase(int reqId)
@@ -290,5 +312,46 @@ namespace HalloDoc.mvc.Controllers
             }
         }
 
+        [HttpGet]
+        public IActionResult ClearCase(int reqId)
+        {
+            ViewBag.ClearCaseId = reqId;
+            return PartialView("_clearcase");
+        }
+
+        [HttpGet]
+        public IActionResult TransferCase(int reqId)
+        {
+            var model = _adminService.AssignCase(reqId);
+            model.ReqId = reqId;
+            return PartialView("_transfer", model);
+        }
+
+        [HttpPost]
+        public IActionResult SubmitTransferCase(AssignCaseModel transferCaseModel)
+        {
+            bool isTransferred = _adminService.SubmitAssignCase(transferCaseModel);
+            return Json(new { isTransferred = isTransferred });
+        }
+
+        [HttpPost]
+        public IActionResult SubmitClearCase(int reqId)
+        {
+            bool isClear = _adminService.ClearCase(reqId);
+            if (isClear)
+            {
+                _notyf.Success("Cleared Successfully");
+                return RedirectToAction("admin_dashboard");
+            }
+            _notyf.Error("Failed");
+            return RedirectToAction("admin_dashboard");
+        }
+
+        public IActionResult CloseCase(int reqId)
+        {
+            HttpContext.Session.SetInt32("rid", reqId);
+            var model = _adminService.GetAllDocById(reqId);
+            return View(model);
+        }
     }
 }

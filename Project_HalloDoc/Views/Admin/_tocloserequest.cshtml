@@ -1,4 +1,4 @@
-﻿﻿@using DataAccess.Models;
+﻿@using DataAccess.Models;
 @using DataAccess.Enums;
 @model List<AdminDashTableModel>;
 
@@ -101,11 +101,14 @@
                     {
                         bgColor = "#60be5e";
                         role = "Patient";
+
+
                     }
                     else if (item.requestTypeId == (int)RequestTypeEnum.Family)
                     {
                         bgColor = "#e69232";
                         role = "FamilyFriend";
+
                     }
                     else if (item.requestTypeId == (int)RequestTypeEnum.Concierge)
                     {
@@ -116,6 +119,7 @@
                         @*1*@
                         <td style="background:@bgColor">
                             <div class="d-flex justify-content-between">
+
                                 <span>@item.firstName @item.lastName</span>
                                 <a href="">
                                     <i class="bi bi-envelope text-white "></i>
@@ -125,7 +129,7 @@
                         @*2*@
                         <td style="background:@bgColor">Jun 16, 2023(0)</td>
                         @*3*@
-                        <td style="background:@bgColor">@item.requestorFname @item.requestorLname</td>
+                        <td mailto:style="background:@bgColor"> @item.requestorLname</td>
                         @*4*@
                         <td style="background:@bgColor">Nov 20, 2023 335h 1m 01m</td>
                         @*@item.strMonth @item.intDate , @item.intYear*@
@@ -138,14 +142,17 @@
                                 </a>
                             </div>
                             (@role)
+
+
                         </td>
                         @if ((item.street != null || item.city != null) || item.state != null)
                         {
-                            <td style="background:@bgColor">@item.street, @item.city, @item.state </td>
+                            <td mailto:style="background:@bgColor">, @item.city, @item.state </td>
                         }
                         else
                         {
                             <td style="background:@bgColor"> - </td>
+
                         }
 
                         @*7*@
@@ -165,6 +172,7 @@
                                     </button>
 
                                 </div>
+
                             </div>
                             <div>
                                 <div class="dropdown w-75">
@@ -176,6 +184,7 @@
                                             Provider
                                         </span>
                                     </button>
+
                                 </div>
                             </div>
                         </td>
@@ -183,36 +192,40 @@
                         <td style="background:@bgColor">
                             <div>
                                 <div class="dropdown mt-3">
-                                    <button class="btn text-white border border-white py-1  dropdown-toggle w-50 d-flex justify-content-around align-items-center" id="chat_with_dropdown2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <span>Actions</span>
+                                    <button class="btn text-white border border-white py-1  dropdown-toggle w-50 d-flex justify-content-around align-items-center"
+                                            id="chat_with_dropdown2" type="button" data-bs-toggle="dropdown"
+                                            aria-expanded="false">
+                                        <span>
+                                            Actions
+                                        </span>
                                     </button>
                                     <ul class="dropdown-menu table_dropdowns">
                                         <li>
-                                            <a class="dropdown-item" href="@Url.Action("ViewCase", new {Requestclientid = item.reqClientId, RequestTypeId = item.requestTypeId})">
+                                            <a class="dropdown-item" href="@Url.Action("viewcase", new {Requestclientid = item.reqClientId , RequestTypeId = item.requestTypeId})">
                                                 <i class="bi bi-file-earmark-text"></i>
                                                 ViewCase
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="#">
+                                            <a class="dropdown-item" asp-controller="Admin" asp-action="viewuploads" asp-route-reqId=@item.reqId>
                                                 <i class="bi bi-file-earmark-text"></i>
                                                 ViewUploads
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="@Url.Action("ViewNote", new {ReqId = item.reqId})">
+                                            <a class="dropdown-item" href="@Url.Action("viewnotes", new {ReqId = item.reqId})">
                                                 <i class="bi bi-file-earmark-text"></i>
                                                 ViewNotes
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="@Url.Action("Orders")">
+                                            <a class="dropdown-item" href="@Url.Action("orders", new {ReqId = item.reqId})">
                                                 <i class="bi bi-file-earmark-text"></i>
                                                 Orders
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="#">
+                                            <a class="dropdown-item" href="@Url.Action("CloseCase", new {ReqId = item.reqId})">
                                                 <i class="bi bi-x-circle"></i>
                                                 Close Case
                                             </a>
@@ -224,10 +237,10 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="#">
+                                            <button class="dropdown-item" onclick="clearCase(@item.reqId)">
                                                 <i class="bi bi-x-circle"></i>
                                                 Clear Case
-                                            </a>
+                                            </button>
                                         </li>
                                         <li>
                                             <a class="dropdown-item" href="#">
@@ -246,7 +259,25 @@
         </tbody>
     </table>
 </div>
-
+<div id="modelContent3"></div>
 <!-- accordions -->
 <div class="accordion accordion-flush d-block d-md-none" id="accordionFlushExample">
 </div>
+
+<script>
+    function clearCase(reqId) {
+        var url = '@Url.Action("ClearCase","Admin")';
+
+        $.ajax({
+            url: url,
+            type: 'GET',
+            data: { reqId: reqId },
+            success: function (response) {
+                console.log(response);
+                $("#modelContent3").html(response);
+
+                $('#clearModal').modal('show');
+            }
+        });
+    }
+</script>

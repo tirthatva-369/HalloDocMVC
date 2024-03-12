@@ -37,7 +37,9 @@
             <div class="col-lg-6 col-md-6 col-sm-12 right">
                 <img onclick="darkMode()" class="d-mode" src="/images/dark.png" alt="dark">
                 <form asp-controller="Admin" asp-action="AdminLogin" class="login">
-                    <img id="logo" src="/images/logo.png" alt="logo">
+                    <a asp-controller="Home" asp-action="Index">
+                        <img id="logo" src="/images/logo.png" alt="logo">
+                    </a>
                     <h3>Login to your account</h3>
 
                     <div class="row w-50 form-floating mb-3 mt-3">
