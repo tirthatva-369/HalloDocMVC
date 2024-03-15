@@ -13,6 +13,7 @@ using System.Net;
 using Humanizer;
 using DataAccess.Enum;
 using DataAccess.Enums;
+using Microsoft.Build.Framework;
 
 namespace BusinessLogic.Services
 {
@@ -32,115 +33,137 @@ namespace BusinessLogic.Services
         {
             using (var transaction = _db.Database.BeginTransaction())
             {
-                var aspnetuser = _db.Aspnetusers.Where(m => m.Email == patientRequestModel.email).FirstOrDefault();
-                User user = new User();
-                if (aspnetuser == null)
+                try
                 {
-                    Aspnetuser aspnetuser1 = new Aspnetuser();
-                    aspnetuser1.Id = Guid.NewGuid().ToString();
-                    aspnetuser1.Passwordhash = patientRequestModel.password;
-                    aspnetuser1.Email = patientRequestModel.email;
-                    string username = patientRequestModel.firstName + patientRequestModel.lastName;
-                    aspnetuser1.Username = username;
-                    aspnetuser1.Phonenumber = patientRequestModel.phoneNo;
-                    aspnetuser1.Modifieddate = DateTime.Now;
-                    _db.Aspnetusers.Add(aspnetuser1);
-
-                    user.Aspnetuserid = aspnetuser1.Id;
-                    user.Firstname = patientRequestModel.firstName;
-                    user.Lastname = patientRequestModel.lastName;
-                    user.Email = patientRequestModel.email;
-                    user.Mobile = patientRequestModel.phoneNo;
-                    user.Street = patientRequestModel.street;
-                    user.City = patientRequestModel.city;
-                    user.State = patientRequestModel.state;
-                    user.Zip = patientRequestModel.zipCode;
-                    user.Createdby = patientRequestModel.firstName + patientRequestModel.lastName;
-                    user.Intyear = patientRequestModel.dateOfBirth.Year;
-                    user.Intdate = patientRequestModel.dateOfBirth.Day;
-                    user.Strmonth = patientRequestModel.dateOfBirth.ToString("MMM");
-                    user.Createddate = DateTime.Now;
-                    user.Modifieddate = DateTime.Now;
-                    user.Status = (int)StatusEnum.Unassigned;
-                    user.Regionid = 1;
-
-                    _db.Users.Add(user);
-                }
-                else
-                {
-                    user = _db.Users.Where(m => m.Email == patientRequestModel.email).FirstOrDefault();
-                }
-
-                var regionData = _db.Regions.Where(x => x.Regionid == user.Regionid).FirstOrDefault();
-                Request request = new Request();
-                request.Requesttypeid = (int)RequestTypeEnum.Patient; ;
-                request.Status = (int)StatusEnum.Unassigned;
-                request.Createddate = DateTime.Now;
-                request.Modifieddate = DateTime.Now;
-                request.Isurgentemailsent = new BitArray(1);
-                request.Firstname = patientRequestModel.firstName;
-                request.Lastname = patientRequestModel.lastName;
-                request.Phonenumber = patientRequestModel.phoneNo;
-                request.Email = patientRequestModel.email;
-                request.User = user;
-
-                _db.Requests.Add(request);
-                _db.SaveChanges();
-
-                var count = (from req in _db.Requests where req.Userid == user.Userid && req.Createddate.Date == DateTime.Now.Date select req).Count();
-                request.Confirmationnumber = $"{regionData.Abbreviation.Substring(0, 2)}{request.Createddate.Day.ToString().PadLeft(2, '0')}{request.Createddate.Month.ToString().PadLeft(2, '0')}{(request.Createddate.Year % 100).ToString().PadLeft(2, '0')}{user.Lastname.ToUpper().Substring(0, 2)}{user.Firstname.ToUpper().Substring(0, 2)}{count.ToString().PadLeft(4, '0')}";
-
-                _db.Requests.Update(request);
-                _db.SaveChanges();
-
-                Requestclient info = new Requestclient();
-                info.Request = request;
-                info.Notes = patientRequestModel.symptoms;
-                info.Firstname = patientRequestModel.firstName;
-                info.Lastname = patientRequestModel.lastName;
-                info.Phonenumber = patientRequestModel.phoneNo;
-                info.Email = patientRequestModel.email;
-                info.Street = patientRequestModel.street;
-                info.City = patientRequestModel.city;
-                info.State = patientRequestModel.state;
-                info.Zipcode = patientRequestModel.zipCode;
-                info.Regionid = 1;
-                info.Intyear = patientRequestModel.dateOfBirth.Year;
-                info.Intdate = patientRequestModel.dateOfBirth.Day;
-                info.Strmonth = patientRequestModel.dateOfBirth.Month.ToString("MMM");
-                info.Address = patientRequestModel.street + ", " + patientRequestModel.city + ", " + patientRequestModel.state + ", " + patientRequestModel.zipCode;
-
-                _db.Requestclients.Add(info);
-                _db.SaveChanges();
-                if (patientRequestModel.file != null)
-                {
-                    foreach (IFormFile file in patientRequestModel.file)
+                    var aspnetuser = _db.Aspnetusers.Where(m => m.Email == patientRequestModel.email).FirstOrDefault();
+                    string hostName = Dns.GetHostName();
+                    string myIp = Dns.GetHostByName(hostName).AddressList[0].ToString();
+                    User user = new User();
+                    if (aspnetuser == null)
                     {
-                        if (file != null && file.Length > 0)
-                        {
-                            //get file name
-                            var fileName = Path.GetFileName(file.FileName);
+                        Aspnetuser aspnetuser1 = new Aspnetuser();
+                        aspnetuser1.Id = Guid.NewGuid().ToString();
+                        aspnetuser1.Passwordhash = patientRequestModel.password;
+                        aspnetuser1.Email = patientRequestModel.email;
+                        string username = patientRequestModel.firstName + patientRequestModel.lastName;
+                        aspnetuser1.Username = username;
+                        aspnetuser1.Phonenumber = patientRequestModel.phoneNo;
+                        aspnetuser1.Modifieddate = DateTime.Now;
+                        aspnetuser1.Ip = myIp.Substring(0, Math.Min(myIp.Length, 20));
+                        _db.Aspnetusers.Add(aspnetuser1);
+                        _db.SaveChanges();
 
-                            //define path
-                            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "UploadedFiles", fileName);
 
-                            // Copy the file to the desired location
-                            using (var stream = new FileStream(filePath, FileMode.Create))
-                            {
-                                file.CopyTo(stream);
-                            }
+                        user.Aspnetuserid = aspnetuser1.Id;
+                        user.Firstname = patientRequestModel.firstName;
+                        user.Lastname = patientRequestModel.lastName;
+                        user.Email = patientRequestModel.email;
+                        user.Mobile = patientRequestModel.phoneNo;
+                        user.Street = patientRequestModel.street;
+                        user.City = patientRequestModel.city;
+                        user.State = patientRequestModel.state;
+                        user.Zip = patientRequestModel.zipCode;
+                        user.Createdby = patientRequestModel.firstName + patientRequestModel.lastName;
+                        user.Intyear = patientRequestModel.dateOfBirth.Year;
+                        user.Intdate = patientRequestModel.dateOfBirth.Day;
+                        user.Strmonth = patientRequestModel.dateOfBirth.ToString("MMM");
+                        user.Createddate = DateTime.Now;
+                        user.Modifieddate = DateTime.Now;
+                        user.Status = (int)StatusEnum.Unassigned;
+                        user.Regionid = 1;
+                        user.Ip = myIp.Substring(0, Math.Min(myIp.Length, 20));
 
-                            Requestwisefile requestwisefile = new()
-                            {
-                                Filename = fileName,
-                                Requestid = request.Requestid,
-                                Createddate = DateTime.Now
-                            };
+                        _db.Users.Add(user);
+                        _db.SaveChanges();
 
-                            _db.Requestwisefiles.Add(requestwisefile);
-                            _db.SaveChanges();
-                        };
                     }
+                    else
+                    {
+                        user = _db.Users.Where(m => m.Email == patientRequestModel.email).FirstOrDefault();
+                    }
+
+                    var regionData = _db.Regions.Where(x => x.Regionid == user.Regionid).FirstOrDefault();
+                    Request request = new Request();
+                    request.Requesttypeid = (int)RequestTypeEnum.Patient; ;
+                    request.Status = (int)StatusEnum.Unassigned;
+                    request.Createddate = DateTime.Now;
+                    request.Modifieddate = DateTime.Now;
+                    request.Isurgentemailsent = new BitArray(1);
+                    request.Firstname = patientRequestModel.firstName;
+                    request.Lastname = patientRequestModel.lastName;
+                    request.Phonenumber = patientRequestModel.phoneNo;
+                    request.Email = patientRequestModel.email;
+                    request.User = user;
+
+                    _db.Requests.Add(request);
+                    _db.SaveChanges();
+
+                    var count = (from req in _db.Requests where req.Userid == user.Userid && req.Createddate.Date == DateTime.Now.Date select req).Count();
+
+                    request.Confirmationnumber = $"{regionData.Abbreviation.Substring(0, 2)}{request.Createddate.Day.ToString().PadLeft(2, '0')}{request.Createddate.Month.ToString().PadLeft(2, '0')}{(request.Createddate.Year % 100).ToString().PadLeft(2, '0')}{user.Lastname.ToUpper().Substring(0, 2)}{user.Firstname.ToUpper().Substring(0, 2)}{count.ToString().PadLeft(4, '0')}";
+
+                    _db.Requests.Update(request);
+                    _db.SaveChanges();
+
+                    Requestclient info = new Requestclient();
+                    info.Request = request;
+                    info.Notes = patientRequestModel.symptoms;
+                    info.Firstname = patientRequestModel.firstName;
+                    info.Lastname = patientRequestModel.lastName;
+                    info.Phonenumber = patientRequestModel.phoneNo;
+                    info.Email = patientRequestModel.email;
+                    info.Street = patientRequestModel.street;
+                    info.City = patientRequestModel.city;
+                    info.State = patientRequestModel.state;
+                    info.Zipcode = patientRequestModel.zipCode;
+                    info.Regionid = 1;
+                    info.Intyear = patientRequestModel.dateOfBirth.Year;
+                    info.Intdate = patientRequestModel.dateOfBirth.Day;
+                    info.Strmonth = patientRequestModel.dateOfBirth.ToString("MMM");
+                    info.Address = patientRequestModel.street + ", " + patientRequestModel.city + ", " + patientRequestModel.state + ", " + patientRequestModel.zipCode;
+
+                    _db.Requestclients.Add(info);
+                    _db.SaveChanges();
+
+                    if (patientRequestModel.file != null)
+                    {
+                        foreach (IFormFile file in patientRequestModel.file)
+                        {
+                            if (file != null && file.Length > 0)
+                            {
+                                //get file name
+                                var fileName = Path.GetFileName(file.FileName);
+
+                                //define path
+                                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "UploadedFiles", fileName);
+
+                                // Copy the file to the desired location
+                                using (var stream = new FileStream(filePath, FileMode.Create))
+                                {
+                                    file.CopyTo(stream);
+                                }
+
+                                Requestwisefile requestwisefile = new()
+                                {
+                                    Filename = fileName,
+                                    Requestid = request.Requestid,
+                                    Createddate = DateTime.Now
+                                };
+
+                                _db.Requestwisefiles.Add(requestwisefile);
+                                _db.SaveChanges();
+                            };
+                        }
+                    }
+                    else
+                    {
+                        _db.SaveChanges();
+                    }
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
                 }
             }
         }
@@ -305,18 +328,6 @@ namespace BusinessLogic.Services
                                   group requestfile by request.Requestid into groupedFiles
                                   select new MedicalHistory
                                   {
-                                      //FirstName = user.Firstname,
-                                      //LastName = user.Lastname,
-                                      //PhoneNumber = user.Mobile,
-                                      //Email = user.Email,
-                                      //Street = user.Street,
-                                      //City = user.City,
-                                      //State = user.State,
-                                      //ZipCode = user.Zip,
-                                      //IntYear = user.Intyear,
-                                      //IntDate = user.Intdate,
-                                      //StrMonth = user.Strmonth,
-                                      //DateOfBirth = new DateTime(Convert.ToInt32(user.Intyear), DateTime.ParseExact(user.Strmonth, "MMM", CultureInfo.InvariantCulture).Month, Convert.ToInt32(user.Intdate)),
                                       reqId = groupedFiles.Select(x => x.Request.Requestid).FirstOrDefault(),
                                       createdDate = groupedFiles.Select(x => x.Request.Createddate).FirstOrDefault(),
                                       currentStatus = groupedFiles.Select(x => x.Request.Status).FirstOrDefault(),
@@ -348,42 +359,21 @@ namespace BusinessLogic.Services
             return result;
         }
 
-        public void AddFile(IFormFile file, int reqId)
-        {
-            var fileName = Path.GetFileName(file.FileName);
-
-            //define path
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "UploadedFiles", fileName);
-
-            // Copy the file to the desired location
-            using (var stream = new FileStream(filePath, FileMode.Create))
-            {
-                file.CopyTo(stream);
-            }
-            Requestwisefile requestwisefile = new()
-            {
-                Filename = fileName,
-                Requestid = reqId,
-                Createddate = DateTime.Now
-            };
-            _db.Requestwisefiles.Add(requestwisefile);
-            _db.SaveChanges();
-        }
-
         public Profile GetProfile(int userid)
         {
             var user = _db.Users.FirstOrDefault(x => x.Userid == userid);
-            Profile profile = new()
-            {
-                FirstName = user.Firstname,
-                LastName = user.Lastname,
-                Email = user.Email,
-                PhoneNo = user.Mobile,
-                State = user.State,
-                City = user.City,
-                Street = user.Street,
-                ZipCode = user.Zip,
-            };
+            Profile profile = new Profile();
+            profile.FirstName = user.Firstname;
+            profile.LastName = user.Lastname;
+            profile.Email = user.Email;
+            profile.PhoneNo = user.Mobile;
+            profile.State = user.State;
+            profile.City = user.City;
+            profile.Street = user.Street;
+            profile.ZipCode = user.Zip;
+            profile.DateOfBirth = new DateTime(Convert.ToInt32(user.Intyear), DateTime.ParseExact(user.Strmonth, "MMM", CultureInfo.InvariantCulture).Month, Convert.ToInt32(user.Intdate));
+            profile.isMobileCheck = user.Ismobile[0] ? 1 : 0;
+
             return profile;
         }
 
@@ -401,6 +391,12 @@ namespace BusinessLogic.Services
                     existingUser.City = profile.City;
                     existingUser.State = profile.State;
                     existingUser.Zip = profile.ZipCode;
+                    existingUser.Intdate = profile.DateOfBirth.Day;
+                    existingUser.Strmonth = profile.DateOfBirth.ToString("MMM");
+                    existingUser.Intyear = profile.DateOfBirth.Year;
+
+                    existingUser.Ismobile[0] = profile.isMobileCheck == 1 ? true : false;
+
                     _db.Users.Update(existingUser);
                     _db.SaveChanges();
 

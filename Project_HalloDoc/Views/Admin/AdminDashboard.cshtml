@@ -209,15 +209,15 @@
                     var requestor = $(this).find('td:eq(2)').text();
 
                     var accordionItem = `
-                                                    <div class="accordion-item">
+                                                                            <div class="accordion-item">
 
-                                                        <div class="accordion-content">
-                                                            <p><strong>Name:</strong> ${name}</p>
-                                                            <p><strong>Address:</strong> ${address}</p>
-                                                            <p><strong>Requestor:</strong> ${requestor}</p>
-                                                        </div>
-                                                    </div>
-                                                `;
+                                                                                <div class="accordion-content">
+                                                                                    <p><strong>Name:</strong> ${name}</p>
+                                                                                    <p><strong>Address:</strong> ${address}</p>
+                                                                                    <p><strong>Requestor:</strong> ${requestor}</p>
+                                                                                </div>
+                                                                            </div>
+                                                                        `;
 
                     $('#accordionFlushExample').append(accordionItem);
                 });
@@ -234,15 +234,15 @@
                     var requestor = $(this).find('td:eq(2)').text();
 
                     var accordionItem = `
-                                                    <div class="accordion-item">
+                                                                            <div class="accordion-item">
 
-                                                        <div class="accordion-content">
-                                                            <p><strong>Name:</strong> ${name}</p>
-                                                            <p><strong>Address:</strong> ${address}</p>
-                                                            <p><strong>Requestor:</strong> ${requestor}</p>
-                                                        </div>
-                                                    </div>
-                                                `;
+                                                                                <div class="accordion-content">
+                                                                                    <p><strong>Name:</strong> ${name}</p>
+                                                                                    <p><strong>Address:</strong> ${address}</p>
+                                                                                    <p><strong>Requestor:</strong> ${requestor}</p>
+                                                                                </div>
+                                                                            </div>
+                                                                        `;
 
                     $('#accordionFlushExample').append(accordionItem);
                 });
@@ -310,7 +310,7 @@
                 }
             });
         }
-        
+
 
         function showBlockCase(reqId) {
             $.ajax({
@@ -336,17 +336,41 @@
             });
         }
 
-        function showSendAgreement(reqId) {
+        function showSendAgreement(reqId, reqType) {
+            var role = null;
+            if (reqType == 1) {
+                role = 'Business';
+            }
+            if (reqType == 2) {
+                role = 'Patient';
+            }
+            if (reqType == 3) {
+                role = 'Family';
+            }
+            if (reqType == 4) {
+                role = 'Concierge';
+            }
+
             $.ajax({
                 url: '/Admin/SendAgreement',
                 type: 'GET',
+            });
+        }
+
+        function clearCase(reqId) {
+            var url = '@Url.Action("ClearCase","Admin")';
+            $.ajax({
+                url: url,
+                type: 'GET',
                 data: { reqId: reqId },
                 success: function (response) {
-                    $("#modelcontent2").html(response);
-                    $('#sendAgreementModal').modal('show');
+                    console.log(response);
+                    $("#modelContent").html(response);
+                    $('#clearModal').modal('show');
                 }
             });
         }
+
     </script>
 </body>
 </html>

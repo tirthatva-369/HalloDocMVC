@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Project_HalloDoc.Views.Admin
+namespace Project_HalloDoc.Views.Home
 {
-    public class AdminDashboardModel : PageModel
+    public class ReviewAgreementModel : PageModel
     {
         public void OnGet()
         {

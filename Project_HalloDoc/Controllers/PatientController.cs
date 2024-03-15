@@ -104,7 +104,7 @@ namespace HalloDoc.mvc.Controllers
                 }
                 _patientService.AddPatientInfo(patientInfoModel);
                 _notyf.Success("Submit Successfully !!");
-                return RedirectToAction("RequestScreen", "Patient");
+                return RedirectToAction("RequestScreen", "Patient", patientInfoModel);
             }
             else
             {
@@ -321,6 +321,7 @@ namespace HalloDoc.mvc.Controllers
             HttpContext.Session.SetInt32("EditUserId", userid);
             var profile = _patientService.GetProfile(userid);
             return PartialView("_Profile", profile);
+        
         }
 
         public IActionResult SaveEditProfile(Profile profile)

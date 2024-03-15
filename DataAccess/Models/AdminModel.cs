@@ -101,7 +101,7 @@ namespace DataAccess.Models
         public int RequestNotesId { get; set; }
         public string? PhyscianNotes { get; set; }
         public string? AdminNotes { get; set; }
-        public string? TransferNotes { get; set; }
+        public List<Requeststatuslog>? TransferNotesList { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime ModifiedDate { get; set; }
         public string CreatedBy { get; set; }
@@ -159,5 +159,36 @@ namespace DataAccess.Models
         public int vendorid { get; set; }
         public string uName { get; set; }
     }
+    public class SendAgreementModel
+    {
+        public int? Reqid { get; set; }
+        public string? PhoneNumber { get; set; }
+        public string? Email { get; set; }
 
+        public int? reqType { get; set; }
+    }
+
+    public class CancelAgreementModal
+    {
+        public int ReqClientId { get; set; }
+        public string? PatientName { get; set; }
+    }
+
+    public class CloseCaseModel
+    {
+        public int? reqid { get; set; }
+        public string? email { get; set; }
+        public string? phoneNo { get; set; }
+        public string fname { get; set; }
+        public string lname { get; set; }
+        public string? fulldateofbirth { get; set; }
+        public string? str_month { get; set; }
+        public int? int_year { get; set; }
+        public int? int_date { get; set; }
+        public string? confirmation_no { get; set; }
+        public int? status { get; set; }
+        public List<Requestwisefile>? files { get; set; }
+        [Required(ErrorMessage = "Please Enter Atleast One File")]
+        public IFormFile Upload { get; set; }
+    }
 }

@@ -220,13 +220,13 @@
                                             </button>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="@Url.Action("viewcase", new {Requestclientid = item.reqClientId , RequestTypeId = item.requestTypeId})">
+                                            <a class="dropdown-item" href="@Url.Action("ViewCase", new {Requestclientid = item.reqClientId , RequestTypeId = item.requestTypeId, ReqId = item.reqId})">
                                                 <i class="bi bi-file-earmark-text"></i>
                                                 ViewCase
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="@Url.Action("viewnotes", new {ReqId = item.reqId})">
+                                            <a class="dropdown-item" href="@Url.Action("ViewNote", new {ReqId = item.reqId})">
                                                 <i class="bi bi-file-earmark-text"></i>
                                                 ViewNotes
                                             </a>
@@ -255,7 +255,88 @@
 
 
 <!-- accordions -->
-<div class="accordion accordion-flush d-block d-md-none" id="accordionFlushExample">
+<div class="accordion accordion-flush d-md-none d-block" id="accordionFlushExample">
+
+    <div class="accordion-item">
+        @foreach (var item in Model)
+        {
+            <h2 class="accordion-header" id="flush-headingOne">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" mailto:data-bs-target="#flush-collapseone-@item.reqId" aria-expanded="false" aria-controls="flush-collapseOne" style="background-color:#e7f1ff; color:black">
+
+                    <div class="col d-flex flex-column">
+                        <span class="">@item.firstName, @item.lastName</span>
+                        <span class=" mt-4">@item.street @item.city @item.state</span>
+                        <span class="mt-3"><i class="bi bi-clock text-info h6 mr-2 icns"></i>Wait Time: DEC5, 2023</span>
+                    </div>
+                    <div class="col d-flex flex-column text-end mt-2 p-0">
+                        <div>
+                            @switch (item.requestTypeId)
+                            {
+                                case 1:
+                                    <span>Patient</span>
+                                    <i class="bi bi-circle-fill text-success h6"></i>
+                                    break;
+                                case 2:
+                                    <span>Family/Friend</span>
+                                    <i class="bi bi-circle-fill text-warning h6"></i>
+                                    break;
+                                case 3:
+                                    <span>Business</span>
+                                    <i class="bi bi-circle-fill " style="color:pink;"></i>
+                                    break;
+                                case 4:
+                                    <span>Concierge</span>
+                                    <i class="bi bi-circle-fill text-primary h6"></i>
+                                    break;
+                            }
+
+                        </div>
+                        <div>
+                            <div class=" btn rounded-pill text-info border-info float-end p-1 mt-3" style="width:150px">
+                                Map Location
+                            </div>
+                        </div>
+
+                    </div>
+                </button>
+                <hr class="m-0">
+            </h2>
+
+            <div mailto:id="flush-collapseone-@item.reqId" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample" style="background-color:#e7f1ff; color:black">
+                <div class="d-flex justify-content-end d-inline">
+                    <div class="rounded-pill me-3 viewCaseBtn p-1 viewCase">
+                        View Case
+                    </div>
+                </div>
+                <div class="accordion-body d-flex flex-column gap-1">
+                    <div><i class="bi bi-calendar2-minus mr-1 icn"></i>Date of birth: @item.strMonth @item.intDate, @item.intYear</div>
+                    <div><i class="bi bi-envelope mr-1 icn"></i>Email: @item.requestorFname</div>
+                    <div>
+                        <i class="bi bi-telephone mr-1 icn"></i>Patient: @item.mobileNo
+
+                    </div>
+                    <div><i class="bi bi-person mr-1 icn"></i>Requestor: @item.firstName, @item.lastName</div>
+                </div>
+                <div class="row mx-3">
+                    <div class="col-6 ps-0 pr-3 pb-2">
+                        <a class="btn w-100  text-white rounded-pill p-1 btn-sm" style="background:#c40eff;">Assign Case</a>
+                    </div>
+                    <div class="col-6 p-0 pb-2 pb-2">
+                        <a class="btn w-100 bg-danger text-white rounded-pill p-1 btn-sm">Cancel Case</a>
+                    </div>
+                    <div class="col-6 p-0 pr-3 pb-2">
+                        <a class="btn w-100 bg-success text-white rounded-pill p-1 btn-sm">View Notes</a>
+                    </div>
+                    <div class="col-6 p-0 pb-2">
+                        <a class="btn w-100  bg-danger text-white rounded-pill p-1 btn-sm">Block Patient</a>
+                    </div>
+                    <div class="col-6 p-0 pr-3">
+                        <a class="btn w-100 bg-success text-white rounded-pill p-1 btn-sm">Email</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
 </div>
 
 <script>
@@ -307,16 +388,12 @@
             d[i].style.display = "none";
         }
 
-
         let a = document.getElementsByClassName("Patient");
 
         for (let i = 0; i < a.length; i++) {
             a[i].style.display = "table-row";
         }
-
-
     }
-
 
     function familyFriendElements() {
         let a = document.getElementsByClassName("Patient");
@@ -343,7 +420,6 @@
 
     }
 
-
     function conciergeElements() {
         let a = document.getElementsByClassName("Patient");
         let b = document.getElementsByClassName("FamilyFriend");
@@ -361,13 +437,11 @@
             d[i].style.display = "none";
         }
 
-
         let c = document.getElementsByClassName("Concierge");
 
         for (let i = 0; i < c.length; i++) {
             c[i].style.display = "table-row";
         }
-
     }
 
     function businessElements() {
@@ -388,16 +462,11 @@
             c[i].style.display = "none";
         }
 
-
-
         let d = document.getElementsByClassName("Business");
-
 
         for (let i = 0; i < d.length; i++) {
             d[i].style.display = "table-row";
         }
-
-
     }
     $(document).ready(function () {
 
@@ -425,7 +494,5 @@
         // $('.dataTables_length').hide();
         $('.dataTables_filter').hide();
     });
-
-
 
 </script>

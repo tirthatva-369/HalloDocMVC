@@ -13,6 +13,8 @@ using Project_HalloDoc.Auth;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis.Elfie.Serialization;
 using System.Text.Json.Nodes;
+//using Org.BouncyCastle.Crypto.Macs;
+//using Org.BouncyCastle.Asn1.Ocsp;
 
 namespace HalloDoc.mvc.Controllers
 {
@@ -86,9 +88,9 @@ namespace HalloDoc.mvc.Controllers
         }
 
 
-        public IActionResult ViewCase(int Requestclientid, int RequestTypeId)
+        public IActionResult ViewCase(int Requestclientid, int RequestTypeId, int ReqId)
         {
-            var obj = _adminService.ViewCase(Requestclientid, RequestTypeId);
+            var obj = _adminService.ViewCase(Requestclientid, RequestTypeId, ReqId);
 
             return View(obj);
         }
@@ -96,10 +98,9 @@ namespace HalloDoc.mvc.Controllers
         public IActionResult ViewNote(int ReqId)
         {
             HttpContext.Session.SetInt32("RNId", ReqId);
-            ViewNotesModel data = _adminService.ViewNotes(ReqId);
+            var data = _adminService.ViewNotes(ReqId);
             return View(data);
         }
-
 
         public IActionResult GetRequestsByStatus(int tabNo)
         {
@@ -132,7 +133,6 @@ namespace HalloDoc.mvc.Controllers
         }
 
         [HttpPost]
-        [HttpPost]
         public IActionResult UpdateNotes(ViewNotesModel model)
         {
             int? reqId = HttpContext.Session.GetInt32("RNId");
@@ -146,7 +146,6 @@ namespace HalloDoc.mvc.Controllers
             return RedirectToAction("ViewNote", "Admin");
         }
 
-
         public IActionResult admin_resetpassword()
         {
             return View();
@@ -159,17 +158,19 @@ namespace HalloDoc.mvc.Controllers
             return PartialView("_CancelCase", model);
         }
 
-        public IActionResult SubmitCancelCase(CancelCaseModel cancelCaseModel)
+        [HttpPost]
+        public IActionResult SubmitCancelCase(int casetag, string notes, int reqId)
         {
-            cancelCaseModel.reqId = HttpContext.Session.GetInt32("CancelReqId");
-            bool isCancelled = _adminService.SubmitCancelCase(cancelCaseModel);
-            if (isCancelled)
+            CancelCaseModel cancelCaseModel = new()
             {
-                _notyf.Success("Cancelled successfully");
-                return RedirectToAction("AdminDashboard", "Admin");
-            }
-            return View();
+                casetag = casetag,
+                notes = notes,
+                reqId = reqId
+            };
+            bool isCancelled = _adminService.SubmitCancelCase(cancelCaseModel);
+            return RedirectToAction("AdminDashboard");
         }
+
         public IActionResult Order(int reqId)
         {
             var order = _adminService.FetchProfession();
@@ -178,12 +179,19 @@ namespace HalloDoc.mvc.Controllers
         }
 
         [HttpPost]
-        public IActionResult OrderDetails(Order order, int requestId)
+        public IActionResult orders(Order order)
         {
-            order.ReqId = requestId;
-            _adminService.SendOrderDetails(order);
-            return RedirectToAction("AdminDashboard", "Admin");
+            bool isSend = _adminService.SendOrder(order);
+            return Json(new { isSend = isSend });
         }
+
+        //[HttpPost]
+        //public IActionResult OrderDetails(Order order, int requestId)
+        //{
+        //    order.ReqId = requestId;
+        //    _adminService.SendOrderDetails(order);
+        //    return RedirectToAction("AdminDashboard", "Admin");
+        //}
 
         [HttpGet]
         public JsonArray FetchBusiness(int proffesionId)
@@ -206,12 +214,6 @@ namespace HalloDoc.mvc.Controllers
             return PartialView("_AssignCase", model);
         }
 
-        public IActionResult GetPhysician(int selectRegion)
-        {
-            List<Physician> physicianlist = _adminService.GetPhysicianByRegion(selectRegion);
-            return Json(new { physicianlist });
-        }
-
         public IActionResult SubmitAssignCase(AssignCaseModel assignCaseModel)
         {
             assignCaseModel.ReqId = HttpContext.Session.GetInt32("AssignReqId");
@@ -222,6 +224,12 @@ namespace HalloDoc.mvc.Controllers
                 return RedirectToAction("AdminDashboard", "Admin");
             }
             return View();
+        }
+
+        public IActionResult GetPhysician(int selectRegion)
+        {
+            List<Physician> physicianlist = _adminService.GetPhysicianByRegion(selectRegion);
+            return Json(new { physicianlist });
         }
 
         public IActionResult BlockCase(int reqId)
@@ -245,6 +253,21 @@ namespace HalloDoc.mvc.Controllers
             return RedirectToAction("AdminDashboard", "Admin");
         }
 
+        public IActionResult DeleteFileById(int id)
+        {
+            var rid = (int)HttpContext.Session.GetInt32("rid");
+            bool isDeleted = _adminService.DeleteFileById(id);
+            if (isDeleted)
+            {
+                return RedirectToAction("viewuploads", "Admin", new { reqId = rid });
+            }
+            else
+            {
+                _notyf.Error("SomeThing Went Wrong");
+                return RedirectToAction("viewuploads", "Admin", new { reqId = rid });
+            }
+        }
+
         public IActionResult DeleteAllFiles(List<string> selectedFiles)
         {
             var rid = (int)HttpContext.Session.GetInt32("rid");
@@ -262,15 +285,13 @@ namespace HalloDoc.mvc.Controllers
         public IActionResult SendAllFiles(List<string> selectedFiles)
         {
             var rid = (int)HttpContext.Session.GetInt32("rid");
-            var message = string.Join(", ", selectedFiles);
 
-
-            SendEmail("yashvariya23@gmail.com", "Documents", message);
+            SendEmail("yashvariya23@gmail.com", "Documents", selectedFiles);
             _notyf.Success("Send Mail Successfully");
             return RedirectToAction("ViewUploads", "Admin", new { reqId = rid });
         }
 
-        private Task SendEmail(string email, string subject, string message)
+        private Task SendEmail(string email, string subject, List<string> filenames)
         {
             var mail = "tatva.dotnet.tirthpatel@outlook.com";
             var password = "Prabodham@369";
@@ -280,7 +301,19 @@ namespace HalloDoc.mvc.Controllers
                 EnableSsl = true,
                 Credentials = new NetworkCredential(mail, password)
             };
-            return client.SendMailAsync(new MailMessage(from: mail, to: email, subject, message));
+            MailMessage mailMessage = new MailMessage();
+            for (var i = 0; i < filenames.Count; i++)
+            {
+                string pathname = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "UploadedFiles", filenames[i]);
+                Attachment attachment = new Attachment(pathname);
+                mailMessage.Attachments.Add(attachment);
+            }
+            mailMessage.To.Add(email);
+            mailMessage.From = new MailAddress(mail);
+
+            mailMessage.Subject = subject;
+
+            return client.SendMailAsync(mailMessage);
         }
 
         public IActionResult ViewUploads(int reqId)
@@ -313,13 +346,6 @@ namespace HalloDoc.mvc.Controllers
         }
 
         [HttpGet]
-        public IActionResult ClearCase(int reqId)
-        {
-            ViewBag.ClearCaseId = reqId;
-            return PartialView("_clearcase");
-        }
-
-        [HttpGet]
         public IActionResult TransferCase(int reqId)
         {
             var model = _adminService.AssignCase(reqId);
@@ -334,6 +360,13 @@ namespace HalloDoc.mvc.Controllers
             return Json(new { isTransferred = isTransferred });
         }
 
+        [HttpGet]
+        public IActionResult ClearCase(int reqId)
+        {
+            ViewBag.ClearCaseId = reqId;
+            return PartialView("_clearcase");
+        }
+
         [HttpPost]
         public IActionResult SubmitClearCase(int reqId)
         {
@@ -341,17 +374,42 @@ namespace HalloDoc.mvc.Controllers
             if (isClear)
             {
                 _notyf.Success("Cleared Successfully");
-                return RedirectToAction("admin_dashboard");
+                return RedirectToAction("AdminDashboard");
             }
             _notyf.Error("Failed");
-            return RedirectToAction("admin_dashboard");
+            return RedirectToAction("AdminDashboard");
         }
 
         public IActionResult CloseCase(int reqId)
         {
-            HttpContext.Session.SetInt32("rid", reqId);
             var model = _adminService.GetAllDocById(reqId);
             return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult SendAgreement(int reqId, int reqType)
+        {
+            var model = _adminService.SendAgreementCase(reqId);
+            model.reqType = reqType;
+            return PartialView("_sendagreement", model);
+        }
+
+        [HttpPost]
+        public IActionResult SendAgreement(string email)
+        {
+            try
+            {
+                string baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
+                string reviewPathLink = baseUrl + Url.Action("ReviewAgreement", "Home");
+
+                //SendEmail(email, "Review Agreement", $"Hello, Review the agreement properly: {reviewPathLink}");
+                return Json(new { isSend = true });
+
+            }
+            catch (Exception ex)
+            {
+                return Json(new { isSend = false });
+            }
         }
     }
 }

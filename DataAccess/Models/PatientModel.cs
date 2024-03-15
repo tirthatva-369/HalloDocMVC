@@ -1,5 +1,6 @@
 ﻿using DataAccess.DataModels;
 using Microsoft.AspNetCore.Http;
+using System.Collections;
 using System.ComponentModel.DataAnnotations;
 
 namespace DataAccess.Models
@@ -19,14 +20,12 @@ namespace DataAccess.Models
         public string? state { get; set; }
         public string? zipCode { get; set; }
         public string? roomSuite { get; set; }
-        [StringLength(15, MinimumLength = 4, ErrorMessage = "Password Have 4 to 15 Char")]
-        public string password { get; set; }
+        //[StringLength(15, MinimumLength = 4, ErrorMessage = "Password Have 4 to 15 Char")]
+        public string? password { get; set; }
         [Compare("password", ErrorMessage = "Password Missmatch")]
         public string? confirmPassword { get; set; }
         public List<IFormFile>? file { get; set; }
-        public int IntDate { get; set; }
-        public string StrMonth { get; set; }
-        public int IntYear { get; set; }
+        public BitArray? isMobile { get; set; }
     }
 
     public class FamilyRequestModel
@@ -116,24 +115,24 @@ namespace DataAccess.Models
         public DateTime createdDate { get; set; }
         public int currentStatus { get; set; }
         public List<string> document { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        //public string FirstName { get; set; }
+        //public string LastName { get; set; }
         public DateTime DateOfBirth { get; set; }
         public int? IntDate { get; set; }
         public string StrMonth { get; set; }
         public int? IntYear { get; set; }
-        public string Email { get; set; }
-        public string PhoneNumber { get; set; }
-        public string Street { get; set; }
-        public string City { get; set; }
-        public string State { get; set; }
-        public string ZipCode { get; set; }
-        public string ContactType { get; set; }
+        //public string Email { get; set; }
+        //public string PhoneNumber { get; set; }
+        //public string Street { get; set; }
+        //public string City { get; set; }
+        //public string State { get; set; }
+        //public string ZipCode { get; set; }
+        //public string ContactType { get; set; }
         public string ConfirmationNumber { get; set; }
     }
     public class MedicalHistoryList
     {
-        public List<MedicalHistory>? medicalHistoriesList { get; set; }
+        public List<MedicalHistory> medicalHistoriesList { get; set; }
         public int? id { get; set; }
         public string? firstName { get; set; }
         public string? lastName { get; set; }
@@ -143,7 +142,7 @@ namespace DataAccess.Models
     {
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
-        public DateTime? DateOfBirth { get; set; }
+        public DateTime DateOfBirth { get; set; }
         public string? PhoneNo { get; set; }
         public string? Street { get; set; }
         public string? City { get; set; }
@@ -151,6 +150,10 @@ namespace DataAccess.Models
         public string? State { get; set; }
         public string? Email { get; set; }
         public int? userId { get; set; }
+        public int? IntDate { get; set; }
+        public int? IntYear { get; set; }
+        public string StrMonth { get; set; }
+        public int isMobileCheck { get; set; }
     }
 
     public class DocumentModel

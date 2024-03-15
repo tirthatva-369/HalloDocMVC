@@ -15,7 +15,7 @@ namespace BusinessLogic.Interfaces
         Aspnetuser GetAspnetuser(string email);
         StatusCountModel GetStatusCount();
         List<AdminDashTableModel> GetRequestsByStatus(int tabNo);
-        ViewCaseViewModel ViewCase(int reqClientId, int RequestTypeId);
+        ViewCaseViewModel ViewCase(int reqClientId, int RequestTypeId, int ReqId);
         ViewNotesModel ViewNotes(int reqClientId);
         bool UpdateAdminNotes(string AdminNotes, int RequestId);
         CancelCaseModel CancelCase(int reqId);
@@ -32,8 +32,10 @@ namespace BusinessLogic.Interfaces
         Order FetchProfession();
         JsonArray FetchVendors(int selectedValue);
         Healthprofessional VendorDetails(int selectedValue);
-        Orderdetail SendOrderDetails(Order order);
+        //Orderdetail SendOrderDetails(Order order);
         bool SendOrder(Order order);
         bool ClearCase(int reqId);
+        SendAgreementModel SendAgreementCase(int reqId);
+        CloseCaseModel ShowCloseCase(int reqId);
     }
 }

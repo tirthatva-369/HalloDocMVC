@@ -67,7 +67,7 @@ public partial class Requestclient
     public int? Intdate { get; set; }
 
     [Column("ismobile", TypeName = "bit(1)")]
-    public BitArray? Ismobile { get; set; }
+    public BitArray? Ismobile { get; set; } = new BitArray(1) { [0] = true };
 
     [Column("street")]
     [StringLength(100)]

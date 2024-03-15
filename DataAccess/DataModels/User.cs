@@ -35,7 +35,7 @@ public partial class User
     public string? Mobile { get; set; }
 
     [Column("ismobile", TypeName = "bit(1)")]
-    public BitArray? Ismobile { get; set; }
+    public BitArray? Ismobile { get; set; } = new BitArray(1) { [0] = true };
 
     [Column("street")]
     [StringLength(100)]
@@ -84,7 +84,7 @@ public partial class User
     public short? Status { get; set; }
 
     [Column("isdeleted", TypeName = "bit(1)")]
-    public BitArray? Isdeleted { get; set; }
+    public BitArray? Isdeleted { get; set; } = new BitArray(1) { [0] = false };
 
     [Column("ip")]
     [StringLength(20)]

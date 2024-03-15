@@ -1,10 +1,22 @@
 ﻿@using DataAccess.Models
+@model ViewNotesModel﻿
 
 @{
     ViewData["Title"] = "viewnotes";
 }
 
-@model ViewNotesModel﻿
+<style>
+    .notes {
+        height: 45px;
+        border-radius: 4px;
+        padding-top: 5px;
+        padding-left: 5px;
+    }
+
+        .notes:hover {
+            cursor: pointer;
+        }
+</style>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -13,13 +25,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
+    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-            crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="~/css/AdminDashboard.css">
 </head>
@@ -36,34 +43,46 @@
             </h3>
         </div>
 
-        <div class="row mt-4">
-            <div class="col-6">
-                <div class="flex-column bg-light mx-2 rounded shadow p-3 pe-0">
-                    <div class="h4 fw-bold w-auto"><i class="bi bi-arrow-left-right p-2 me-1"></i>Transfer Notes</div>
-                    <span class="ps-5">@Model.TransferNotes</span>
+        <form method="post" asp-action="UpdateNotes" asp-controller="Admin" onsubmit="return ViewNoteValidation()">
+            <div class="row mt-4">
+                <div class="col-6 bg-light rounded shadow">
+                    <div class="dropdown mt-3 flex-column">
+                        <button class="btn fs-4 fw-bolder dropdown-toggle w-100 text-start notes text-black border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-arrow-left-right"></i>
+                            Transfer Notes
+                        </button>
+                        @if (Model.TransferNotesList != null && Model.TransferNotesList.Count > 0)
+                        {
+                            <ul class="dropdown-menu w-100">
+                                @foreach (var item in Model.TransferNotesList)
+                                {
+                                    <li><a class="dropdown-item">@item.Notes on @item.Createddate</a></li>
+                                }
+                            </ul>
+                        }
+                    </div>
                 </div>
-            </div>
-            <div class="col-6">
-                <div class="flex-column bg-light mx-2 rounded shadow p-3 pe-0">
-                    <div class="h4 fw-bold w-auto"><i class="bi bi-person p-2 me-1"></i>Physician Notes</div>
-                    <span class="ps-5">@Model.PhyscianNotes</span>
+                <div class="col-6 pe-0 me-0">
+                    <div class="flex-column bg-light mx-2 rounded shadow p-3 pe-0">
+                        <div class="h4 fw-bold w-auto"><i class="bi bi-person p-2 me-1"></i>Physician Notes</div>
+                        <span class="ps-5">@Model.PhyscianNotes</span>
+                    </div>
                 </div>
-            </div>
-            <div class="col-6 mt-3">
-                <div class="flex-column bg-light m-2 rounded shadow p-3 pe-0">
-                    <div class="h4 fw-bold w-auto"><i class="bi bi-person-gear p-2 me-1"></i>Admin Notes</div>
-                    <span class="ps-5">@Model.AdminNotes</span>
+                <div class="col-6 mt-3 px-0">
+                    <div class="flex-column bg-light rounded shadow py-3 px-2">
+                        <div class="h4 fw-bold w-auto"><i class="bi bi-person-gear p-2 me-1"></i>Admin Notes</div>
+                        <span class="ps-5">@Model.AdminNotes</span>
+                    </div>
                 </div>
-            </div>
 
-            <form method="post" asp-action="UpdateNotes" asp-controller="Admin" class="col-12 mt-4 rounded bg-light">
                 <div class="rounded shadow mx-2">
                     <div class="form-floating col w-100 p-3">
-                        <textarea asp-for="AdminNotes" class="form-control px-4 pt-5 fs-6 mt-2 shadow-none" placeholder="Symptoms" id="floatingTextarea" style="height: 200px"></textarea>
+                        <textarea asp-for="AdminNotes" class="form-control px-4 pt-5 fs-6 mt-2 shadow-none" placeholder="Symptoms" id="notes" style="height: 200px"></textarea>
                         <label for="floatingTextarea" class="h5 common mx-4 mt-4">
                             Admin Notes
                         </label>
                         <input asp-for="RequestId" class="d-none" type="text" />
+                        <small id="notesRequired" class="d-none" style=" color:red">Admin Note is required</small>
                     </div>
                     <div class="row row-cols-2 p-3 justify-content-end">
                         <div class="col w-auto">
@@ -73,8 +92,31 @@
                         </div>
                     </div>
                 </div>
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
 </body>
 </html>
+
+<script>
+    $('#notes').on('input', function () {
+        let notes = $("#notes").val();
+        if (notes != "") {
+            $("#notesRequired").addClass('d-none').removeClass('d-block');
+        }
+        if (notes == "") {
+            $("#notesRequired").addClass('d-block').removeClass('d-none');
+        }
+    });
+
+    function ViewNoteValidation() {
+        var notes = $("#notes").val();
+        if (notes == "") {
+            $("#notesRequired").addClass('d-block').removeClass('d-none');
+            return false;
+        } else {
+            $("#notesRequired").addClass('d-none').removeClass('d-block');
+            return true;
+        }
+    }
+</script>

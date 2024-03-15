@@ -50,7 +50,7 @@ public partial class Request
     public DateTime Createddate { get; set; }
 
     [Column("isdeleted", TypeName = "bit(1)")]
-    public BitArray? Isdeleted { get; set; }
+    public BitArray? Isdeleted { get; set; } = new BitArray(1) { [0] = false };
 
     [Column("modifieddate", TypeName = "timestamp without time zone")]
     public DateTime? Modifieddate { get; set; }
@@ -60,19 +60,19 @@ public partial class Request
     public string? Declinedby { get; set; }
 
     [Column("isurgentemailsent", TypeName = "bit(1)")]
-    public BitArray Isurgentemailsent { get; set; } = null!;
+    public BitArray Isurgentemailsent { get; set; } = new BitArray(1) { [0] = false };
 
     [Column("lastwellnessdate", TypeName = "timestamp without time zone")]
     public DateTime? Lastwellnessdate { get; set; }
 
     [Column("ismobile", TypeName = "bit(1)")]
-    public BitArray? Ismobile { get; set; }
+    public BitArray? Ismobile { get; set; } = new BitArray(1) { [0] = true };
 
     [Column("calltype")]
     public short? Calltype { get; set; }
 
     [Column("completedbyphysician", TypeName = "bit(1)")]
-    public BitArray? Completedbyphysician { get; set; }
+    public BitArray? Completedbyphysician { get; set; } = new BitArray(1) { [0] = false };
 
     [Column("lastreservationdate", TypeName = "timestamp without time zone")]
     public DateTime? Lastreservationdate { get; set; }

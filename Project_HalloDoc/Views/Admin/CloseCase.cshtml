@@ -1,6 +1,5 @@
 ﻿﻿@using DataAccess.Models
-@model ViewUploadModel;
-
+@model CloseCaseModel;
 <style>
     #downloadSelected {
         color: rgb(0, 183, 255);
@@ -13,6 +12,12 @@
             background-color: rgb(0, 183, 255);
             color: white;
         }
+
+    .mobile-icon {
+        position: absolute;
+        top: 15%;
+        left: 93%;
+    }
 </style>
 
 <link rel="stylesheet"
@@ -38,8 +43,8 @@
             <div class="row">
                 <p class="col-12 mb-0">Patient Name</p>
                 <p class="col-12">
-                    <span class="fw-bolder fs-4 text-info">@Model.firstName @Model.lastName </span>
-                    <span>(NY210303FNLN0369)</span>
+                    <span class="fw-bolder fs-4 text-info">@Model.fname @Model.lname </span>
+                    <span>(Model.ConfirmationNumber)</span>
                     <button class="btn btn-outline-info p-2 back float-end">Create Invoice Through Quick</button>
                 </p>
                 <p class="fw-bolder fs-4 mb-0 pb-0">Documents</p>
@@ -80,19 +85,13 @@
                                 </td>
 
                                 <td>@item.Createddate.ToString("MMM dd, yyyy")</td>
-                                <td>
 
+                                <td>
                                     <a href="~/UploadedFiles/@item.Filename" class="btn px-2 py-1 btn-outline-info shadow-none night-mode-btn" download>
                                         <i class="bi bi-cloud-download"></i>
                                     </a>
-                                    <a class="btn ms-2 px-2 py-1 btn-outline-info shadow-none night-mode-btn" asp-controller="Admin" asp-action="DeleteFileById" asp-route-id="@item.Requestwisefileid">
-                                        @*onclick="deleteFile(@item.Requestwisefileid)"*@
-                                        <i class="bi bi-trash"></i>
-                                    </a>
-
                                 </td>
                             </tr>
-
                         }
                     }
                     else
@@ -105,13 +104,13 @@
             </table>
         </div>
 
-        <form method="post" asp-action="UploadFiles" asp-controller="Admin" class="input-group my-5 mt-3 rounded-3 shadow p-3 bg-white  " enctype="multipart/form-data">
+        <form method="post" asp-action="closeCaseBtn" asp-controller="adminDashboard" class="input-group my-5 mt-3 rounded-3 shadow p-3 bg-white">
             <div class="row">
                 <h5 class="col-12">Patient Information</h5>
 
                 <div class="col-6">
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingInputDisabled" placeholder="name" disabled>
+                        <input type="text" class="form-control" id="floatingInputDisabled" placeholder="name" value="@Model.fname" aria-label="First Name" disabled>
                         <label for="floatingInputDisabled">First Name</label>
                     </div>
                 </div>
@@ -127,15 +126,16 @@
                         <label for="floatingInput">Date Of Birth</label>
                     </div>
                 </div>
-                <div class="col-5">
+                <div class="col-5 pe-0">
                     <div class="input-div form-floating mb-3">
-                        <input type="tel" name="phone" class="form-control p-3 ps-5" placeholder="name" id="floatingInput" disabled>
+                        <input type="tel" name="phone" class="form-control py-3 ps-5 pe-3" placeholder="name" id="floatingInput" disabled>
+                        <i class="bi bi-phone mobile-icon w-auto fs-4"></i>
                         <label for="floatingInput">Phone Number</label>
                     </div>
                 </div>
-                <div class="col-1">
+                <div class="col-1 ps-4">
                     <div class="form-floating mb-3">
-                        <button type="button" class="btn btn-outline-info back px-4 float-right me-0" style="height:3.4rem;"><i class="bi bi-telephone"></i></button>
+                        <button type="button" class="btn btn-outline-info back ps-4 pe-4 float-right me-0" style="height:3.4rem;"><i class="bi bi-telephone"></i></button>
                     </div>
                 </div>
                 <div class="col-6">
@@ -147,124 +147,36 @@
             </div>
 
             <div class="col d-flex w-auto justify-content-end">
-                <button role="button" class="back btn btn-outline-info py-2 px-4 w-auto" id="editButton">
-                    Edit
-                </button>
-
-                <button class="back btn btn-outline-info py-2 px-4 ms-3 w-auto" type="submit" id="saveButton">
-                    Close Case
-                </button>
+                <button type="button" id="editButton" class="back btn btn-outline-info py-2 px-4 w-auto" onclick="enableFields()">Edit</button>
+                <button type="button" id="cancelBtn" class="back btn btn-outline-info py-2 px-4 w-auto" onclick="disableFields()">Cancel</button>
+                <button type="submit" id="submitBtn" class="back btn btn-outline-info py-2 px-4 ms-3 w-auto">Save</button>
+                <button type="submit" id="CloseCaseBtn" class="back btn btn-outline-info py-2 px-4 ms-3 w-auto">Close Case</button>
             </div>
         </form>
 
     </div>
 </body>
 <script>
-    function toggleCheckboxes() {
-        var checkboxes = document.getElementsByName('selectedFiles');
-        var selectAllCheckbox = document.getElementById('selectAll');
-
-        for (var i = 0; i < checkboxes.length; i++) {
-            checkboxes[i].checked = selectAllCheckbox.checked;
-        }
-    }
-
-    function downloadSelectedFiles() {
-        var selectedFiles = [];
-        var checkboxes = document.getElementsByName('selectedFiles');
-
-        for (var i = 0; i < checkboxes.length; i++) {
-            if (checkboxes[i].checked) {
-                selectedFiles.push(checkboxes[i].value);
-            }
-        }
-
-        // If no files are selected, return
-        if (selectedFiles.length === 0) {
-            alert('Please select at least one file to download.');
-            return;
-        }
-
-        // Construct URLs for all selected files and initiate download
-        for (var j = 0; j < selectedFiles.length; j++) {
-
-            var fileUrl = '/UploadedFiles/' + selectedFiles[j];
-            var link = document.createElement('a');
-            link.href = fileUrl;
-            link.setAttribute('download', ''); // This attribute triggers the download
-            link.click(); // Simulate a click event to initiate the download
-        }
-
-    }
-
-    function deleteAllFiles() {
-        var selectedFiles = [];
-        var checkboxes = document.getElementsByName('selectedFiles');
-
-        for (var i = 0; i < checkboxes.length; i++) {
-            if (checkboxes[i].checked) {
-                selectedFiles.push(checkboxes[i].value);
-            }
-        }
-
-        // If no files are selected, return
-        if (selectedFiles.length === 0) {
-            alert('Please select at least one file to Delete.');
-            return;
-        }
-
-        var confirmDelete = confirm("Are you sure you want to delete all selected files?");
-        if (!confirmDelete) {
-            return;
-        }
-        deleteSelectedFiles(selectedFiles);
-
-    }
-
-    function deleteSelectedFiles(selectedFiles) {
-        $.ajax({
-            url: '/Admin/DeleteAllFiles',
-            type: 'POST',
-            data: { selectedFiles: selectedFiles },
-            success: function (response) {
-                window.location.reload();
-            }
+    function disableFields() {
+        document.querySelectorAll('.dclass').forEach(function (element) {
+            element.disabled = true;
         });
+        // Hide the submit and cancel buttons, show the edit button
+        document.getElementById('submitBtn').style.display = 'none';
+        document.getElementById('cancelBtn').style.display = 'none';
+        document.getElementById('editBtn').style.display = 'block';
+        document.getElementById('CloseCaseBtn').style.display = 'block';
     }
 
-    function sendMail() {
-        debugger;
-        var selectedFiles = [];
-        var checkboxes = document.getElementsByName('selectedFiles');
-
-        for (var i = 0; i < checkboxes.length; i++) {
-            if (checkboxes[i].checked) {
-                selectedFiles.push(checkboxes[i].value);
-            }
-        }
-
-        // If no files are selected, return
-        if (selectedFiles.length === 0) {
-            alert('Please select at least one file to Send.');
-            return;
-        }
-
-        var confirmDelete = confirm("Are you sure you want to send all selected files?");
-        if (!confirmDelete) {
-            return;
-        }
-
-        sendSelectedFiles(selectedFiles);
-    }
-    function sendSelectedFiles(selectedFiles) {
-        $.ajax({
-            url: '/Admin/SendAllFiles',
-            type: 'POST',
-            data: { selectedFiles: selectedFiles },
-            success: function (response) {
-                window.location.reload();
-            }
+    function enableFields() {
+        document.querySelectorAll('.dclass').forEach(function (element) {
+            element.disabled = false;
         });
+        // Show the submit and cancel buttons, hide the edit button
+        document.getElementById('submitBtn').style.display = 'block';
+        document.getElementById('cancelBtn').style.display = 'block';
+        document.getElementById('editBtn').style.display = 'none';
+        document.getElementById('CloseCaseBtn').style.display = 'none';
     }
-
+    disableFields();
 </script>

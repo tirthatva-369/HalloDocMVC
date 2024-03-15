@@ -4,7 +4,7 @@
 @*cancel case model *@
 <div class="modal fade" id="cancelModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
-        <form method="post" asp-action="SubmitCancelCase" asp-controller="Admin" class="modal-content">
+        <form method="post" asp-action="SubmitCancelCase" asp-controller="Admin" asp-route-reqId=@Model.reqId class="modal-content">
             <div class="modal-header" style="background-color:#00B7FF">
                 <h5 class="modal-title text-light" id="exampleModalLabel">Confirm Cancellation</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>

@@ -16,6 +16,9 @@ using DataAccess.Enum;
 using System.Collections;
 using Microsoft.AspNetCore.Http;
 using System.Text.Json.Nodes;
+using System.Net.Mail;
+using System.Net;
+//using static Org.BouncyCastle.Math.EC.ECCurve;
 
 namespace BusinessLogic.Services
 {
@@ -60,7 +63,6 @@ namespace BusinessLogic.Services
                             notes = rc.Notes,
                         };
 
-            var result = query.ToList();
 
             if (tabNo == 1)
             {
@@ -93,6 +95,7 @@ namespace BusinessLogic.Services
 
                 query = query.Where(x => x.status == (int)StatusEnum.Unpaid);
             }
+            var result = query.ToList();
             return result;
         }
 
@@ -117,7 +120,7 @@ namespace BusinessLogic.Services
             return statusCount;
         }
 
-        public ViewCaseViewModel ViewCase(int reqClientId, int RequestTypeId)
+        public ViewCaseViewModel ViewCase(int reqClientId, int RequestTypeId, int ReqId)
         {
             var data = _db.Requestclients.FirstOrDefault(x => x.Requestclientid == reqClientId);
             var requestData = _db.Requests.FirstOrDefault(x => x.Requestid == data.Requestid);
@@ -152,18 +155,55 @@ namespace BusinessLogic.Services
             return viewdata;
         }
 
+        //public ViewNotesModel ViewNotes(int requestId)
+        //{
+        //    var requestNotes = _db.Requestnotes.Where(x => x.Requestid == requestId).FirstOrDefault();
+        //    var statuslogs = _db.Requeststatuslogs.Where(x => x.Requestid == requestId);
+        //    ViewNotesModel model = new ViewNotesModel();
+        //    if (model == null)
+        //    {
+        //        model.TransferNotesList = null;
+        //        model.PhyscianNotes = null;
+        //        model.AdminNotes = null;
+        //    }
+
+        //    if (requestNotes != null)
+        //    {
+        //        model.PhyscianNotes = requestNotes.Physiciannotes;
+        //        model.AdminNotes = requestNotes.Adminnotes;
+        //    }
+
+        //    if (statuslogs != null)
+        //    {
+        //        model.TransferNotesList = statuslogs;
+        //    }
+        //    return model;
+        //}
+
         public ViewNotesModel ViewNotes(int requestId)
         {
-            var reqnotesData = _db.Requestnotes.FirstOrDefault(x => x.Requestid == requestId);
-            var reqstatusData = _db.Requeststatuslogs.FirstOrDefault(x => x.Requestid == requestId);
-            var viewnotes = new ViewNotesModel
+
+            var requestNotes = _db.Requestnotes.Where(x => x.Requestid == requestId).FirstOrDefault();
+            var statuslogs = _db.Requeststatuslogs.Where(x => x.Requestid == requestId).ToList();
+            ViewNotesModel model = new ViewNotesModel();
+            if (model == null)
             {
-                TransferNotes = reqstatusData != null ? reqstatusData.Notes : null,
-                PhyscianNotes = reqnotesData != null ? reqnotesData.Physiciannotes : null,
-                AdminNotes = reqnotesData != null ? reqnotesData.Adminnotes : null,
-                RequestId = requestId
-            };
-            return viewnotes;
+                model.TransferNotesList = null;
+                model.PhyscianNotes = null;
+                model.AdminNotes = null;
+            }
+
+            if (requestNotes != null)
+            {
+                model.PhyscianNotes = requestNotes.Physiciannotes;
+                model.AdminNotes = requestNotes.Adminnotes;
+            }
+            if (statuslogs != null)
+            {
+                model.TransferNotesList = statuslogs;
+            }
+
+            return model;
         }
 
         public bool UpdateAdminNotes(string AdminNotes, int RequestId)
@@ -180,7 +220,6 @@ namespace BusinessLogic.Services
                     //here instead of admin , add id of the admin through which admin is loggedIn 
                     rn.Createddate = DateTime.Now;
                     _db.Requestnotes.Add(rn);
-                    _db.SaveChanges();
                 }
                 else
                 {
@@ -189,8 +228,8 @@ namespace BusinessLogic.Services
                     reqNotes.Modifiedby = "admin";
                     //here instead of admin , add id of the admin through which admin is loggedIn 
                     _db.Requestnotes.Update(reqNotes);
-                    _db.SaveChanges();
                 }
+                _db.SaveChanges();
                 return true;
             }
             catch (Exception ex)
@@ -198,12 +237,14 @@ namespace BusinessLogic.Services
                 return false;
             }
         }
+
         public CancelCaseModel CancelCase(int reqId)
         {
             var casetags = _db.Casetags.ToList();
             var request = _db.Requests.Where(x => x.Requestid == reqId).FirstOrDefault();
             CancelCaseModel model = new()
             {
+                reqId = reqId,
                 PatientFName = request.Firstname,
                 PatientLName = request.Lastname,
                 casetaglist = casetags
@@ -230,8 +271,6 @@ namespace BusinessLogic.Services
                     rsl.Createddate = DateTime.Now;
                     _db.Requeststatuslogs.Add(rsl);
                     _db.Requests.Update(req);
-                    _db.SaveChanges();
-                    return true;
                 }
                 else
                 {
@@ -240,9 +279,9 @@ namespace BusinessLogic.Services
 
                     _db.Requeststatuslogs.Update(reqStatusLog);
                     _db.Requests.Update(req);
-                    _db.SaveChanges();
-                    return true;
                 }
+                _db.SaveChanges();
+                return true;
             }
             catch (Exception ex)
             {
@@ -266,8 +305,6 @@ namespace BusinessLogic.Services
 
         public Order FetchProfession()
         {
-
-
             var Healthprofessionaltype = _db.Healthprofessionaltypes.ToList();
 
             Order order = new()
@@ -329,20 +366,20 @@ namespace BusinessLogic.Services
                     rsl.Status = (int)StatusEnum.Accepted;
                     rsl.Notes = assignCaseModel.description;
                     rsl.Createddate = DateTime.Now;
+                    rsl.Physicianid = assignCaseModel.selectPhysicianId;
                     _db.Requeststatuslogs.Add(rsl);
-                    _db.Requests.Update(req);
-                    _db.SaveChanges();
-                    return true;
                 }
                 else
                 {
                     reqStatusLog.Status = (int)StatusEnum.Accepted;
                     reqStatusLog.Notes = assignCaseModel.description;
+                    reqStatusLog.Physicianid = assignCaseModel.selectPhysicianId;
+
                     _db.Requeststatuslogs.Update(reqStatusLog);
-                    _db.Requests.Update(req);
-                    _db.SaveChanges();
-                    return true;
                 }
+                _db.Requests.Update(req);
+                _db.SaveChanges();
+                return true;
             }
             catch (Exception ex)
             {
@@ -410,25 +447,25 @@ namespace BusinessLogic.Services
                 {
                     foreach (IFormFile file in files)
                     {
-                        if (file != null && file.Length > 0)
+                        //if (file != null && file.Length > 0)
+                        //{
+                        //get file name
+                        var fileName = Path.GetFileName(file.FileName);
+                        //define path
+                        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "UploadedFiles", fileName);
+                        // Copy the file to the desired location
+                        using (var stream = new FileStream(filePath, FileMode.Create))
                         {
-                            //get file name
-                            var fileName = Path.GetFileName(file.FileName);
-                            //define path
-                            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "UploadedFiles", fileName);
-                            // Copy the file to the desired location
-                            using (var stream = new FileStream(filePath, FileMode.Create))
-                            {
-                                file.CopyTo(stream);
-                            }
-                            Requestwisefile requestwisefile = new()
-                            {
-                                Filename = fileName,
-                                Requestid = reqId,
-                                Createddate = DateTime.Now
-                            };
-                            _db.Requestwisefiles.Add(requestwisefile);
+                            file.CopyTo(stream);
                         }
+                        Requestwisefile requestwisefile = new()
+                        {
+                            Filename = fileName,
+                            Requestid = reqId,
+                            Createddate = DateTime.Now
+                        };
+                        _db.Requestwisefiles.Add(requestwisefile);
+                        //}
                     }
                     _db.SaveChanges();
                     return true;
@@ -487,28 +524,28 @@ namespace BusinessLogic.Services
             }
         }
 
-        public Orderdetail SendOrderDetails(Order order)
-        {
-            var reqData = _db.Requests.Where(x => x.Requestid == order.ReqId).FirstOrDefault();
-            var usersData = _db.Users.Where(x => x.Userid == reqData.Userid).FirstOrDefault();
-            var aspnetusersData = _db.Aspnetusers.Where(x => x.Id == usersData.Aspnetuserid).FirstOrDefault();
-            Orderdetail orderDetail = new()
-            {
-                Vendorid = order.vendorid,
-                Requestid = order.ReqId,
-                Faxnumber = order.faxnumber,
-                Email = order.email,
-                Businesscontact = order.BusineesContact,
-                Prescription = order.orderdetail,
-                Noofrefill = order.refills,
-                Createddate = DateTime.Now,
-                Createdby = aspnetusersData.Username,
-            };
-            _db.Orderdetails.Add(orderDetail);
-            _db.SaveChanges();
+        //public Orderdetail SendOrderDetails(Order order)
+        //{
+        //    var reqData = _db.Requests.Where(x => x.Requestid == order.ReqId).FirstOrDefault();
+        //    var usersData = _db.Users.Where(x => x.Userid == reqData.Userid).FirstOrDefault();
+        //    var aspnetusersData = _db.Aspnetusers.Where(x => x.Id == usersData.Aspnetuserid).FirstOrDefault();
+        //    Orderdetail orderDetail = new()
+        //    {
+        //        Vendorid = order.vendorid,
+        //        Requestid = order.ReqId,
+        //        Faxnumber = order.faxnumber,
+        //        Email = order.email,
+        //        Businesscontact = order.BusineesContact,
+        //        Prescription = order.orderdetail,
+        //        Noofrefill = order.refills,
+        //        Createddate = DateTime.Now,
+        //        Createdby = aspnetusersData.Username,
+        //    };
+        //    _db.Orderdetails.Add(orderDetail);
+        //    _db.SaveChanges();
 
-            return orderDetail;
-        }
+        //    return orderDetail;
+        //}
 
         public bool SendOrder(Order order)
         {
@@ -554,6 +591,33 @@ namespace BusinessLogic.Services
             {
                 return false;
             }
+        }
+
+        public SendAgreementModel SendAgreementCase(int reqId)
+        {
+            var requestClient = _db.Requestclients.Where(x => x.Requestid == reqId).FirstOrDefault();
+            SendAgreementModel obj = new();
+            obj.Reqid = reqId;
+            obj.PhoneNumber = requestClient.Phonenumber;
+            obj.Email = requestClient.Email;
+
+            return obj;
+        }
+
+        public CloseCaseModel ShowCloseCase(int reqId)
+        {
+            var requestClient = _db.Requestclients.FirstOrDefault(x => x.Requestid == reqId);
+            var list = _db.Requestwisefiles.Where(x => x.Requestid == reqId).ToList();
+            CloseCaseModel model = new()
+            {
+                reqid = reqId,
+                fname = requestClient.Firstname,
+                lname = requestClient.Lastname,
+                email = requestClient.Email,
+                phoneNo = requestClient.Phonenumber,
+                files = list
+            };
+            return model;
         }
     }
 }
