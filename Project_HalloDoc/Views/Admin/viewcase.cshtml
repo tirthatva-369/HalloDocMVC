@@ -23,19 +23,22 @@
 <body>
     @{
         var bgColor = "He";
-
+            // Green
         @if (Model.RequestTypeId == 1)
         {
             bgColor = "#60be5e";
         }
+        // Orange
         else if (Model.RequestTypeId == 2)
         {
             bgColor = "#e69232";
         }
+        // Pink
         else if (Model.RequestTypeId == 3)
         {
             bgColor = "#d76879";
         }
+        // Blue
         else if (Model.RequestTypeId == 4)
         {
             bgColor = "#0b7ebf";

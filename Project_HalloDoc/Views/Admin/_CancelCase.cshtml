@@ -1,10 +1,9 @@
 ﻿@using DataAccess.Models;
 @model CancelCaseModel;
-
-@*cancel case model *@
 <div class="modal fade" id="cancelModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
-        <form method="post" asp-action="SubmitCancelCase" asp-controller="Admin" asp-route-reqId=@Model.reqId class="modal-content">
+        <form class="modal-content" method="post" asp-action="SubmitCancelCase" asp-controller="Admin" asp-route-reqId="@Model.reqId" onsubmit="return CancelValidation()">
+
             <div class="modal-header" style="background-color:#00B7FF">
                 <h5 class="modal-title text-light" id="exampleModalLabel">Confirm Cancellation</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
@@ -16,8 +15,8 @@
                 </div>
                 <div class="mb-3 ">
 
-                    <select class="form-select" aria-label="Default select example" asp-for="casetag">
-                        <option selected>Reasons for Cancellation</option>
+                    <select class="form-select" aria-label="Default select example" id="reason" asp-for="casetag">
+                        <option disabled selected>Reasons for Cancellation</option>
 
                         @foreach (var item in Model.casetaglist)
                         {
@@ -26,9 +25,11 @@
 
 
                     </select>
+                    <small id="reasonRequired" class="d-none" style="color:red">Reason is required</small>
                 </div>
                 <div class="mb-3">
-                    <textarea asp-for="notes" class="form-control" id="message-text" placeholder="Provide Additional Notes"></textarea>
+                    <textarea class="form-control" asp-for="notes" id="notes" placeholder="Provide Additional Notes"></textarea>
+                    <small id="notesRequired" class="d-none" style=" color:red">Note is required</small>
                 </div>
 
             </div>
@@ -39,3 +40,46 @@
         </form>
     </div>
 </div>
+<script>
+    $('#reason').on('change', function () {
+        let reason = $("#reason").val();
+        if (reason != null) {
+            $("#reasonRequired").addClass('d-none').removeClass('d-block');
+
+        }
+    });
+    $('#notes').on('input', function () {
+        let notes = $("#notes").val();
+        if (notes != "") {
+            $("#notesRequired").addClass('d-none').removeClass('d-block');
+
+
+        }
+        if (notes == "") {
+            $("#notesRequired").addClass('d-block').removeClass('d-none');
+        }
+    });
+
+    function CancelValidation() {
+        var reason = $("#reason").val();
+
+        if (reason == null) {
+            $("#reasonRequired").addClass('d-block').removeClass('d-none');
+        } else {
+            $("#reasonRequired").addClass('d-none').removeClass('d-block');
+        }
+
+        var notes = $("#notes").val();
+        if (notes == "") {
+            $("#notesRequired").addClass('d-block').removeClass('d-none');
+        } else {
+            $("#notesRequired").addClass('d-none').removeClass('d-block');
+        }
+
+        if (reason != null && notes != "") {
+            return true;
+        }
+        return false;
+    }
+
+</script>

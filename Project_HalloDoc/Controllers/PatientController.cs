@@ -130,7 +130,7 @@ namespace HalloDoc.mvc.Controllers
             }
             else
             {
-                return View(familyReqModel);
+                return RedirectToAction("CreateFamilyFrndReq", "Patient", familyReqModel);
             }
         }
 

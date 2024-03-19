@@ -168,10 +168,14 @@ namespace DataAccess.Models
         public int? reqType { get; set; }
     }
 
-    public class CancelAgreementModal
+    public class AgreementModal
     {
+        public int? Reqid { get; set; }
         public int ReqClientId { get; set; }
         public string? PatientName { get; set; }
+        public string? fname { get; set; }
+        public string? lname { get; set; }
+        public string? Reason { get; set; }
     }
 
     public class CloseCaseModel
@@ -190,5 +194,43 @@ namespace DataAccess.Models
         public List<Requestwisefile>? files { get; set; }
         [Required(ErrorMessage = "Please Enter Atleast One File")]
         public IFormFile Upload { get; set; }
+    }
+
+    public class EncounterFormModel
+    {
+        public int reqid { get; set; }
+        public string? FirstName { get; set; }
+        public string? LastName { get; set; }
+        public string? Location { get; set; }
+        public string? BirthDate { get; set; }
+        public DateTime? Date { get; set; }
+        public string? fullDate { get; set; }
+        public string? Email { get; set; }
+        public string? PhoneNumber { get; set; }
+        public string? HistoryIllness { get; set; }
+        public string? MedicalHistory { get; set; }
+        public string? Medications { get; set; }
+        public string? Allergies { get; set; }
+        public decimal? Temp { get; set; }
+        public decimal? Hr { get; set; }
+        public decimal? Rr { get; set; }
+        public int? BpS { get; set; }
+        public int? BpD { get; set; }
+        public decimal? O2 { get; set; }
+        public string? Pain { get; set; }
+        public string? Heent { get; set; }
+        public string? Cv { get; set; }
+        public string? Chest { get; set; }
+        public string? Abd { get; set; }
+        public string? Extr { get; set; }
+        public string? Skin { get; set; }
+        public string? Neuro { get; set; }
+        public string? Other { get; set; }
+        public string? Diagnosis { get; set; }
+        public string? TreatmentPlan { get; set; }
+        public string? MedicationDispensed { get; set; }
+        public string? Procedures { get; set; }
+        public string? FollowUp { get; set; }
+        public bool? indicate { get; set; }
     }
 }

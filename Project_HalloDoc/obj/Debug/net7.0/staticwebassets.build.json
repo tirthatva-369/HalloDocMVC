@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "1tg19T96TZOSXKHXQDdx9wrskfqykWKPH+CRaS2+LLY=",
+  "Hash": "WLHQz0YaueZRT/92vbP9gWzOsLu316KRJgAgt+ZcAvc=",
   "Source": "Project_HalloDoc",
   "BasePath": "_content/Project_HalloDoc",
   "Mode": "Default",
@@ -1598,6 +1598,23 @@
       "OriginalItemSpec": "wwwroot\\UploadedFiles\\Alt Tab_Refresh.ahk"
     },
     {
+      "Identity": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\UploadedFiles\\AutoHotkey_2.0.11_setup.exe",
+      "SourceId": "Project_HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\",
+      "BasePath": "_content/Project_HalloDoc",
+      "RelativePath": "UploadedFiles/AutoHotkey_2.0.11_setup.exe",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\UploadedFiles\\AutoHotkey_2.0.11_setup.exe"
+    },
+    {
       "Identity": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\UploadedFiles\\dark.png",
       "SourceId": "Project_HalloDoc",
       "SourceType": "Discovered",
@@ -1732,6 +1749,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\UploadedFiles\\table.png"
+    },
+    {
+      "Identity": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\UploadedFiles\\Tables.sql",
+      "SourceId": "Project_HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\",
+      "BasePath": "_content/Project_HalloDoc",
+      "RelativePath": "UploadedFiles/Tables.sql",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\UploadedFiles\\Tables.sql"
     },
     {
       "Identity": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\UploadedFiles\\Test Instructions (1).pdf",

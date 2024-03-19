@@ -49,7 +49,7 @@ public partial class Business
 
     [Column("createdby")]
     [StringLength(128)]
-    public string Createdby { get; set; } = null!;
+    public string? Createdby { get; set; } = null!;
 
     [Column("createddate", TypeName = "timestamp without time zone")]
     public DateTime Createddate { get; set; }
@@ -72,7 +72,7 @@ public partial class Business
 
     [ForeignKey("Createdby")]
     [InverseProperty("BusinessCreatedbyNavigations")]
-    public virtual Aspnetuser CreatedbyNavigation { get; set; } = null!;
+    public virtual Aspnetuser? CreatedbyNavigation { get; set; } = null!;
 
     [ForeignKey("Modifiedby")]
     [InverseProperty("BusinessModifiedbyNavigations")]

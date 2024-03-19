@@ -37,5 +37,11 @@ namespace BusinessLogic.Interfaces
         bool ClearCase(int reqId);
         SendAgreementModel SendAgreementCase(int reqId);
         CloseCaseModel ShowCloseCase(int reqId);
+        bool SaveCloseCase(CloseCaseModel model);
+        bool SubmitCloseCase(int ReqId);
+        EncounterFormModel EncounterForm(int reqId);
+        bool IAgreeAgreement(AgreementModal model);
+        AgreementModal ICancelAgreement(AgreementModal agreementModal);
+        bool SubmitCancelAgreement(AgreementModal model);
     }
 }

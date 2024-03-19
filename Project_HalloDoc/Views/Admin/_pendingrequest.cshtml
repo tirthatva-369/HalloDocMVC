@@ -102,14 +102,11 @@
                     {
                         bgColor = "#60be5e";
                         role = "Patient";
-
-
                     }
                     else if (item.requestTypeId == (int)RequestTypeEnum.Family)
                     {
                         bgColor = "#e69232";
                         role = "FamilyFriend";
-
                     }
                     else if (item.requestTypeId == (int)RequestTypeEnum.Concierge)
                     {
@@ -120,7 +117,6 @@
                         @*1*@
                         <td style="background:@bgColor">
                             <div class="d-flex justify-content-between">
-
                                 <span>@item.firstName @item.lastName</span>
                                 <a href="">
                                     <i class="bi bi-envelope text-white "></i>
@@ -153,7 +149,6 @@
                         else
                         {
                             <td style="background:@bgColor"> - </td>
-
                         }
 
                         @*7*@
@@ -163,29 +158,18 @@
 
                             <div class="d-flex">
                                 <div class="dropdown mb-1 w-75">
-                                    <button class="btn text-white border border-white py-1"
-                                            type="button" data-bs-toggle="dropdown"
-                                            aria-expanded="false">
+                                    <button class="btn text-white border border-white py-1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="bi bi-person-fill"></i>
-                                        <span>
-                                            Patient
-                                        </span>
+                                        <span>Patient</span>
                                     </button>
-
                                 </div>
-
                             </div>
                             <div>
                                 <div class="dropdown w-75">
-                                    <button class="btn text-white border border-white py-1"
-                                            type="button" data-bs-toggle="dropdown"
-                                            aria-expanded="false">
+                                    <button class="btn text-white border border-white py-1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="bi bi-person-badge-fill"></i>
-                                        <span>
-                                            Provider
-                                        </span>
+                                        <span>Provider</span>
                                     </button>
-
                                 </div>
                             </div>
                         </td>
@@ -193,22 +177,18 @@
                         <td style="background:@bgColor">
                             <div>
                                 <div class="dropdown mt-3">
-                                    <button class="btn text-white border border-white py-1  dropdown-toggle w-50 d-flex justify-content-around align-items-center"
-                                            id="chat_with_dropdown2" type="button" data-bs-toggle="dropdown"
-                                            aria-expanded="false">
-                                        <span>
-                                            Actions
-                                        </span>
+                                    <button class="btn text-white border border-white py-1  dropdown-toggle w-50 d-flex justify-content-around align-items-center" id="chat_with_dropdown2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <span>Actions</span>
                                     </button>
                                     <ul class="dropdown-menu table_dropdowns">
                                         <li>
-                                            <a class="dropdown-item" href="@Url.Action("viewcase",  new {Requestclientid = item.reqClientId , RequestTypeId = item.requestTypeId})">
+                                            <a class="dropdown-item" href="@Url.Action("ViewCase",  new {Requestclientid = item.reqClientId , RequestTypeId = item.requestTypeId})">
                                                 <i class="bi bi-file-earmark-text"></i>
                                                 View Case
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" asp-controller="Admin" asp-action="viewuploads" asp-route-reqId=@item.reqId>
+                                            <a class="dropdown-item" asp-controller="Admin" asp-action="ViewUploads" asp-route-reqId=@item.reqId>
                                                 <i class="bi bi-file-earmark-text"></i>
                                                 View Uploads
                                             </a>
@@ -232,10 +212,10 @@
                                             </button>
                                         </li>
                                         <li>
-                                            <button class="dropdown-item" onclick="showSendAgreement(@item.reqId)">
+                                            <a class="dropdown-item" style="cursor:pointer" onclick="showSendAgreement(@item.reqId,@item.requestTypeId)">
                                                 <i class="bi bi-file-earmark-text"></i>
                                                 Send Agreement
-                                            </button>
+                                            </a>
                                         </li>
 
                                     </ul>
@@ -248,10 +228,8 @@
         </tbody>
     </table>
 </div>
-
-<div id="modelcontent2"></div>
+<div id="modelContent"></div>
 
 <!-- accordions -->
 <div class="accordion accordion-flush d-block d-md-none" id="accordionFlushExample">
 </div>
-

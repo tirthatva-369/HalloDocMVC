@@ -36,6 +36,8 @@ public partial class ApplicationDbContext : DbContext
 
     public virtual DbSet<Emaillog> Emaillogs { get; set; }
 
+    public virtual DbSet<Encounterform> Encounterforms { get; set; }
+
     public virtual DbSet<Healthprofessional> Healthprofessionals { get; set; }
 
     public virtual DbSet<Healthprofessionaltype> Healthprofessionaltypes { get; set; }
@@ -204,6 +206,17 @@ public partial class ApplicationDbContext : DbContext
             entity.HasOne(d => d.Physician).WithMany(p => p.Emaillogs).HasConstraintName("fk_emaillog3");
 
             entity.HasOne(d => d.Request).WithMany(p => p.Emaillogs).HasConstraintName("fk_emaillog1");
+        });
+
+        modelBuilder.Entity<Encounterform>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("encounterform_pkey");
+
+            entity.Property(e => e.Createddate).HasDefaultValueSql("LOCALTIMESTAMP");
+
+            entity.HasOne(d => d.Request).WithMany(p => p.Encounterforms)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fk_ecounterform");
         });
 
         modelBuilder.Entity<Healthprofessional>(entity =>

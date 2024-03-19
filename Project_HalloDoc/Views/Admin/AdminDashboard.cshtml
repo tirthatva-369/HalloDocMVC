@@ -139,7 +139,7 @@
             provider-location......
         </div>
         <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-            Profile......
+            <partial name="_myprofile" />
         </div>
         <div class="tab-pane fade" id="provider-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
             provider......
@@ -311,7 +311,6 @@
             });
         }
 
-
         function showBlockCase(reqId) {
             $.ajax({
                 url: '/Admin/BlockCase',
@@ -330,13 +329,14 @@
                 type: 'GET',
                 data: { reqId: reqId },
                 success: function (response) {
-                    $("#modelcontent2").html(response);
+                    $("#modelContent").html(response);
                     $('#transferModal').modal('show');
                 }
             });
         }
 
         function showSendAgreement(reqId, reqType) {
+            console.log('hi');
             var role = null;
             if (reqType == 1) {
                 role = 'Business';
@@ -350,17 +350,21 @@
             if (reqType == 4) {
                 role = 'Concierge';
             }
-
+            console.log(reqType);
             $.ajax({
                 url: '/Admin/SendAgreement',
                 type: 'GET',
+                data: { reqId: reqId, reqType: reqType },
+                success: function (response) {
+                    $("#modelContent").html(response);
+                    $('#sendAgreementModal').modal('show');
+                }
             });
         }
 
         function clearCase(reqId) {
-            var url = '@Url.Action("ClearCase","Admin")';
             $.ajax({
-                url: url,
+                url: '/Admin/ClearCase',
                 type: 'GET',
                 data: { reqId: reqId },
                 success: function (response) {

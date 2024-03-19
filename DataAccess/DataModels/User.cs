@@ -84,7 +84,7 @@ public partial class User
     public short? Status { get; set; }
 
     [Column("isdeleted", TypeName = "bit(1)")]
-    public BitArray? Isdeleted { get; set; } = new BitArray(1) { [0] = false };
+    public BitArray? Isdeleted { get; set; }
 
     [Column("ip")]
     [StringLength(20)]

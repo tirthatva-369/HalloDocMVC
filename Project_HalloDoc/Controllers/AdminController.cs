@@ -13,6 +13,7 @@ using Project_HalloDoc.Auth;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis.Elfie.Serialization;
 using System.Text.Json.Nodes;
+using DataAccess.DataContext;
 //using Org.BouncyCastle.Crypto.Macs;
 //using Org.BouncyCastle.Asn1.Ocsp;
 
@@ -24,13 +25,16 @@ namespace HalloDoc.mvc.Controllers
         private readonly IAdminInterface _adminService;
         private readonly INotyfService _notyf;
         private readonly IJwtService _jwtService;
+        private readonly ApplicationDbContext _db;
 
-        public AdminController(ILogger<AdminController> logger, IAdminInterface adminService, INotyfService notyf, IJwtService jwtService)
+
+        public AdminController(ILogger<AdminController> logger, IAdminInterface adminService, INotyfService notyf, IJwtService jwtService, ApplicationDbContext db)
         {
             _logger = logger;
             _adminService = adminService;
             _notyf = notyf;
             _jwtService = jwtService;
+            _db = db;
         }
 
         public IActionResult Index()
@@ -286,12 +290,43 @@ namespace HalloDoc.mvc.Controllers
         {
             var rid = (int)HttpContext.Session.GetInt32("rid");
 
-            SendEmail("yashvariya23@gmail.com", "Documents", selectedFiles);
+            var message = string.Join(", ", selectedFiles);
+
             _notyf.Success("Send Mail Successfully");
+
+            var mail = "tatva.dotnet.tirthpatel@outlook.com";
+            var password = "Prabodham@369";
+
+            var client = new SmtpClient("smtp.office365.com", 587)
+            {
+                EnableSsl = true,
+                Credentials = new NetworkCredential(mail, password)
+            };
+            MailMessage mailMessage = new MailMessage
+            {
+                From = new MailAddress("tatva.dotnet.parthtrivedi@outlook.com"),
+                Subject = "Document List",
+                IsBodyHtml = true,
+
+            };
+            foreach (var item in selectedFiles)
+            {
+
+                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/UploadedFiles");
+                path = Path.Combine(path, item);
+                Attachment attachment = new Attachment(path);
+                mailMessage.Attachments.Add(attachment);
+            }
+            //RequestClient requestClient = _requestClientRepository.GetRequestClientByRequestId(requestId);
+            //mailMessage.To.Add(requestClient.Email);
+            mailMessage.To.Add("tirthpatel7321@gmail.com");
+
+            client.SendMailAsync(mailMessage);
+
             return RedirectToAction("ViewUploads", "Admin", new { reqId = rid });
         }
 
-        private Task SendEmail(string email, string subject, List<string> filenames)
+        public Task SendEmail(string email, string subject, string message)
         {
             var mail = "tatva.dotnet.tirthpatel@outlook.com";
             var password = "Prabodham@369";
@@ -301,19 +336,8 @@ namespace HalloDoc.mvc.Controllers
                 EnableSsl = true,
                 Credentials = new NetworkCredential(mail, password)
             };
-            MailMessage mailMessage = new MailMessage();
-            for (var i = 0; i < filenames.Count; i++)
-            {
-                string pathname = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "UploadedFiles", filenames[i]);
-                Attachment attachment = new Attachment(pathname);
-                mailMessage.Attachments.Add(attachment);
-            }
-            mailMessage.To.Add(email);
-            mailMessage.From = new MailAddress(mail);
 
-            mailMessage.Subject = subject;
-
-            return client.SendMailAsync(mailMessage);
+            return client.SendMailAsync(new MailMessage(from: mail, to: email, subject, message));
         }
 
         public IActionResult ViewUploads(int reqId)
@@ -350,7 +374,7 @@ namespace HalloDoc.mvc.Controllers
         {
             var model = _adminService.AssignCase(reqId);
             model.ReqId = reqId;
-            return PartialView("_transfer", model);
+            return PartialView("_Transfer", model);
         }
 
         [HttpPost]
@@ -364,7 +388,7 @@ namespace HalloDoc.mvc.Controllers
         public IActionResult ClearCase(int reqId)
         {
             ViewBag.ClearCaseId = reqId;
-            return PartialView("_clearcase");
+            return PartialView("_Clearcase");
         }
 
         [HttpPost]
@@ -382,27 +406,78 @@ namespace HalloDoc.mvc.Controllers
 
         public IActionResult CloseCase(int reqId)
         {
-            var model = _adminService.GetAllDocById(reqId);
+            var model = _adminService.ShowCloseCase(reqId);
             return View(model);
         }
+
+        [HttpPost]
+        public IActionResult CloseCase(CloseCaseModel model)
+        {
+            bool isSaved = _adminService.SaveCloseCase(model);
+            if (isSaved)
+            {
+                _notyf.Success("Saved");
+            }
+            else
+            {
+                _notyf.Error("Failed");
+            }
+            return RedirectToAction("CloseCase", new { ReqId = model.reqid });
+        }
+        public IActionResult SubmitCloseCase(int ReqId)
+        {
+            bool isClosed = _adminService.SubmitCloseCase(ReqId);
+            if (isClosed)
+            {
+                _notyf.Success("Closed Successfully");
+                return RedirectToAction("AdminDashboard");
+            }
+            else
+            {
+                _notyf.Error("Failed to close");
+                return RedirectToAction("CloseCase", new { ReqId = ReqId });
+            }
+        }
+
 
         [HttpGet]
         public IActionResult SendAgreement(int reqId, int reqType)
         {
             var model = _adminService.SendAgreementCase(reqId);
             model.reqType = reqType;
-            return PartialView("_sendagreement", model);
+            return PartialView("_SendAgreement", model);
+        }
+
+        //public Task SendEmail(string email, string subject, string message)
+        //{
+        //    var mail = "tatva.dotnet.tirthpatel@outlook.com";
+        //    var password = "Prabodham@369";
+
+        //    var client = new SmtpClient("smtp.office365.com", 587)
+        //    {
+        //        EnableSsl = true,
+        //        Credentials = new NetworkCredential(mail, password)
+        //    };
+
+        //    return client.SendMailAsync(new MailMessage(from: mail, to: email, subject, message));
+        //}
+
+        private string GenerateReviewAgreementUrl(string userId)
+        {
+            string baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
+            string resetPasswordPath = Url.Action("ReviewAgreement", "Home", new { id = userId });
+            return baseUrl + resetPasswordPath;
         }
 
         [HttpPost]
-        public IActionResult SendAgreement(string email)
+        public IActionResult SendAgreement(SendAgreementModel model)
         {
             try
             {
                 string baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
-                string reviewPathLink = baseUrl + Url.Action("ReviewAgreement", "Home");
+                string reviewPathLink = baseUrl + Url.Action("ReviewAgreement", "Home", new { reqId = model.Reqid });
 
-                //SendEmail(email, "Review Agreement", $"Hello, Review the agreement properly: {reviewPathLink}");
+                SendEmail(model.Email, "Review Agreement", $"Hello, Review the agreement properly: {reviewPathLink}");
                 return Json(new { isSend = true });
 
             }
@@ -410,6 +485,12 @@ namespace HalloDoc.mvc.Controllers
             {
                 return Json(new { isSend = false });
             }
+        }
+
+        public IActionResult Encounter(int reqId)
+        {
+            var model = _adminService.EncounterForm(reqId);
+            return View(model);
         }
     }
 }

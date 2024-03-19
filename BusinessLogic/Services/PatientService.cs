@@ -14,19 +14,19 @@ using Humanizer;
 using DataAccess.Enum;
 using DataAccess.Enums;
 using Microsoft.Build.Framework;
+using System.Net.NetworkInformation;
+using System.Net.Sockets;
 
 namespace BusinessLogic.Services
 {
     public class PatientService : IPatientInterface
     {
         private readonly ApplicationDbContext _db;
-        private readonly IHostingEnvironment _env;
 
 
-        public PatientService(ApplicationDbContext db, IHostingEnvironment env)
+        public PatientService(ApplicationDbContext db)
         {
             _db = db;
-            _env = env;
         }
 
         public void AddPatientInfo(PatientRequestModel patientRequestModel)
@@ -36,8 +36,6 @@ namespace BusinessLogic.Services
                 try
                 {
                     var aspnetuser = _db.Aspnetusers.Where(m => m.Email == patientRequestModel.email).FirstOrDefault();
-                    string hostName = Dns.GetHostName();
-                    string myIp = Dns.GetHostByName(hostName).AddressList[0].ToString();
                     User user = new User();
                     if (aspnetuser == null)
                     {
@@ -49,7 +47,7 @@ namespace BusinessLogic.Services
                         aspnetuser1.Username = username;
                         aspnetuser1.Phonenumber = patientRequestModel.phoneNo;
                         aspnetuser1.Modifieddate = DateTime.Now;
-                        aspnetuser1.Ip = myIp.Substring(0, Math.Min(myIp.Length, 20));
+                        aspnetuser1.Ip = GetLocalIPv4(NetworkInterfaceType.Ethernet);
                         _db.Aspnetusers.Add(aspnetuser1);
                         _db.SaveChanges();
 
@@ -71,7 +69,7 @@ namespace BusinessLogic.Services
                         user.Modifieddate = DateTime.Now;
                         user.Status = (int)StatusEnum.Unassigned;
                         user.Regionid = 1;
-                        user.Ip = myIp.Substring(0, Math.Min(myIp.Length, 20));
+                        user.Ip = GetLocalIPv4(NetworkInterfaceType.Ethernet);
 
                         _db.Users.Add(user);
                         _db.SaveChanges();
@@ -94,6 +92,7 @@ namespace BusinessLogic.Services
                     request.Phonenumber = patientRequestModel.phoneNo;
                     request.Email = patientRequestModel.email;
                     request.User = user;
+                    request.Ip = GetLocalIPv4(NetworkInterfaceType.Ethernet);
 
                     _db.Requests.Add(request);
                     _db.SaveChanges();
@@ -121,6 +120,7 @@ namespace BusinessLogic.Services
                     info.Intdate = patientRequestModel.dateOfBirth.Day;
                     info.Strmonth = patientRequestModel.dateOfBirth.ToString("MMM");
                     info.Address = patientRequestModel.street + ", " + patientRequestModel.city + ", " + patientRequestModel.state + ", " + patientRequestModel.zipCode;
+                    info.Ip = GetLocalIPv4(NetworkInterfaceType.Ethernet);
 
                     _db.Requestclients.Add(info);
                     _db.SaveChanges();
@@ -450,6 +450,25 @@ namespace BusinessLogic.Services
             {
                 return false;
             }
+        }
+
+        public string GetLocalIPv4(NetworkInterfaceType _type)
+        {
+            string output = "";
+            foreach (NetworkInterface item in NetworkInterface.GetAllNetworkInterfaces())
+            {
+                if (item.NetworkInterfaceType == _type && item.OperationalStatus == OperationalStatus.Up)
+                {
+                    foreach (UnicastIPAddressInformation ip in item.GetIPProperties().UnicastAddresses)
+                    {
+                        if (ip.Address.AddressFamily == AddressFamily.InterNetwork)
+                        {
+                            output = ip.Address.ToString();
+                        }
+                    }
+                }
+            }
+            return output;
         }
     }
 }

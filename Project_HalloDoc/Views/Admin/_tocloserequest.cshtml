@@ -1,4 +1,4 @@
-﻿﻿@using DataAccess.Models;
+﻿@using DataAccess.Models;
 @using DataAccess.Enums;
 @model List<AdminDashTableModel>;
 
@@ -219,7 +219,7 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="#">
+                                            <a class="dropdown-item" href="@Url.Action("Order", new {ReqId = item.reqId})">
                                                 <i class="bi bi-file-earmark-text"></i>
                                                 Orders
                                             </a>
@@ -243,7 +243,7 @@
                                             </button>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="#">
+                                            <a class="dropdown-item" href="@Url.Action("Encounter",new {ReqId=@item.reqId})">
                                                 <i class="bi bi-file-earmark-text"></i>
                                                 Encounter
                                             </a>
@@ -259,12 +259,12 @@
         </tbody>
     </table>
 </div>
-<div id="modelContent3"></div>
+<div id="modelContent"></div>
 <!-- accordions -->
 <div class="accordion accordion-flush d-block d-md-none" id="accordionFlushExample">
 </div>
 
-<script>
+@* <script>
     function clearCase(reqId) {
         var url = '@Url.Action("ClearCase","Admin")';
 
@@ -280,4 +280,4 @@
             }
         });
     }
-</script>
+</script> *@
