@@ -91,7 +91,7 @@
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="profile-tab" data-bs-toggle="tab"
                                 data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane"
-                                aria-selected="false">
+                                aria-selected="false" onClick="showMyProfile()">
                             My Profile
                         </button>
                     </li>
@@ -139,7 +139,7 @@
             provider-location......
         </div>
         <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-            <partial name="_myprofile" />
+            <partial name="_MyProfile" />
         </div>
         <div class="tab-pane fade" id="provider-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
             provider......
@@ -371,6 +371,72 @@
                     console.log(response);
                     $("#modelContent").html(response);
                     $('#clearModal').modal('show');
+                }
+            });
+        }
+
+        function showMyProfile() {
+            $.ajax({
+                url: '/Admin/ShowMyProfile',
+                type: 'GET',
+                success: function (response) {
+                    $("#profile-tab-pane").html(response);
+                }
+            });
+        }
+
+        function Export(reqList)  //---------------------------------------------- Export btn Ajax
+        {
+
+
+            $.ajax({
+                method: "POST",
+                url: "/Admin/ExportReq",
+                data: { reqList: reqList },
+
+                success: function (resp) {
+
+                    //const blob = new Blob([resp], { type: 'text/xlsx' });
+                    const blob = new Blob([resp], { type: 'text/csv' });
+
+                    var url = window.URL.createObjectURL(blob);
+
+                    var anchor = document.createElement('a');
+
+                    anchor.style.display = 'none';
+                    anchor.href = url;
+                    anchor.download = 'Exported-Requests.csv';
+
+                    //anchor.download = 'Exported-Requests.xlsx';
+                    document.body.appendChild(anchor);
+                    anchor.click();
+                    window.URL.revokeObjectURL(url);
+                    document.body.removeChild(anchor);
+                },
+
+                error: function () {
+                    alert("in error");
+                }
+
+            });
+
+        }
+
+        // $("#exportbtn").click(function () {
+        //     console.log('hi');
+        //     var request = @Html.Raw(Json.Serialize(Model));
+        //     console.log(request);
+        //     Export(request);
+        // });
+
+        function ExportAll() {
+            $.ajax({
+                url: '/Admin/GetRequestsByStatus',
+                type: 'GET',
+                data: { tabNo: 0 },
+                success: function (response) {
+                    console.log(response);
+                    Export(response);
                 }
             });
         }

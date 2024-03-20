@@ -19,10 +19,10 @@
             <button class="action-btn">
                 <i class="bi bi-journal-text"></i> <span class="d-none d-md-block">Create Requests</span>
             </button>
-            <button class="action-btn">
+            <button class="action-btn" id="exportbtn">
                 <i class="bi bi-reply"></i> <span class="d-none d-md-block">Export</span>
             </button>
-            <button class="action-btn">
+            <button class="action-btn" onclick="ExportAll()">
                 <i class="bi bi-reply-all"></i> <span class="d-none d-md-block">Export All</span>
             </button>
             <button class="action-btn">
@@ -207,7 +207,7 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="#">
+                                            <a class="dropdown-item" asp-controller="Admin" asp-action="viewuploads" asp-route-reqId=@item.reqId>
                                                 <i class="bi bi-file-earmark-text"></i>
                                                 ViewUploads
                                             </a>
@@ -264,20 +264,27 @@
 <div class="accordion accordion-flush d-block d-md-none" id="accordionFlushExample">
 </div>
 
-@* <script>
-    function clearCase(reqId) {
-        var url = '@Url.Action("ClearCase","Admin")';
+<script>
+    // function clearCase(reqId) {
+    //     var url = '@Url.Action("ClearCase","Admin")';
 
-        $.ajax({
-            url: url,
-            type: 'GET',
-            data: { reqId: reqId },
-            success: function (response) {
-                console.log(response);
-                $("#modelContent3").html(response);
+    //     $.ajax({
+    //         url: url,
+    //         type: 'GET',
+    //         data: { reqId: reqId },
+    //         success: function (response) {
+    //             console.log(response);
+    //             $("#modelContent3").html(response);
 
-                $('#exampleModal').modal('show');
-            }
-        });
-    }
-</script> *@
+    //             $('#exampleModal').modal('show');
+    //         }
+    //     });
+    // }
+
+        $("#exportbtn").click(function () {
+        //alert("exportbtn was clicked.");
+        var request = @Html.Raw(Json.Serialize(Model));
+        console.log(request);
+        Export(request);
+    });
+</script>

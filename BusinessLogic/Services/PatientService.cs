@@ -73,7 +73,6 @@ namespace BusinessLogic.Services
 
                         _db.Users.Add(user);
                         _db.SaveChanges();
-
                     }
                     else
                     {
@@ -284,7 +283,7 @@ namespace BusinessLogic.Services
             business.Phonenumber = businessReqModel.phoneNo;
             business.City = businessReqModel.city;
             business.Zipcode = businessReqModel.zipCode;
-            business.Createdby = businessReqModel.businessName;
+            business.Createdby = "1";
 
             _db.Businesses.Add(business);
             _db.SaveChanges();

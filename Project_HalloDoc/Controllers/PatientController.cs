@@ -26,8 +26,6 @@ namespace HalloDoc.mvc.Controllers
         private readonly INotyfService _notyf;
         private readonly ApplicationDbContext _db;
 
-
-
         public PatientController(ILogger<PatientController> logger, ILoginInterface loginService, IPatientInterface patientService, INotyfService notyf, ApplicationDbContext db)
         {
             _logger = logger;
@@ -35,7 +33,6 @@ namespace HalloDoc.mvc.Controllers
             _patientService = patientService;
             _notyf = notyf;
             _db = db;
-
         }
 
         public IActionResult Index()
@@ -207,6 +204,11 @@ namespace HalloDoc.mvc.Controllers
         }
 
         public IActionResult ForgetPassword()
+        {
+            return View();
+        }
+
+        public IActionResult CreateAccount()
         {
             return View();
         }

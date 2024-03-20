@@ -80,8 +80,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX0NvbmNsdWRlUmVxdWVzdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Project/Project_HalloDoc/Project_HalloDoc/Views/Admin/_myprofile.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX215cHJvZmlsZS5jc2h0bWw=
+[D:/Project/Project_HalloDoc/Project_HalloDoc/Views/Admin/_MyProfile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX015UHJvZmlsZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Project/Project_HalloDoc/Project_HalloDoc/Views/Admin/_NewRequest.cshtml]
@@ -108,6 +108,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cX1VucGFpZFJlcXVlc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Project/Project_HalloDoc/Project_HalloDoc/Views/Home/AgreementStatus.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBZ3JlZW1lbnRTdGF0dXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Project/Project_HalloDoc/Project_HalloDoc/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -116,8 +120,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxSZXZpZXdBZ3JlZW1lbnQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Project/Project_HalloDoc/Project_HalloDoc/Views/Home/_cancelagreement.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxfY2FuY2VsYWdyZWVtZW50LmNzaHRtbA==
+[D:/Project/Project_HalloDoc/Project_HalloDoc/Views/Home/_CancelAgreement.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxfQ2FuY2VsQWdyZWVtZW50LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Project/Project_HalloDoc/Project_HalloDoc/Views/Patient/CreateAccount.cshtml]

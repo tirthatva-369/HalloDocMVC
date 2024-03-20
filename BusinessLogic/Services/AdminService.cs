@@ -132,7 +132,7 @@ namespace BusinessLogic.Services
 
             var viewdata = new ViewCaseViewModel
             {
-                RequestId = requestData.Requestid,
+                RequestId = ReqId,
                 Requestclientid = reqClientId,
                 Firstname = data.Firstname,
                 Lastname = data.Lastname,
@@ -148,10 +148,10 @@ namespace BusinessLogic.Services
                 Zipcode = data.Zipcode,
                 RegionName = regionData.Name,
                 Requesttype = reqtypeData.Name,
-                DateOfBirth = new DateTime(Convert.ToInt32(userData.Intyear), DateTime.ParseExact(userData.Strmonth, "MMM", CultureInfo.InvariantCulture).Month, Convert.ToInt32(userData.Intdate)),
-                IntYear = userData.Intyear,
-                IntDate = userData.Intdate,
-                StrMonth = userData.Strmonth,
+                //DateOfBirth = new DateTime(Convert.ToInt32(userData.Intyear), DateTime.ParseExact(userData.Strmonth, "MMM", CultureInfo.InvariantCulture).Month, Convert.ToInt32(userData.Intdate)),
+                //IntYear = userData.Intyear,
+                //IntDate = userData.Intdate,
+                //StrMonth = userData.Strmonth,
 
             };
             return viewdata;
@@ -665,68 +665,62 @@ namespace BusinessLogic.Services
             }
         }
 
-        public bool IAgreeAgreement(AgreementModal model)
+        public bool AgreeAgreement(AgreementModel model)
         {
             try
             {
                 var req = _db.Requests.FirstOrDefault(x => x.Requestid == model.Reqid);
-                var requestclient = _db.Requestclients.FirstOrDefault(x => x.Requestid == req.Requestid);
-
                 req.Status = (int)StatusEnum.MDEnRoute;
+                req.Modifieddate = DateTime.Now;
 
                 Requeststatuslog rsl = new Requeststatuslog();
                 rsl.Requestid = req.Requestid;
-                rsl.Status = req.Status;
+                rsl.Status = (int)StatusEnum.MDEnRoute;
                 rsl.Createddate = DateTime.Now;
+                rsl.Notes = "Agreement accepted by patient";
 
-                _db.Requests.Update(req);
                 _db.Requeststatuslogs.Add(rsl);
+                _db.Requests.Update(req);
                 _db.SaveChanges();
                 return true;
             }
-
             catch (Exception e)
             {
                 return false;
             }
+        }
 
+        public int GetStatusForReviewAgreement(int reqId)
+        {
+            var status = (int)_db.Requests.Where(x => x.Requestid == reqId).Select(x => x.Status).FirstOrDefault();
+            return status;
         }
 
 
-        public AgreementModal ICancelAgreement(AgreementModal agreementModal)
+        public AgreementModel CancelAgreement(int reqId)
         {
-            //var req = _db.Requests.FirstOrDefault(x => x.Requestid == agreementModal.Reqid);
-            var requestclient = _db.Requestclients.FirstOrDefault(x => x.Requestid == agreementModal.Reqid);
-            AgreementModal model = new()
+            var requestclient = _db.Requestclients.FirstOrDefault(x => x.Requestid == reqId);
+            AgreementModel model = new()
             {
-                Reqid = agreementModal.Reqid,
+                Reqid = reqId,
                 fname = requestclient.Firstname,
                 lname = requestclient.Lastname,
-                ReqClientId = requestclient.Requestclientid
-
-
             };
             return model;
-
-
         }
 
-        public bool SubmitCancelAgreement(AgreementModal model)
+        public bool SubmitCancelAgreement(AgreementModel model)
         {
             try
             {
-                var reqclientid = _db.Requestclients.FirstOrDefault(x => x.Requestclientid == model.ReqClientId);
-
-
-                if (model.ReqClientId != null)
+                var request = _db.Requests.FirstOrDefault(x => x.Requestid == model.Reqid);
+                if (request != null)
                 {
-                    var request = _db.Requests.FirstOrDefault(x => x.Requestid == reqclientid.Requestid);
-
-                    request.Status = (int)StatusEnum.Closed;
-
+                    request.Status = (int)StatusEnum.CancelledByPatient;
+                    request.Modifieddate = DateTime.Now;
                     Requeststatuslog rsl = new Requeststatuslog();
                     rsl.Requestid = request.Requestid;
-                    rsl.Status = request.Status;
+                    rsl.Status = (int)StatusEnum.CancelledByPatient;
                     rsl.Notes = model.Reason;
                     rsl.Createddate = DateTime.Now;
 
@@ -790,5 +784,126 @@ namespace BusinessLogic.Services
             return ef;
         }
 
+        public bool SubmitEncounterForm(EncounterFormModel model)
+        {
+            try
+            {
+                //concludeEncounter _obj = new concludeEncounter();
+
+                var ef = _db.Encounterforms.FirstOrDefault(r => r.Requestid == model.reqid);
+
+                if (ef == null)
+                {
+                    Encounterform _encounter = new Encounterform()
+                    {
+                        Requestid = model.reqid,
+                        Firstname = model.FirstName,
+                        Lastname = model.LastName,
+                        Location = model.Location,
+                        Phonenumber = model.PhoneNumber,
+                        Email = model.Email,
+                        Illnesshistory = model.HistoryIllness,
+                        Medicalhistory = model.MedicalHistory,
+                        //date = model.Date,
+                        Medications = model.Medications,
+                        Allergies = model.Allergies,
+                        Temperature = model.Temp,
+                        Heartrate = model.Hr,
+                        Respirationrate = model.Rr,
+                        Bloodpressuresystolic = model.BpS,
+                        Bloodpressurediastolic = model.BpD,
+                        Oxygenlevel = model.O2,
+                        Pain = model.Pain,
+                        Heent = model.Heent,
+                        Cardiovascular = model.Cv,
+                        Chest = model.Chest,
+                        Abdomen = model.Abd,
+                        Extremities = model.Extr,
+                        Skin = model.Skin,
+                        Neuro = model.Neuro,
+                        Other = model.Other,
+                        Diagnosis = model.Diagnosis,
+                        Treatmentplan = model.TreatmentPlan,
+                        Medicationsdispensed = model.MedicationDispensed,
+                        Procedures = model.Procedures,
+                        Followup = model.FollowUp,
+                        Isfinalized = false
+                    };
+
+                    _db.Encounterforms.Add(_encounter);
+
+                    //_obj.indicate = true;
+                }
+                else
+                {
+                    var efdetail = _db.Encounterforms.FirstOrDefault(x => x.Requestid == model.reqid);
+
+                    efdetail.Requestid = model.reqid;
+                    efdetail.Illnesshistory = model.HistoryIllness;
+                    efdetail.Medicalhistory = model.MedicalHistory;
+                    //efdetail.Date = model.Date;
+                    efdetail.Medications = model.Medications;
+                    efdetail.Allergies = model.Allergies;
+                    efdetail.Temperature = model.Temp;
+                    efdetail.Heartrate = model.Hr;
+                    efdetail.Respirationrate = model.Rr;
+                    efdetail.Bloodpressuresystolic = model.BpS;
+                    efdetail.Bloodpressurediastolic = model.BpD;
+                    efdetail.Oxygenlevel = model.O2;
+                    efdetail.Pain = model.Pain;
+                    efdetail.Heent = model.Heent;
+                    efdetail.Cardiovascular = model.Cv;
+                    efdetail.Chest = model.Chest;
+                    efdetail.Abdomen = model.Abd;
+                    efdetail.Extremities = model.Extr;
+                    efdetail.Skin = model.Skin;
+                    efdetail.Neuro = model.Neuro;
+                    efdetail.Other = model.Other;
+                    efdetail.Diagnosis = model.Diagnosis;
+                    efdetail.Treatmentplan = model.TreatmentPlan;
+                    efdetail.Medicationsdispensed = model.MedicationDispensed;
+                    efdetail.Procedures = model.Procedures;
+                    efdetail.Followup = model.FollowUp;
+                    efdetail.Modifieddate = DateTime.Now;
+                    ef.Isfinalized = false;
+                    _db.Encounterforms.Update(efdetail);
+                    // _obj.indicate = true;
+                };
+
+
+                _db.SaveChanges();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
+        }
+
+        public MyProfileModel MyProfile(string sessionEmail)
+        {
+            var myProfileMain = _db.Admins.Where(x => x.Email == sessionEmail).Select(x => new MyProfileModel()
+            {
+                fname = x.Firstname,
+                lname = x.Lastname,
+                email = x.Email,
+                confirm_email = x.Email,
+                mobile_no = x.Mobile,
+                addr1 = x.Address1,
+                addr2 = x.Address2,
+                city = x.City,
+                zip = x.Zip,
+                state = _db.Regions.Where(r => r.Regionid == x.Regionid).Select(r => r.Name).First(),
+                roles = _db.Aspnetroles.ToList(),
+            }).ToList().FirstOrDefault();
+
+            var aspnetuser = _db.Aspnetusers.Where(r => r.Email == sessionEmail).First();
+            myProfileMain.username = aspnetuser.Username;
+            myProfileMain.password = aspnetuser.Passwordhash;
+
+            return myProfileMain;
+        }
     }
 }

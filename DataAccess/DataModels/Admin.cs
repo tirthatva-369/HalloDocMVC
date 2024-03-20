@@ -76,6 +76,10 @@ public partial class Admin
     [Column("roleid")]
     public int? Roleid { get; set; }
 
+    [Column("city")]
+    [StringLength(50)]
+    public string? City { get; set; }
+
     [InverseProperty("Admin")]
     public virtual ICollection<Adminregion> Adminregions { get; set; } = new List<Adminregion>();
 

@@ -168,7 +168,7 @@ namespace DataAccess.Models
         public int? reqType { get; set; }
     }
 
-    public class AgreementModal
+    public class AgreementModel
     {
         public int? Reqid { get; set; }
         public int ReqClientId { get; set; }
@@ -232,5 +232,56 @@ namespace DataAccess.Models
         public string? Procedures { get; set; }
         public string? FollowUp { get; set; }
         public bool? indicate { get; set; }
+    }
+    public class MyProfileModel
+    {
+        public int? admin_id { get; set; }
+        public int? aspnetuserid { get; set; }
+
+        [Required(ErrorMessage = "Please Enter Your First Name")]
+        [RegularExpression(@"^[A-Za-z]+$", ErrorMessage = "First Name must contain only letters")]
+        public string? fname { get; set; }
+
+        [Required(ErrorMessage = "Please Enter Your Last Name")]
+        [RegularExpression(@"^[A-Za-z]+$", ErrorMessage = "Last Name must contain only letters")]
+        public string? lname { get; set; }
+
+        [Required(ErrorMessage = "Please Enter Your Email")]
+        public string? email { get; set; }
+
+        [Compare("email", ErrorMessage = "Email Missmatch")]
+        public string? confirm_email { get; set; }
+
+        [Required(ErrorMessage = "Please Enter Your Mobile number")]
+        public string? mobile_no { get; set; }
+
+        [Required(ErrorMessage = "Please Enter address-1")]
+        public string? addr1 { get; set; }
+
+        [Required(ErrorMessage = "Please Enter address-2")]
+        public string? addr2 { get; set; }
+
+        [Required(ErrorMessage = "Please Enter Your City")]
+        public string? city { get; set; }
+        public int regionId { get; set; }
+
+        [Required(ErrorMessage = "Please Enter Your Zipcode")]
+        public string zip { get; set; }
+        public string? altphone { get; set; }
+        public int? createdBy { get; set; }
+        public DateTime createdDate { get; set; }
+        public int status { get; set; }
+        public int? roleid { get; set; }
+        public string username { get; set; }
+
+        [Required(ErrorMessage = "Please Enter Password")]
+        public string password { get; set; }
+
+        [Required(ErrorMessage = "Please Enter State")]
+        public string state { get; set; }
+        public List<Aspnetrole> roles { get; set; }
+        public int? flag { get; set; }
+
+        public bool indicate { get; set; }
     }
 }

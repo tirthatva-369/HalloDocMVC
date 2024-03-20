@@ -49,8 +49,20 @@
       "PackagePath": "staticwebassets\\UploadedFiles\\AutoHotkey_2.0.11_setup.exe"
     },
     {
+      "Id": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\UploadedFiles\\HalloDoc - DB Schema.xlsx",
+      "PackagePath": "staticwebassets\\UploadedFiles\\HalloDoc - DB Schema.xlsx"
+    },
+    {
       "Id": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\UploadedFiles\\PostgreSQL - Database Backup & Restore using command.docx",
       "PackagePath": "staticwebassets\\UploadedFiles\\PostgreSQL - Database Backup & Restore using command.docx"
+    },
+    {
+      "Id": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\UploadedFiles\\SRS-23-24-Trainees-14Feb24.pdf",
+      "PackagePath": "staticwebassets\\UploadedFiles\\SRS-23-24-Trainees-14Feb24.pdf"
+    },
+    {
+      "Id": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\UploadedFiles\\SRS-23-24-Trainees-8March24.pdf",
+      "PackagePath": "staticwebassets\\UploadedFiles\\SRS-23-24-Trainees-8March24.pdf"
     },
     {
       "Id": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\UploadedFiles\\Session 2 (1).txt",
@@ -67,6 +79,10 @@
     {
       "Id": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\UploadedFiles\\Test Instructions.pdf",
       "PackagePath": "staticwebassets\\UploadedFiles\\Test Instructions.pdf"
+    },
+    {
+      "Id": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\UploadedFiles\\Updated-Training-Plan-20March24.pdf",
+      "PackagePath": "staticwebassets\\UploadedFiles\\Updated-Training-Plan-20March24.pdf"
     },
     {
       "Id": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\UploadedFiles\\dark.png",
@@ -87,6 +103,10 @@
     {
       "Id": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\UploadedFiles\\t.png",
       "PackagePath": "staticwebassets\\UploadedFiles\\t.png"
+    },
+    {
+      "Id": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\UploadedFiles\\table (2).png",
+      "PackagePath": "staticwebassets\\UploadedFiles\\table (2).png"
     },
     {
       "Id": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\UploadedFiles\\table.png",
@@ -147,6 +167,10 @@
     {
       "Id": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\css\\RequestScreen.css",
       "PackagePath": "staticwebassets\\css\\RequestScreen.css"
+    },
+    {
+      "Id": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\css\\admin_resetpassword.css",
+      "PackagePath": "staticwebassets\\css\\admin_resetpassword.css"
     },
     {
       "Id": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\css\\international-telephone-input.css",

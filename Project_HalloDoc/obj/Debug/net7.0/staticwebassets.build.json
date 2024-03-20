@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "WLHQz0YaueZRT/92vbP9gWzOsLu316KRJgAgt+ZcAvc=",
+  "Hash": "PKkl/0XXp3qYZZrwSk0z3xcLp1Cz7SugKDKf1fFDLCM=",
   "Source": "Project_HalloDoc",
   "BasePath": "_content/Project_HalloDoc",
   "Mode": "Default",
@@ -117,6 +117,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\obj\\Debug\\net7.0\\scopedcss\\projectbundle\\Project_HalloDoc.bundle.scp.css"
+    },
+    {
+      "Identity": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\css\\admin_resetpassword.css",
+      "SourceId": "Project_HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\",
+      "BasePath": "_content/Project_HalloDoc",
+      "RelativePath": "css/admin_resetpassword.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\admin_resetpassword.css"
     },
     {
       "Identity": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\css\\AdminDashboard.css",
@@ -1649,6 +1666,23 @@
       "OriginalItemSpec": "wwwroot\\UploadedFiles\\doctor_art.jpg"
     },
     {
+      "Identity": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\UploadedFiles\\HalloDoc - DB Schema.xlsx",
+      "SourceId": "Project_HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\",
+      "BasePath": "_content/Project_HalloDoc",
+      "RelativePath": "UploadedFiles/HalloDoc - DB Schema.xlsx",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\UploadedFiles\\HalloDoc - DB Schema.xlsx"
+    },
+    {
       "Identity": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\UploadedFiles\\hp",
       "SourceId": "Project_HalloDoc",
       "SourceType": "Discovered",
@@ -1717,6 +1751,40 @@
       "OriginalItemSpec": "wwwroot\\UploadedFiles\\Session 2 (1).txt"
     },
     {
+      "Identity": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\UploadedFiles\\SRS-23-24-Trainees-14Feb24.pdf",
+      "SourceId": "Project_HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\",
+      "BasePath": "_content/Project_HalloDoc",
+      "RelativePath": "UploadedFiles/SRS-23-24-Trainees-14Feb24.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\UploadedFiles\\SRS-23-24-Trainees-14Feb24.pdf"
+    },
+    {
+      "Identity": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\UploadedFiles\\SRS-23-24-Trainees-8March24.pdf",
+      "SourceId": "Project_HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\",
+      "BasePath": "_content/Project_HalloDoc",
+      "RelativePath": "UploadedFiles/SRS-23-24-Trainees-8March24.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\UploadedFiles\\SRS-23-24-Trainees-8March24.pdf"
+    },
+    {
       "Identity": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\UploadedFiles\\t.png",
       "SourceId": "Project_HalloDoc",
       "SourceType": "Discovered",
@@ -1732,6 +1800,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\UploadedFiles\\t.png"
+    },
+    {
+      "Identity": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\UploadedFiles\\table (2).png",
+      "SourceId": "Project_HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\",
+      "BasePath": "_content/Project_HalloDoc",
+      "RelativePath": "UploadedFiles/table (2).png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\UploadedFiles\\table (2).png"
     },
     {
       "Identity": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\UploadedFiles\\table.png",
@@ -1800,6 +1885,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\UploadedFiles\\Test Instructions.pdf"
+    },
+    {
+      "Identity": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\UploadedFiles\\Updated-Training-Plan-20March24.pdf",
+      "SourceId": "Project_HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\",
+      "BasePath": "_content/Project_HalloDoc",
+      "RelativePath": "UploadedFiles/Updated-Training-Plan-20March24.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\UploadedFiles\\Updated-Training-Plan-20March24.pdf"
     }
   ]
 }

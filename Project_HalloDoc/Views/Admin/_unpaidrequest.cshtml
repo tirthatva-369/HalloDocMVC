@@ -19,10 +19,10 @@
             <button class="action-btn">
                 <i class="bi bi-journal-text"></i> <span class="d-none d-md-block">Create Requests</span>
             </button>
-            <button class="action-btn">
+            <button class="action-btn" id="exportbtn">
                 <i class="bi bi-reply"></i> <span class="d-none d-md-block">Export</span>
             </button>
-            <button class="action-btn">
+            <button class="action-btn" onclick="ExportAll()">
                 <i class="bi bi-reply-all"></i> <span class="d-none d-md-block">Export All</span>
             </button>
             <button class="action-btn">
@@ -203,7 +203,7 @@
                                     </button>
                                     <ul class="dropdown-menu table_dropdowns">
                                         <li>
-                                            <a class="dropdown-item" href="@Url.Action("viewcase",  new {Requestclientid = item.reqClientId , RequestTypeId = item.requestTypeId})">
+                                            <a class="dropdown-item" href="@Url.Action("ViewCase",  new {Requestclientid = item.reqClientId , RequestTypeId = item.requestTypeId})">
                                                 <i class="bi bi-file-earmark-text"></i>
                                                 ViewCase
                                             </a>
@@ -234,3 +234,169 @@
 <!-- accordions -->
 <div class="accordion accordion-flush d-block d-md-none" id="accordionFlushExample">
 </div>
+
+
+<script>
+
+    function allElements() {
+
+        let a = document.getElementsByClassName("Patient");
+        console.log(a)
+
+        for (let i = 0; i < a.length; i++) {
+            a[i].style.display = "table-row";
+        }
+
+        let b = document.getElementsByClassName("FamilyFriend");
+
+        for (let i = 0; i < b.length; i++) {
+            b[i].style.display = "table-row";
+        }
+
+        let c = document.getElementsByClassName("Concierge");
+
+        for (let i = 0; i < c.length; i++) {
+            c[i].style.display = "table-row";
+        }
+
+
+        let d = document.getElementsByClassName("Business");
+
+
+        for (let i = 0; i < d.length; i++) {
+            d[i].style.display = "table-row";
+        }
+    }
+
+    function patientElements() {
+        let b = document.getElementsByClassName("FamilyFriend");
+        let c = document.getElementsByClassName("Concierge");
+        let d = document.getElementsByClassName("Business");
+
+        for (let i = 0; i < b.length; i++) {
+            b[i].style.display = "none";
+        }
+
+        for (let i = 0; i < c.length; i++) {
+            c[i].style.display = "none";
+        }
+
+        for (let i = 0; i < d.length; i++) {
+            d[i].style.display = "none";
+        }
+
+        let a = document.getElementsByClassName("Patient");
+
+        for (let i = 0; i < a.length; i++) {
+            a[i].style.display = "table-row";
+        }
+    }
+
+    function familyFriendElements() {
+        let a = document.getElementsByClassName("Patient");
+        let c = document.getElementsByClassName("Concierge");
+        let d = document.getElementsByClassName("Business");
+
+        for (let i = 0; i < a.length; i++) {
+            a[i].style.display = "none";
+        }
+
+        for (let i = 0; i < c.length; i++) {
+            c[i].style.display = "none";
+        }
+
+        for (let i = 0; i < d.length; i++) {
+            d[i].style.display = "none";
+        }
+
+        let b = document.getElementsByClassName("FamilyFriend");
+
+        for (let i = 0; i < b.length; i++) {
+            b[i].style.display = "table-row";
+        }
+
+    }
+
+    function conciergeElements() {
+        let a = document.getElementsByClassName("Patient");
+        let b = document.getElementsByClassName("FamilyFriend");
+        let d = document.getElementsByClassName("Business");
+
+        for (let i = 0; i < a.length; i++) {
+            a[i].style.display = "none";
+        }
+
+        for (let i = 0; i < b.length; i++) {
+            b[i].style.display = "none";
+        }
+
+        for (let i = 0; i < d.length; i++) {
+            d[i].style.display = "none";
+        }
+
+        let c = document.getElementsByClassName("Concierge");
+
+        for (let i = 0; i < c.length; i++) {
+            c[i].style.display = "table-row";
+        }
+    }
+
+    function businessElements() {
+
+        let a = document.getElementsByClassName("Patient");
+        let b = document.getElementsByClassName("FamilyFriend");
+        let c = document.getElementsByClassName("Concierge");
+
+        for (let i = 0; i < a.length; i++) {
+            a[i].style.display = "none";
+        }
+
+        for (let i = 0; i < b.length; i++) {
+            b[i].style.display = "none";
+        }
+
+        for (let i = 0; i < c.length; i++) {
+            c[i].style.display = "none";
+        }
+
+        let d = document.getElementsByClassName("Business");
+
+        for (let i = 0; i < d.length; i++) {
+            d[i].style.display = "table-row";
+        }
+    }
+    $(document).ready(function () {
+
+        $('.data-table').DataTable({
+            "initComplete": function (settings, json) {
+
+                $('#my-search-input').val(settings.oPreviousSearch.sSearch);
+
+                $('#my-search-input').on('keyup', function () {
+                    var searchValue = $(this).val();
+                    settings.oPreviousSearch.sSearch = searchValue;
+                    settings.oApi._fnReDraw(settings);
+                });
+            },
+            "lengthMenu": [[5, 10, -1], [5, 10, "All"]],
+            "pageLength": 5,
+            language: {
+                oPaginate: {
+                    sNext: '<i class="bi bi-caret-right-fill text-info"></i>',
+                    sPrevious: '<i class="bi bi-caret-left-fill text-info"></i>'
+
+                }
+            }
+        });
+        // $('.dataTables_length').hide();
+        $('.dataTables_filter').hide();
+    });
+
+        $("#exportbtn").click(function () {
+            //alert("exportbtn was clicked.");
+            var request = @Html.Raw(Json.Serialize(Model));
+            console.log(request);
+            Export(request);
+        });
+
+</script>

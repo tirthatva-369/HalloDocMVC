@@ -18,20 +18,21 @@
 #logo {
     width: 9rem;
     margin-left: 5rem;
-    margin-top: 0.25rem;
 }
 
 #back-btn {
-    position: absolute;
     color: rgb(0, 183, 255);
     background-color: white;
     border: 1px solid rgb(0, 183, 255);
     border-radius: 5px;
     width: 5rem;
     height: 2.5rem;
-    top: 7rem;
-    right: 8rem;
 }
+
+    #back-btn:hover {
+        background-color: rgb(0, 183, 255);
+        color: white;
+    }
 
 #main-cont {
     background-color: #FFFFFF;
@@ -47,7 +48,6 @@ h5 {
     float: right;
     margin: 1.5rem;
 }
-
 
 
 #footr {
@@ -81,6 +81,7 @@ footer p {
     background-color: rgb(0, 183, 255);
     color: #FFFFFF;
 }
+
 
 
 

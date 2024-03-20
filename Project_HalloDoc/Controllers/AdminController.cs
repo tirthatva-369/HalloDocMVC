@@ -91,7 +91,6 @@ namespace HalloDoc.mvc.Controllers
             return PartialView("_AllRequest", statusCountModel);
         }
 
-
         public IActionResult ViewCase(int Requestclientid, int RequestTypeId, int ReqId)
         {
             var obj = _adminService.ViewCase(Requestclientid, RequestTypeId, ReqId);
@@ -132,6 +131,10 @@ namespace HalloDoc.mvc.Controllers
             else if (tabNo == 6)
             {
                 return PartialView("_UnpaidRequest", list);
+            }
+            else if (tabNo == 0)
+            {
+                return Json(list);
             }
             return View();
         }
@@ -304,14 +307,13 @@ namespace HalloDoc.mvc.Controllers
             };
             MailMessage mailMessage = new MailMessage
             {
-                From = new MailAddress("tatva.dotnet.parthtrivedi@outlook.com"),
+                From = new MailAddress("tatva.dotnet.tirthpatel@outlook.com"),
                 Subject = "Document List",
                 IsBodyHtml = true,
 
             };
             foreach (var item in selectedFiles)
             {
-
                 string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/UploadedFiles");
                 path = Path.Combine(path, item);
                 Attachment attachment = new Attachment(path);
@@ -478,19 +480,73 @@ namespace HalloDoc.mvc.Controllers
                 string reviewPathLink = baseUrl + Url.Action("ReviewAgreement", "Home", new { reqId = model.Reqid });
 
                 SendEmail(model.Email, "Review Agreement", $"Hello, Review the agreement properly: {reviewPathLink}");
-                return Json(new { isSend = true });
+                _notyf.Success("Agreement Sent");
 
             }
             catch (Exception ex)
             {
-                return Json(new { isSend = false });
+                _notyf.Error("Failed to sent");
             }
+            return RedirectToAction("AdminDashboard");
         }
 
-        public IActionResult Encounter(int reqId)
+        [HttpGet]
+        public IActionResult Encounter(int ReqId)
         {
-            var model = _adminService.EncounterForm(reqId);
+            var model = _adminService.EncounterForm(ReqId);
             return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Encounter(EncounterFormModel model)
+        {
+            bool isSaved = _adminService.SubmitEncounterForm(model);
+            if (isSaved)
+            {
+                _notyf.Success("Saved!!");
+            }
+            else
+            {
+                _notyf.Error("Failed");
+            }
+            return RedirectToAction("Encounter", new { ReqId = model.reqid });
+        }
+
+        [HttpGet]
+        public IActionResult ShowMyProfile()
+        {
+            return PartialView("_MyProfile");
+        }
+
+        [HttpPost]
+        //public IActionResult ExportReq(List<RequestListAdminDash> reqList)
+        public string ExportReq(List<AdminDashTableModel> reqList)
+        {
+            StringBuilder stringbuild = new StringBuilder();
+
+            string header = "\"No\"," + "\"Name\"," + "\"DateOfBirth\"," + "\"Requestor\"," +
+                "\"RequestDate\"," + "\"Phone\"," + "\"Notes\"," + "\"Address\","
+                 + "\"Physician\"," + "\"DateOfService\"," + "\"Region\"," +
+                "\"Status\"," + "\"RequestTypeId\"," + "\"OtherPhone\"," + "\"Email\"," + "\"RequestId\"," + Environment.NewLine + Environment.NewLine;
+
+            stringbuild.Append(header);
+            int count = 1;
+
+            foreach (var item in reqList)
+            {
+                string content = $"\"{count}\"," + $"\"{item.firstName}\"," + $"\"{item.intDate}\"," + $"\"{item.requestorFname}\"," +
+                    $"\"{item.intDate}\"," + $"\"{item.mobileNo}\"," + $"\"{item.notes}\"," + $"\"{item.street}\"," +
+                    $"\"{item.lastName}\"," + $"\"{item.intDate}\"," + $"\"{item.street}\"," +
+                    $"\"{item.status}\"," + $"\"{item.requestTypeId}\"," + $"\"{item.mobileNo}\"," + $"\"{item.firstName}\"," + $"\"{item.reqId}\"," + Environment.NewLine;
+
+                count++;
+                stringbuild.Append(content);
+            }
+
+            string finaldata = stringbuild.ToString();
+
+            return finaldata;
+            //return Json(new { message = finaldata });
         }
     }
 }
