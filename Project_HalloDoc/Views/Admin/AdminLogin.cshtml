@@ -1,7 +1,6 @@
 ﻿@using DataAccess.Models;
 @{
     ViewData["Title"] = "admin_login";
-    Layout = null;
 }
 
 @model AdminLoginModel
@@ -46,13 +45,13 @@
                         <input type="email" asp-for="email" class="form-control shadow-none border-info" id="floatingInput" placeholder="Email" />
                         <i class="bi bi-person-circle login-icon w-auto fs-4"></i>
                         <label for="floatingInput" class="input-box-text">Email</label>
-                        <span asp-validation-for="email" class="text-danger"></span>
+                        @* <span asp-validation-for="email" class="text-danger"></span> *@
                     </div>
 
                     <div class="row w-50 form-floating">
                         <input type="password" asp-for="password" class="form-control shadow-none border-info" id="see" placeholder="Password" />
                         <label for="floatingPassword" class="input-box-text">Password</label>
-                        <span asp-validation-for="password" class="text-danger"></span>
+                        @* <span asp-validation-for="password" class="text-danger"></span> *@
                         <i class="bi bi-eye-fill login-icon w-auto fs-4" id="eye"></i>
                     </div>
                     <button type="submit" class="row btn btn-info text-white font-weight-bold fs-5 mt-3 w-50 p-3">
@@ -86,7 +85,8 @@
         </div>
     </div>
 
-
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
     <!-- script  -->
     <script>
         function darkMode() {

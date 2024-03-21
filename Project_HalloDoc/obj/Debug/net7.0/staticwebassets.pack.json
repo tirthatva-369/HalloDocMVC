@@ -49,8 +49,16 @@
       "PackagePath": "staticwebassets\\UploadedFiles\\AutoHotkey_2.0.11_setup.exe"
     },
     {
+      "Id": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\UploadedFiles\\Exported-Requests (5).csv",
+      "PackagePath": "staticwebassets\\UploadedFiles\\Exported-Requests (5).csv"
+    },
+    {
       "Id": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\UploadedFiles\\HalloDoc - DB Schema.xlsx",
       "PackagePath": "staticwebassets\\UploadedFiles\\HalloDoc - DB Schema.xlsx"
+    },
+    {
+      "Id": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\UploadedFiles\\MVC.pdf",
+      "PackagePath": "staticwebassets\\UploadedFiles\\MVC.pdf"
     },
     {
       "Id": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\UploadedFiles\\PostgreSQL - Database Backup & Restore using command.docx",
@@ -95,6 +103,10 @@
     {
       "Id": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\UploadedFiles\\hp",
       "PackagePath": "staticwebassets\\UploadedFiles"
+    },
+    {
+      "Id": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\UploadedFiles\\image_2024_02_06T09_37_24_637Z.png",
+      "PackagePath": "staticwebassets\\UploadedFiles\\image_2024_02_06T09_37_24_637Z.png"
     },
     {
       "Id": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\UploadedFiles\\info.png",

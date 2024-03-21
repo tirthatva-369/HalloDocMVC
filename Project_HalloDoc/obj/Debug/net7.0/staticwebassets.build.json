@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "PKkl/0XXp3qYZZrwSk0z3xcLp1Cz7SugKDKf1fFDLCM=",
+  "Hash": "dQv+d3oOzaMrzWwnptrczpnTPbFPmFI7cBccK/xFUvM=",
   "Source": "Project_HalloDoc",
   "BasePath": "_content/Project_HalloDoc",
   "Mode": "Default",
@@ -1666,6 +1666,23 @@
       "OriginalItemSpec": "wwwroot\\UploadedFiles\\doctor_art.jpg"
     },
     {
+      "Identity": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\UploadedFiles\\Exported-Requests (5).csv",
+      "SourceId": "Project_HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\",
+      "BasePath": "_content/Project_HalloDoc",
+      "RelativePath": "UploadedFiles/Exported-Requests (5).csv",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\UploadedFiles\\Exported-Requests (5).csv"
+    },
+    {
       "Identity": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\UploadedFiles\\HalloDoc - DB Schema.xlsx",
       "SourceId": "Project_HalloDoc",
       "SourceType": "Discovered",
@@ -1700,6 +1717,23 @@
       "OriginalItemSpec": "wwwroot\\UploadedFiles\\hp"
     },
     {
+      "Identity": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\UploadedFiles\\image_2024_02_06T09_37_24_637Z.png",
+      "SourceId": "Project_HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\",
+      "BasePath": "_content/Project_HalloDoc",
+      "RelativePath": "UploadedFiles/image_2024_02_06T09_37_24_637Z.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\UploadedFiles\\image_2024_02_06T09_37_24_637Z.png"
+    },
+    {
       "Identity": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\UploadedFiles\\info.png",
       "SourceId": "Project_HalloDoc",
       "SourceType": "Discovered",
@@ -1715,6 +1749,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\UploadedFiles\\info.png"
+    },
+    {
+      "Identity": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\UploadedFiles\\MVC.pdf",
+      "SourceId": "Project_HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\",
+      "BasePath": "_content/Project_HalloDoc",
+      "RelativePath": "UploadedFiles/MVC.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\UploadedFiles\\MVC.pdf"
     },
     {
       "Identity": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\UploadedFiles\\PostgreSQL - Database Backup & Restore using command.docx",

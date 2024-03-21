@@ -41,11 +41,12 @@ namespace BusinessLogic.Interfaces
         bool SubmitCloseCase(int ReqId);
         EncounterFormModel EncounterForm(int reqId);
         bool SubmitEncounterForm(EncounterFormModel encounterFormModel);
-
         bool AgreeAgreement(AgreementModel model);
         AgreementModel CancelAgreement(int reqId);
         bool SubmitCancelAgreement(AgreementModel model);
         int GetStatusForReviewAgreement(int reqId);
         MyProfileModel MyProfile(string email);
+        bool VerifyState(string state);
+        bool CreateRequest(CreateRequestModel model, string sessionEmail);
     }
 }

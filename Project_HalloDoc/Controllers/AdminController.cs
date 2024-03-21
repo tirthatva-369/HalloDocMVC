@@ -14,6 +14,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis.Elfie.Serialization;
 using System.Text.Json.Nodes;
 using DataAccess.DataContext;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 //using Org.BouncyCastle.Crypto.Macs;
 //using Org.BouncyCastle.Asn1.Ocsp;
 
@@ -512,14 +514,7 @@ namespace HalloDoc.mvc.Controllers
             return RedirectToAction("Encounter", new { ReqId = model.reqid });
         }
 
-        [HttpGet]
-        public IActionResult ShowMyProfile()
-        {
-            return PartialView("_MyProfile");
-        }
-
         [HttpPost]
-        //public IActionResult ExportReq(List<RequestListAdminDash> reqList)
         public string ExportReq(List<AdminDashTableModel> reqList)
         {
             StringBuilder stringbuild = new StringBuilder();
@@ -547,6 +542,94 @@ namespace HalloDoc.mvc.Controllers
 
             return finaldata;
             //return Json(new { message = finaldata });
+        }
+
+        [HttpGet]
+        public IActionResult SendLink()
+        {
+            return PartialView("_SendLink");
+        }
+        [HttpPost]
+        public IActionResult SendLink(SendLinkModel model)
+        {
+            bool isSend = false;
+            try
+            {
+                string baseUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
+                string reviewPathLink = baseUrl + Url.Action("RequestScreen", "Patient");
+
+                SendEmail(model.email, "Create Patient Request", $"Hello, please create patient request from this link: {reviewPathLink}");
+                _notyf.Success("Link Sent");
+                isSend = true;
+            }
+            catch (Exception ex)
+            {
+                _notyf.Error("Failed to sent");
+            }
+            return Json(new { isSend = isSend });
+
+        }
+
+        [HttpGet]
+        public IActionResult ShowMyProfile()
+        {
+            var request = HttpContext.Request;
+            var token = request.Cookies["jwt"];
+            if (token == null || !_jwtService.ValidateToken(token, out JwtSecurityToken jwtToken))
+            {
+                return Json("ok");
+            }
+            var emailClaim = jwtToken.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Email);
+
+            var model = _adminService.MyProfile(emailClaim.Value);
+            return PartialView("_MyProfile", model);
+        }
+
+        [HttpGet]
+        public IActionResult CreateRequest()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult VerifyState(string stateMain)
+        {
+            if (stateMain == null || stateMain.Trim() == null)
+            {
+                return Json(new { isSend = false });
+            }
+            var isSend = _adminService.VerifyState(stateMain);
+            return Json(new { isSend = isSend });
+        }
+
+
+        [HttpPost]
+        public IActionResult CreateRequest(CreateRequestModel model)
+        {
+            var request = HttpContext.Request;
+            var token = request.Cookies["jwt"];
+            if (token == null || !_jwtService.ValidateToken(token, out JwtSecurityToken jwtToken))
+            {
+                _notyf.Error("Token Expired");
+                return View(model);
+            }
+            var emailClaim = jwtToken.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Email);
+            var isSaved = _adminService.CreateRequest(model, emailClaim.Value);
+            if (isSaved)
+            {
+                _notyf.Success("Request Created");
+                return RedirectToAction("AdminDshboard");
+            }
+            else
+            {
+                _notyf.Error("Failed to Create");
+                return View(model);
+            }
+        }
+
+        public IActionResult RequestSupport()
+        {
+            return PartialView("_RequestSupport");
         }
     }
 }

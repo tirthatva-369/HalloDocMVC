@@ -16,10 +16,10 @@ namespace DataAccess.Models
     public class AdminLoginModel
     {
         [Required(ErrorMessage = "Email is required")]
-        public string email { get; set; } = null;
+        public string email { get; set; }
 
         [Required(ErrorMessage = "Password is required")]
-        public string password { get; set; } = null;
+        public string password { get; set; }
     }
 
     public class StatusCountModel
@@ -143,6 +143,7 @@ namespace DataAccess.Models
         public string? firstName { get; set; }
         public string? lastName { get; set; }
         public int? ReqId { get; set; }
+        public string? confirmationNumber { get; set; }
         public List<IFormFile>? uploadedFiles { get; set; }
     }
 
@@ -283,5 +284,59 @@ namespace DataAccess.Models
         public int? flag { get; set; }
 
         public bool indicate { get; set; }
+    }
+    public class SendLinkModel
+    {
+        [Required(ErrorMessage = "FirstName is required")]
+        public string? fName { get; set; }
+        [Required(ErrorMessage = "LastName is required")]
+        public string? lName { get; set; }
+        [Required(ErrorMessage = "Phone No. is required")]
+        public string? phoneNo { get; set; }
+        [Required(ErrorMessage = "Email is required")]
+        public string? email { get; set; }
+
+    }
+
+    public class CreateRequestModel
+    {
+
+        public int? requesttypeid { get; set; }
+
+        public int? userid { get; set; }
+
+        [Required(ErrorMessage = "Please Enter Your Street Name")]
+        public string? street { get; set; }
+
+        [Required(ErrorMessage = "Please Enter Your City Name")]
+        public string? city { get; set; }
+
+        [Required(ErrorMessage = "Please Enter Your State Name")]
+        public string? state { get; set; }
+
+        [Required(ErrorMessage = "Please Enter Your Zipcode")]
+        public string? zipcode { get; set; }
+
+        [Required(ErrorMessage = "Please Enter Your Name")]
+        public string? firstname { get; set; }
+
+        [Required(ErrorMessage = "Please Enter Your Last Name")]
+        public string? lastname { get; set; }
+
+        [Required(ErrorMessage = "Please Enter Your Date Of Birth")]
+        public string? dateofbirth { get; set; }
+
+        [Required(ErrorMessage = "Please Enter Your Email")]
+        public string? email { get; set; }
+
+        [Required(ErrorMessage = "Please Enter Your Phone Number")]
+        public string? phone { get; set; }
+
+        [Required(ErrorMessage = "Please Enter Your Room")]
+        public string? room { get; set; }
+
+        public string? admin_notes { get; set; }
+
+        public bool? indicate { get; set; }
     }
 }
