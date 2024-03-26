@@ -24,5 +24,6 @@ namespace BusinessLogic.Interfaces
         bool EditProfile(Profile profile);
         bool UploadDocuments(List<IFormFile> files, int reqId);
         string GetLocalIPv4(NetworkInterfaceType _type);
+        LoginResponseViewModel PatientLogin(LoginModel model);
     }
 }

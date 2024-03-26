@@ -33,10 +33,11 @@
                 </li>
         </div>
         <li class="nav-item">
-            <button id="logout" class="px-2">
-                <span class=" d-none d-md-block">Logout</span><i class="bi bi-box-arrow-right d-md-none d-block"></i>
-            </button>
-
+            <a asp-action="Logout" asp-controller="Admin">
+                <button id="logout" class="px-2">
+                    <span class=" d-none d-md-block">Logout</span><i class="bi bi-box-arrow-right d-md-none d-block"></i>
+                </button>
+            </a>
         </li>
         <li class="nav-item">
             <img onclick="darkMode()" class="light" src="/images/dark.png" alt="">

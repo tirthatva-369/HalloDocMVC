@@ -1,5 +1,5 @@
 ﻿﻿@using DataAccess.Models;
-
+@model AdminDashTableModel
 @{
     ViewData["Title"] = "AdminDashboard";
     Layout = null;
@@ -18,9 +18,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.js"
             integrity="sha512-+k1pnlgt4F1H8L7t3z95o3/KO+o78INEcXTbnoJQ/F2VqDVhWoaiVml/OEHv9HsVgxUaVW+IbiZPUJQfF/YxZw=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-            crossorigin="anonymous"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="~/css/AdminDashboard.css">
 </head>
@@ -74,7 +71,7 @@
         <div class="container-fluid">
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class=" bg-white ps-5 nav nav-underline" id="myTab" role="tablist">
-                    <li class="nav-item" role="presentation">
+                    <li class="nav-item active" role="presentation">
                         <button class="nav-link active" id="home-tab" data-bs-toggle="tab"
                                 data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane"
                                 aria-selected="true" onclick="ShowAllRequests()">
@@ -98,7 +95,7 @@
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="provider-tab" data-bs-toggle="tab"
                                 data-bs-target="#provider-tab-pane" type="button" role="tab"
-                                aria-controls="provider-tab-pane" aria-selected="false">
+                                aria-controls="provider-tab-pane" aria-selected="false" onClick="showProvider()">
                             Providers
                         </button>
                     </li>
@@ -142,7 +139,6 @@
             <partial name="_MyProfile" />
         </div>
         <div class="tab-pane fade" id="provider-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-            provider......
         </div>
         <div class="tab-pane fade" id="partner-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
             partner......
@@ -155,10 +151,12 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-            crossorigin="anonymous"></script>
     <script>
+
+        window.addEventListener('load', function () {
+            document.getElementById("home-tab").click();
+        })
+
         function openTab(evt, tabName) {
             var i, tabcontent, tablinks;
 
@@ -209,15 +207,15 @@
                     var requestor = $(this).find('td:eq(2)').text();
 
                     var accordionItem = `
-                                                                            <div class="accordion-item">
+                                                                                            <div class="accordion-item">
 
-                                                                                <div class="accordion-content">
-                                                                                    <p><strong>Name:</strong> ${name}</p>
-                                                                                    <p><strong>Address:</strong> ${address}</p>
-                                                                                    <p><strong>Requestor:</strong> ${requestor}</p>
-                                                                                </div>
-                                                                            </div>
-                                                                        `;
+                                                                                                <div class="accordion-content">
+                                                                                                    <p><strong>Name:</strong> ${name}</p>
+                                                                                                    <p><strong>Address:</strong> ${address}</p>
+                                                                                                    <p><strong>Requestor:</strong> ${requestor}</p>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        `;
 
                     $('#accordionFlushExample').append(accordionItem);
                 });
@@ -234,15 +232,15 @@
                     var requestor = $(this).find('td:eq(2)').text();
 
                     var accordionItem = `
-                                                                            <div class="accordion-item">
+                                                                                            <div class="accordion-item">
 
-                                                                                <div class="accordion-content">
-                                                                                    <p><strong>Name:</strong> ${name}</p>
-                                                                                    <p><strong>Address:</strong> ${address}</p>
-                                                                                    <p><strong>Requestor:</strong> ${requestor}</p>
-                                                                                </div>
-                                                                            </div>
-                                                                        `;
+                                                                                                <div class="accordion-content">
+                                                                                                    <p><strong>Name:</strong> ${name}</p>
+                                                                                                    <p><strong>Address:</strong> ${address}</p>
+                                                                                                    <p><strong>Requestor:</strong> ${requestor}</p>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        `;
 
                     $('#accordionFlushExample').append(accordionItem);
                 });
@@ -253,10 +251,11 @@
             $.ajax({
                 url: '/Admin/GetRequestsByStatus',
                 type: 'GET',
-                data: { tabNo: status },
+                data: { tabNo: status, CurrentPage: 1 },
                 success: function (response) {
                     if (status == 1) {
                         $("#tab1").html(response);
+                        status = 1;
                     }
                     if (status == 2) {
                         $("#tab2").html(response);
@@ -277,24 +276,49 @@
             });
         }
 
+        function changepage(CurrentPage, tabNo) {
+            console.log("pagination");
+
+            $.ajax({
+                url: '/Admin/GetRequestsByStatus',
+                type: "GET",
+                data: { tabNo: tabNo, CurrentPage: CurrentPage },
+
+                success: function (response) {
+                    console.log(response);
+                    if (tabNo == 1) {
+                        $("#tab1").html(response);
+                    }
+                    if (tabNo == 2) {
+                        $("#tab2").html(response);
+                    }
+                    if (tabNo == 3) {
+                        $("#tab3").html(response);
+                    }
+                    if (tabNo == 4) {
+                        $("#tab4").html(response);
+                    }
+                    if (tabNo == 5) {
+                        $("#tab5").html(response);
+                    }
+                    if (tabNo == 6) {
+                        $("#tab6").html(response);
+                    }
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            });
+        }
+
         function ShowAllRequests() {
             $.ajax({
                 url: '/Admin/GetCount',
                 type: 'GET',
                 success: function (response) {
                     $("#home-tab-pane").html(response);
-                }
-            });
-        }
-
-        function showCancelCase(reqId) {
-            $.ajax({
-                url: '/Admin/CancelCase',
-                type: 'GET',
-                data: { reqId: reqId },
-                success: function (response) {
-                    $("#modelContent").html(response);
-                    $('#cancelModal').modal('show');
+                    openTab(event, 'tab1'); // on load page tab1 will open by default
+                    $('#newTable').addClass("active");
                 }
             });
         }
@@ -323,18 +347,29 @@
             });
         }
 
-        function showTransferCase(reqId) {
-            $.ajax({
-                url: '/Admin/TransferCase',
-                type: 'GET',
-                data: { reqId: reqId },
-                success: function (response) {
-                    $("#modelContent").html(response);
-                    $('#transferModal').modal('show');
-                }
-            });
-        }
+        // function showTransferCase(reqId) {
+        //     $.ajax({
+        //         url: '/Admin/TransferCase',
+        //         type: 'GET',
+        //         data: { reqId: reqId },
+        //         success: function (response) {
+        //             $("#modelContent1").html(response);
+        //             $('#transferModal').modal('show');
+        //         }
+        //     });
+        // }
 
+        // function showTransferCase(reqId) {
+        //     $.ajax({
+        //         url: '/Admin/TransferCase',
+        //         type: 'GET',
+        //         data: { reqId: reqId },
+        //         success: function (response) {
+        //             $("#modelcontent2").html(response);
+        //             $('#transferModal').modal('show');
+        //         }
+        //     });
+        // }
         function showSendAgreement(reqId, reqType) {
             console.log('hi');
             var role = null;
@@ -350,14 +385,15 @@
             if (reqType == 4) {
                 role = 'Concierge';
             }
-            console.log(reqType);
             $.ajax({
                 url: '/Admin/SendAgreement',
                 type: 'GET',
                 data: { reqId: reqId, reqType: reqType },
                 success: function (response) {
-                    $("#modelContent").html(response);
-                    $('#sendAgreementModal').modal('show');
+                    // $("#modelContent").html(response);
+                    // $('#sendAgreementModal').modal('show');
+                    // window.location.href = Response.redirect;
+                    console.log(response)
                 }
             });
         }
@@ -434,16 +470,16 @@
             });
         }
 
-        function sendLink() {
-            $.ajax({
-                url: '/Admin/SendLink',
-                type: 'GET',
-                success: function (response) {
-                    $('#modelContent').html(response);
-                    $('#sendLinkPopUpOne').modal('show');
-                }
-            })
-        }
+        // function sendLink() {
+        //     $.ajax({
+        //         url: '/Admin/SendLink',
+        //         type: 'GET',
+        //         success: function (response) {
+        //             $('#modelContent').html(response);
+        //             $('#sendLinkPopUpOne').modal('show');
+        //         }
+        //     })
+        // }
 
         function ShowRequestSupport() {
             $.ajax({
@@ -459,6 +495,26 @@
                 }
             });
         }
+
+        function showProvider() {
+            $.ajax({
+                url: '/Admin/ShowProvider',
+                type: 'GET',
+                success: function (response) {
+                    $("#provider-tab-pane").html(response);
+                }
+            });
+        }
     </script>
 </body>
 </html>
+
+@if (TempData["Success"] != null)
+{
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script type="text/javascript">
+        toastr.success('@TempData["Success"]');
+    </script>
+}

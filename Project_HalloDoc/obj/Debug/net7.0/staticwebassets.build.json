@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "dQv+d3oOzaMrzWwnptrczpnTPbFPmFI7cBccK/xFUvM=",
+  "Hash": "+2wyx6wWJQjO3zVHy5Xw+IjmjudZGpvNOALX6l6Q5uk=",
   "Source": "Project_HalloDoc",
   "BasePath": "_content/Project_HalloDoc",
   "Mode": "Default",
@@ -1681,6 +1681,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\UploadedFiles\\Exported-Requests (5).csv"
+    },
+    {
+      "Identity": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\UploadedFiles\\Exported-Requests.csv",
+      "SourceId": "Project_HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\",
+      "BasePath": "_content/Project_HalloDoc",
+      "RelativePath": "UploadedFiles/Exported-Requests.csv",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\UploadedFiles\\Exported-Requests.csv"
     },
     {
       "Identity": "D:\\Project\\Project_HalloDoc\\Project_HalloDoc\\wwwroot\\UploadedFiles\\HalloDoc - DB Schema.xlsx",

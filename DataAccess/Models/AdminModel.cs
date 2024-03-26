@@ -17,10 +17,10 @@ namespace DataAccess.Models
     {
         [Required(ErrorMessage = "Email is required")]
         public string email { get; set; }
-
         [Required(ErrorMessage = "Password is required")]
         public string password { get; set; }
     }
+
 
     public class StatusCountModel
     {
@@ -35,40 +35,39 @@ namespace DataAccess.Models
 
     public class AdminDashTableModel
     {
+        public string email { get; set; }
         public int reqId { get; set; }
-
         public int reqClientId { get; set; }
-
         public string? firstName { get; set; }
-
         public string? lastName { get; set; }
-
         public string strMonth { get; set; }
         public int? intYear { get; set; }
         public int? intDate { get; set; }
-
+        public string reqstrMonth { get; set; }
+        public int? reqintYear { get; set; }
+        public int? reqintDate { get; set; }
         public string? requestorFname { get; set; }
-
         public string? requestorLname { get; set; }
-
         public DateTime createdDate { get; set; }
-
         public string? mobileNo { get; set; }
-
         public string? city { get; set; }
-
         public string? street { get; set; }
-
         public string? zipCode { get; set; }
-
         public string? state { get; set; }
-
         public string? notes { get; set; }
-
         public int? requestTypeId { get; set; }
-
         public int? status { get; set; }
+        public int? regionId { get; set; }
     }
+
+    public class DashboardModel
+    {
+        public List<AdminDashTableModel>? adminDashTableList { get; set; }
+        public List<Region>? regionList { get; set; }
+        public int? TotalPage { get; set; }
+        public int? CurrentPage { get; set; }
+    }
+
     public class ViewCaseViewModel
     {
         public int RequestId { get; set; }

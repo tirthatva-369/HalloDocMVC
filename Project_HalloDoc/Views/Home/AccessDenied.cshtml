@@ -1,2 +1,11 @@
-﻿<h1>Access Denied</h1>
-<p>your access is denied</p>
+﻿<div class="container">
+    <div class="d-flex flex-row-reverse mt-5 mb-3">
+        <button onclick="location.href='@Url.Action("Index", "Home")'" id="back-btn" class="">&lt; Back</button>
+
+    </div>
+    <div class="container bg-light shadow rounded">
+        <h1 class="text-danger fw-bold popover-body px-2 text-center">Access Denied</h1>
+        <p class="text-center pb-3">your access is denied</p>
+    </div>
+</div>
+

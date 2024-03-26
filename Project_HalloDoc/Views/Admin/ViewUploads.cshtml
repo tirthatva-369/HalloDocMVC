@@ -29,102 +29,98 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 <link rel="stylesheet" href="~/css/patient_dashboard.css">
 
-<div class="container my-5 bg-white ">
+<div class="container my-5">
 
-    <div class="container bg-white p-4 ">
+    <div class="container pt-4 mx-0 px-0">
         <div class="d-flex justify-content-between mb-4">
             <h2>Documents</h2>
             <button class="px-3" id="downloadSelected" onclick="location.href='@Url.Action("AdminDashboard", "Admin")'">&lt; Back</button>
         </div>
-        <div class="row">
-            <p class="col-12 mb-0">Patient Name</p>
-            <p class="col-12">
-                <span class="fw-bolder fs-4">@Model.firstName @Model.lastName </span>
-                <span>@Model.</span>
-            </p>
-            <p class="col-12 py-3">check here for any files that you or the doctors of your subsequents requestors have attached for you to review</p>
-
-            <!-- row--- -->
-        </div>
-
-        <!-- ----container    -->
     </div>
+    <div class="row bg-white shadow rounded py-3">
+        <p class="col-12 mb-0">Patient Name</p>
+        <p class="col-12">
+            <span class="fw-bolder fs-4">@Model.firstName @Model.lastName </span>
+            <span>@Model.confirmationNumber</span>
+        </p>
+        <p class="col-12 pt-3">check here for any files that you or the doctors of your subsequents requestors have attached for you to review</p>
 
-    <form method="post" asp-action="UploadFiles" asp-controller="Admin" class="input-group my-5 mt-3" enctype="multipart/form-data">
-        @*<input name="file" type="file" class="form-control" id="formFileLg" multiple>*@
-        <input asp-for="uploadedFiles" type="file" class="form-control" id="formFileLg" multiple>
-        <button type="submit" class="input-group-text bg-primary text-white" for="inputGroupFile02"><i class="bi bi-cloud-arrow-up m-1"></i>&nbsp;Upload</button>
-        <br />
-    </form>
-    <div class="row my-3">
-        <div class="col-12 d-flex justify-content-between">
-            <h3>Documents</h3>
-            <div class="d-flex gap-2">
-                <button class="px-3" id="downloadSelected" onclick="downloadSelectedFiles()">Download All</button>
-                <button class="px-3" id="downloadSelected" onclick="deleteAllFiles()">Delete All</button>
-                <button class="px-3" id="downloadSelected" onclick="sendMail()">Send Mail</button>
+        <form method="post" asp-action="UploadFiles" asp-controller="Admin" class="input-group my-5 mt-3" enctype="multipart/form-data">
+            @*<input name="file" type="file" class="form-control" id="formFileLg" multiple>*@
+            <input asp-for="uploadedFiles" type="file" class="form-control" id="formFileLg" multiple>
+            <button type="submit" class="input-group-text bg-primary text-white" for="inputGroupFile02"><i class="bi bi-cloud-arrow-up m-1"></i>&nbsp;Upload</button>
+            <br />
+        </form>
+        <div class="row my-3">
+            <div class="col-12 d-flex justify-content-between">
+                <h3>Documents</h3>
+                <div class="d-flex gap-2">
+                    <button class="px-3" id="downloadSelected" onclick="downloadSelectedFiles()">Download All</button>
+                    <button class="px-3" id="downloadSelected" onclick="deleteAllFiles()">Delete All</button>
+                    <button class="px-3" id="downloadSelected" onclick="sendMail()">Send Mail</button>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="table-responsive">
-        <table class="table dataTable table-hover" id="data-table" aria-describedby="data-table_info">
-            <thead>
-                <tr>
-                    <th>
-                        <input type="checkbox" id="selectAll" onclick="toggleCheckboxes()">
-                    </th>
-                    <th class="sorting" data-value="Description">
-                        File
-                    </th>
+        <div class="table-responsive">
+            <table class="table dataTable table-hover" id="data-table" aria-describedby="data-table_info">
+                <thead>
+                    <tr>
+                        <th>
+                            <input type="checkbox" id="selectAll" onclick="toggleCheckboxes()">
+                        </th>
+                        <th class="sorting" data-value="Description">
+                            File
+                        </th>
 
-                    <th>
-                        Upload Date<i class="bi bi-arrow-up-short"></i>
-                    </th>
-                    <th>
-                        Actions
-                    </th>
+                        <th>
+                            Upload Date<i class="bi bi-arrow-up-short"></i>
+                        </th>
+                        <th>
+                            Actions
+                        </th>
 
-                </tr>
-            </thead>
-            <tbody>
-                @if (Model != null && Model.files.Count > 0)
-                {
-                    @foreach (var item in Model.files)
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.files.Count > 0)
+                    {
+                        @foreach (var item in Model.files)
+                        {
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="selectedFiles" value="@item.Filename">
+                                </td>
+
+                                <td>
+                                    <i class="bi bi-file-earmark-fill" style="color:red"></i>
+                                    @item.Filename
+                                </td>
+
+                                <td>@item.Createddate.ToString("MMM dd, yyyy")</td>
+                                <td>
+
+                                    <a href="~/UploadedFiles/@item.Filename" class="btn px-2 py-1 btn-outline-info shadow-none night-mode-btn" download>
+                                        <i class="bi bi-cloud-download"></i>
+                                    </a>
+                                    <a class="btn ms-2 px-2 py-1 btn-outline-info shadow-none night-mode-btn" asp-controller="Admin" asp-action="DeleteFileById" asp-route-id="@item.Requestwisefileid">
+                                        @*onclick="deleteFile(@item.Requestwisefileid)"*@
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+
+                                </td>
+                            </tr>
+
+                        }
+                    }
+                    else
                     {
                         <tr>
-                            <td>
-                                <input type="checkbox" name="selectedFiles" value="@item.Filename">
-                            </td>
-
-                            <td>
-                                <i class="bi bi-file-earmark-fill" style="color:red"></i>
-                                @item.Filename
-                            </td>
-
-                            <td>@item.Createddate.ToString("MMM dd, yyyy")</td>
-                            <td>
-
-                                <a href="~/UploadedFiles/@item.Filename" class="btn px-2 py-1 btn-outline-info shadow-none night-mode-btn" download>
-                                    <i class="bi bi-cloud-download"></i>
-                                </a>
-                                <a class="btn ms-2 px-2 py-1 btn-outline-info shadow-none night-mode-btn" asp-controller="Admin" asp-action="DeleteFileById" asp-route-id="@item.Requestwisefileid">
-                                    @*onclick="deleteFile(@item.Requestwisefileid)"*@
-                                    <i class="bi bi-trash"></i>
-                                </a>
-
-                            </td>
+                            <td colspan="4" style="text-align: center;">No records found.</td>
                         </tr>
-
                     }
-                }
-                else
-                {
-                    <tr>
-                        <td colspan="3" style="text-align: center;">No records found.</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 <script>

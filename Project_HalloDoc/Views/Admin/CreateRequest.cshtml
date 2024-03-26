@@ -6,17 +6,17 @@
 <div class="container">
 
     <div class=" mt-4 d-flex justify-content-between align-items-center">
-        <h4>Submit Information</h4>
+        <h4 class="fw-bold mb-0">Submit Information</h4>
         <button onclick="location.href='@Url.Action("AdminDashboard", "Admin")'" id="back-btn">&lt; Back</button>
     </div>
 
-    <form class="shadow border rounded my-3 bg-white" id="CreateRequestForm" method="post">
+    <form class="shadow border rounded my-3 bg-white" id="CreateRequestForm" method="post" onsubmit="return CheckRegion()">
         <div class="mx-3 my-4 ">
-            <h5 class="mb-3 mt-2">Patient</h5>
+            <h5 class="mb-3 mt-2 fw-bold">Patient</h5>
 
             <div class="row mb-3">
                 <div class="col-12 col-md-6 form-floating mb-3">
-                    <input asp-for="   firstname" type="text" class="form-control bg-transparent" id="floatingInputFName"
+                    <input asp-for="firstname" type="text" class="form-control bg-transparent" id="floatingInputFName"
                            placeholder="Firstname">
                     <label for="floatingInputFName" class="ms-2">First Name</label>
                     <span asp-validation-for="firstname" class="text-danger"></span>
@@ -51,7 +51,7 @@
                 </div>
             </div>
 
-            <h5 class="mb-3 mt-3">Patient Location</h5>
+            <h5 class="mb-3 mt-3  fw-bold">Patient Location</h5>
             <div class="row mb-3">
                 <div class="col-12 col-md-6 form-floating mb-3">
                     <input asp-for="street" type="text" class="form-control bg-transparent" id="floatingInputStreet"
@@ -96,7 +96,7 @@
                 </div>
 
             </div>
-            <h5 class="mb-3 mt-2">Notes</h5>
+            <h5 class="mb-3 mt-2 fw-bold">Notes</h5>
             <div class="form-floating mb-3">
                 <textarea asp-for="admin_notes" class="form-control bg-transparent border border-2 h-100" rows="5"
                           placeholder="Leave a comment here" id="floatingTextareaNotes"></textarea>
@@ -188,4 +188,28 @@
         window.location.href = "https://www.google.com/maps/search/?api=1&query=" + street + city + state + zipcode;
     }
 
+    function CheckRegion() {
+        var state = $("#floatingInputState").val();
+        console.log(state);
+        $.ajax({
+            url: "/Admin/VerifyState",
+            type: 'GET',
+            data: { stateMain: state },
+            success: function (result) {
+                event.preventDefault();
+                if (result.isSend == true) {
+                    document.getElementById("floatingInputState").style.border = "1px solid green";
+                    return true;
+
+                } else {
+                    document.getElementById("floatingInputState").style.border = "1px solid red";
+                    toastr.error("Enter valid State !!");
+                    return false;
+                }
+            },
+            error: function () {
+                alert("Error");
+            },
+        });
+    }
 </script>

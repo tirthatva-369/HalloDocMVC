@@ -1,17 +1,15 @@
-﻿
-using AspNetCoreHero.ToastNotification.Abstractions;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using BusinessLogic.Interfaces;
-using DataAccess.Models;
 using DataAccess.DataContext;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
-using System.Net.Mail;
-using System.Net;
-using System.Security.Cryptography;
-using System.Text;
-using BusinessLogic.Services;
 using DataAccess.DataModels;
+using DataAccess.Enums;
+using DataAccess.Models;
+using Microsoft.AspNetCore.Mvc;
+using Project_HalloDoc.Auth;
+using System.Net;
+using System.Net.Mail;
+//using Org.BouncyCastle.Crypto.Macs;
+//using Org.BouncyCastle.Asn1.Ocsp;
 
 
 namespace HalloDoc.mvc.Controllers
@@ -55,40 +53,47 @@ namespace HalloDoc.mvc.Controllers
         //        return sb.ToString();
         //    }
         //}
+        public IActionResult Login()
+        {
+            return View();
+        }
 
         [HttpPost]
-        public IActionResult Login(LoginModel loginModel)
+        public IActionResult Login(LoginModel user)
         {
             if (ModelState.IsValid)
             {
-                //string passwordhash = GenerateSHA256(loginModel.password);
-                //loginModel.password = passwordhash;
-                var user = _loginService.Login(loginModel);
-
-                //var userId = user.Userid;
-                HttpContext.Session.SetInt32("UserId", user.Userid);
-
-                //the above data is coming from user table and storing in user object
-                if (user != null)
+                LoginResponseViewModel? result = _patientService.PatientLogin(user);
+                if (result.Status == ResponseStatus.Success)
                 {
-                    TempData["username"] = user.Firstname;
-                    TempData["id"] = user.Lastname;
-                    _notyf.Success("Logged In Successfully !!");
-                    return RedirectToAction("PatientDashboard", "Patient");
+                    Response.Cookies.Append("jwt", result.Token);
+                    TempData["Success"] = "Login Successfully";
+                    return RedirectToAction("PatientDashboard", "Patient", user.email);
                 }
                 else
                 {
-                    _notyf.Error("Invalid Credentials");
-                    //ViewBag.AuthFailedMessage = "Please enter valid username and password !!";
+                    ModelState.AddModelError("", result.Message);
+                    TempData["Error"] = result.Message;
+                    return View();
                 }
-                return View();
             }
-            else
-            {
-                return View(loginModel);
-            }
+            return View();
         }
 
+        [CustomAuthorize("User")]
+        public IActionResult PatientDashboard(string email)
+        {
+            var userdata = _db.Users.Where(x => x.Email == email).FirstOrDefault();
+            var profile = _patientService.GetProfile(userdata.Userid);
+
+            return View();
+        }
+
+        public IActionResult PatientLogout()
+        {
+            Response.Cookies.Delete("jwt");
+            return RedirectToAction("Login", "Patient");
+        }
 
         [HttpPost]
         public IActionResult AddPatient(PatientRequestModel patientInfoModel)
@@ -198,11 +203,6 @@ namespace HalloDoc.mvc.Controllers
             return View();
         }
 
-        public IActionResult Login()
-        {
-            return View();
-        }
-
         public IActionResult ForgetPassword()
         {
             return View();
@@ -281,13 +281,6 @@ namespace HalloDoc.mvc.Controllers
             return RedirectToAction("Login");
         }
 
-        public IActionResult PatientDashboard()
-        {
-            int? userid = HttpContext.Session.GetInt32("UserId");
-            var infos = _patientService.GetMedicalHistory((int)userid);
-
-            return View(infos);
-        }
 
         public IActionResult DocumentList(int reqId)
         {
@@ -323,7 +316,7 @@ namespace HalloDoc.mvc.Controllers
             HttpContext.Session.SetInt32("EditUserId", userid);
             var profile = _patientService.GetProfile(userid);
             return PartialView("_Profile", profile);
-        
+
         }
 
         public IActionResult SaveEditProfile(Profile profile)

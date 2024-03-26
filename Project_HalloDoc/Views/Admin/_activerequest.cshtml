@@ -1,6 +1,6 @@
 ﻿@using DataAccess.Models;
 @using DataAccess.Enums;
-@model List<AdminDashTableModel>;
+@model DashboardModel;
 
 <div class="container-fluid pt-4">
     <div class="d-flex justify-content-between">
@@ -41,10 +41,12 @@
         </div>
         <div class="col-12 col-md-2 pt-2">
             <div class="form-floating">
-                <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
-                    <option selected>Regions</option>
-                    <option value="1">new york</option>
-                    <option value="2">usa</option>
+                <select class="form-select" id="newRegionFilter2" aria-label="Floating label select example">
+                <option disabled selected>Regions</option>
+                @foreach (var item in Model.regionList)
+                {
+                    <option value=@item.Regionid>@item.Name</option>
+                }
                 </select>
                 <label for="floatingSelect"><i class="bi bi-search"></i> All Regions</label>
             </div>
@@ -84,173 +86,224 @@
             </tr>
         </thead>
         <tbody>
-
-            @foreach (var item in Model)
+            @if (Model.adminDashTableList != null && Model.adminDashTableList.Count > 0)
             {
-                if (item.status == 4 || item.status == 5)
+
+                @foreach (var item in Model.adminDashTableList)
                 {
-                    var bgColor = "He";
-                    var role = "hello";
-
-                    @if (item.requestTypeId == (int)RequestTypeEnum.Business)
+                    if (item.status == 4 || item.status == 5)
                     {
-                        bgColor = "#d76879";
-                        role = "Business";
-                    }
-                    else if (item.requestTypeId == (int)RequestTypeEnum.Patient)
-                    {
-                        bgColor = "#60be5e";
-                        role = "Patient";
-
-
-                    }
-                    else if (item.requestTypeId == (int)RequestTypeEnum.Family)
-                    {
-                        bgColor = "#e69232";
-                        role = "FamilyFriend";
-
-                    }
-                    else if (item.requestTypeId == (int)RequestTypeEnum.Concierge)
-                    {
-                        bgColor = "#0b7ebf";
-                        role = "Concierge";
-                    }
-
-                    <tr class="tablerows  @role">
-                        @*1*@
-                        <td style="background:@bgColor">
-                            <div class="d-flex justify-content-between">
-
-                                <span>@item.firstName @item.lastName</span>
-                                <a href="">
-                                    <i class="bi bi-envelope text-white "></i>
-                                </a>
-                            </div>
-                        </td>
-                        @*2*@
-                        <td style="background:@bgColor">Jun 16, 2023(0)</td>
-                        @*3*@
-                        <td style="background:@bgColor">@item.requestorFname @item.requestorLname</td>
-                        @*4*@
-                        <td style="background:@bgColor">Nov 20, 2023 335h 1m 01m</td>
-                        @*@item.strMonth @item.intDate , @item.intYear*@
-                        @*5*@
-                        <td style="background:@bgColor">
-                            <div class="table_phone">
-                                <a href="">
-                                    <i class="bi bi-telephone-fill text-white"></i>
-                                    @item.mobileNo
-                                </a>
-                            </div>
-                            (@role)
-
-
-                        </td>
-                        @if ((item.street != null || item.city != null) || item.state != null)
+                        var bgColor = "He";
+                        var role = "hello";
+                        @if (item.requestTypeId == (int)RequestTypeEnum.Business)
                         {
-                            <td style="background:@bgColor">@item.street, @item.city, @item.state </td>
+                            bgColor = "#d76879";
+                            role = "Business";
                         }
-                        else
+                        else if (item.requestTypeId == (int)RequestTypeEnum.Patient)
                         {
-                            <td style="background:@bgColor"> - </td>
-
+                            bgColor = "#60be5e";
+                            role = "Patient";
                         }
+                        else if (item.requestTypeId == (int)RequestTypeEnum.Family)
+                        {
+                            bgColor = "#e69232";
+                            role = "FamilyFriend";
+                        }
+                        else if (item.requestTypeId == (int)RequestTypeEnum.Concierge)
+                        {
+                            bgColor = "#0b7ebf";
+                            role = "Concierge";
+                        }
+                        <tr class="tablerows  @role">
+                            @*1*@
+                            <td style="background:@bgColor">
+                                <div class="d-flex justify-content-between">
+                                    <span>@item.firstName @item.lastName</span>
+                                    <a href="">
+                                        <i class="bi bi-envelope text-white "></i>
+                                    </a>
+                                </div>
+                            </td>
+                            @*2*@
+                            <td style="background:@bgColor">@item.strMonth @item.intDate, @item.intYear</td>
+                            @*3*@
+                            <td style="background:@bgColor">@item.requestorFname @item.requestorLname</td>
+                            @*4*@
+                            <td style="background:@bgColor">@item.reqstrMonth @item.reqintDate, @item.reqintYear</td>
+                            @*5*@
+                            <td style="background:@bgColor">
+                                <div class="table_phone">
+                                    <a href="tel:@item.mobileNo" class="text-decoration-none text-black">
+                                        <i class="bi bi-telephone-fill text-white"></i>
+                                        @item.mobileNo
+                                    </a>
+                                </div>
+                                (@role)
 
-                        @*7*@
-                        <td style="background:@bgColor">-</td>
-                        @*8*@
-                        <td style="background:@bgColor">
 
-                            <div class="d-flex">
-                                <div class="dropdown mb-1 w-75">
-                                    <button class="btn text-white border border-white py-1"
-                                            type="button" data-bs-toggle="dropdown"
-                                            aria-expanded="false">
-                                        <i class="bi bi-person-fill"></i>
-                                        <span>
-                                            Patient
-                                        </span>
-                                    </button>
+                            </td>
+                            @if ((item.street != null || item.city != null) || item.state != null)
+                            {
+                                <td style="background:@bgColor">@item.street, @item.city, @item.state </td>
+                            }
+                            else
+                            {
+                                <td style="background:@bgColor"> - </td>
+
+                            }
+
+                            @*7*@
+                            <td style="background:@bgColor">-</td>
+                            @*8*@
+                            <td style="background:@bgColor">
+
+                                <div class="d-flex">
+                                    <div class="dropdown mb-1 w-75">
+                                        <button class="btn text-white border border-white py-1 px-3"
+                                                type="button" data-bs-toggle="dropdown"
+                                                aria-expanded="false">
+                                            <i class="bi bi-person-fill"></i>
+                                            <span>
+                                                Patient
+                                            </span>
+                                        </button>
+
+                                    </div>
 
                                 </div>
+                                <div>
+                                    <div class="dropdown w-75">
+                                        <button class="btn text-white border border-white py-1"
+                                                type="button" data-bs-toggle="dropdown"
+                                                aria-expanded="false">
+                                            <i class="bi bi-person-badge-fill"></i>
+                                            <span>
+                                                Provider
+                                            </span>
+                                        </button>
 
-                            </div>
-                            <div>
-                                <div class="dropdown w-75">
-                                    <button class="btn text-white border border-white py-1"
-                                            type="button" data-bs-toggle="dropdown"
-                                            aria-expanded="false">
-                                        <i class="bi bi-person-badge-fill"></i>
-                                        <span>
-                                            Provider
-                                        </span>
-                                    </button>
-
+                                    </div>
                                 </div>
-                            </div>
-                        </td>
-                        @*9*@
-                        <td style="background:@bgColor">
-                            <div>
-                                <div class="dropdown mt-3">
-                                    <button class="btn text-white border border-white py-1  dropdown-toggle w-50 d-flex justify-content-around align-items-center"
-                                            id="chat_with_dropdown2" type="button" data-bs-toggle="dropdown"
-                                            aria-expanded="false">
-                                        <span>
-                                            Actions
-                                        </span>
-                                    </button>
-                                    <ul class="dropdown-menu table_dropdowns">
-                                        <li>
-                                            <a class="dropdown-item" href="@Url.Action("ViewCase", new {Requestclientid = item.reqClientId , RequestTypeId = item.requestTypeId})">
-                                                <i class="bi bi-file-earmark-text"></i>
-                                                ViewCase
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" asp-controller="Admin" asp-action="viewuploads" asp-route-reqId=@item.reqId>
-                                                <i class="bi bi-file-earmark-text"></i>
-                                                ViewUploads
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="@Url.Action("ViewNote", new {ReqId = item.reqId})">
-                                                <i class="bi bi-file-earmark-text"></i>
-                                                ViewNotes
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="@Url.Action("Order", new {reqId = item.reqId})">
-                                                <i class="bi bi-file-earmark-text"></i>
-                                                Orders
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="#">
-                                                <i class="bi bi-file-earmark-text"></i>
-                                                Doctors Notes
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="@Url.Action("Encounter",new {ReqId=@item.reqId})">
-                                                <i class="bi bi-file-earmark-text"></i>
-                                                Encounter
-                                            </a>
-                                        </li>
-                                    </ul>
+                            </td>
+                            @*9*@
+                            <td style="background:@bgColor">
+                                <div>
+                                    <div class="dropdown mt-3">
+                                        <button class="btn text-white border border-white py-1 px-3 dropdown-toggle w-50 d-flex justify-content-around align-items-center"
+                                                id="chat_with_dropdown2" type="button" data-bs-toggle="dropdown"
+                                                aria-expanded="false">
+                                            <span>
+                                                Actions
+                                            </span>
+                                        </button>
+                                        <ul class="dropdown-menu table_dropdowns">
+                                            <li>
+                                                <a class="dropdown-item" href="@Url.Action("ViewCase", new {Requestclientid = item.reqClientId , RequestTypeId = item.requestTypeId})">
+                                                    <i class="bi bi-file-earmark-text"></i>
+                                                    ViewCase
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" asp-controller="Admin" asp-action="ViewUploads" asp-route-reqId=@item.reqId>
+                                                    <i class="bi bi-file-earmark-text"></i>
+                                                    ViewUploads
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="@Url.Action("ViewNote", new {ReqId = item.reqId})">
+                                                    <i class="bi bi-file-earmark-text"></i>
+                                                    ViewNotes
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="@Url.Action("Order", new {reqId = item.reqId})">
+                                                    <i class="bi bi-file-earmark-text"></i>
+                                                    Orders
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="#">
+                                                    <i class="bi bi-file-earmark-text"></i>
+                                                    Doctors Notes
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="@Url.Action("Encounter",new {ReqId=@item.reqId})">
+                                                    <i class="bi bi-file-earmark-text"></i>
+                                                    Encounter
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
-                            </div>
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
+                    }
                 }
+            }
+            else
+            {
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="text-center text-danger fw-bold h5">No record found</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
             }
         </tbody>
     </table>
 </div>
+<div id="modelContent2"></div>
 
 <!-- accordions -->
 <div class="accordion accordion-flush d-block d-md-none" id="accordionFlushExample">
 </div>
+
+@if (Model.TotalPage > 1)
+{
+    <div class="page-container">
+        <ul class="pagination justify-content-center d-flex page-list">
+            <li class="page-item @(Model.CurrentPage <= 1 ? "d-none" : "")">
+                <a class="page-link border-0 m-2" onclick="changepage(@Model.CurrentPage - 1)"><i class="bi bi-chevron-double-left text-info page"></i></a>
+            </li>
+            @for (int CurrentPage = 1; CurrentPage <= Model.TotalPage; CurrentPage++)
+            {
+                <li class="m-2 btn @(CurrentPage == Model.CurrentPage ? "page-active" : "")" onclick="changepage(@CurrentPage,3)"><a class="text-decoration-none text-black curent-page-index" data-page="@CurrentPage">@CurrentPage</a></li>
+            }
+            <li class="page-item  @(Model.CurrentPage == Model.TotalPage ? "d-none" : "")">
+                <a class="page-link border-0 m-2" onclick="changepage(@Model.CurrentPage + 1)"><i class="bi bi-chevron-double-right text-info page"></i></a>
+            </li>
+        </ul>
+
+    </div>
+}
+else if (Model.TotalPage == 1)
+{
+}
+else
+{
+    <div class="text-center text-danger fw-bold h5">No record found</div>
+}
+
+<style>
+
+    .page-active {
+        border-radius: 50%;
+        background: #0dcaf0;
+        color: white;
+    }
+
+        .page-active:hover {
+            color: white;
+        }
+</style>
+
 <script>
 
     function allElements() {
@@ -380,38 +433,26 @@
             d[i].style.display = "table-row";
         }
     }
-    $(document).ready(function () {
 
-        $('.data-table').DataTable({
-            "initComplete": function (settings, json) {
-
-                $('#my-search-input').val(settings.oPreviousSearch.sSearch);
-
-                $('#my-search-input').on('keyup', function () {
-                    var searchValue = $(this).val();
-                    settings.oPreviousSearch.sSearch = searchValue;
-                    settings.oApi._fnReDraw(settings);
-                });
-            },
-            "lengthMenu": [[5, 10, -1], [5, 10, "All"]],
-            "pageLength": 5,
-            language: {
-                oPaginate: {
-                    sNext: '<i class="bi bi-caret-right-fill text-info"></i>',
-                    sPrevious: '<i class="bi bi-caret-left-fill text-info"></i>'
-
-                }
+    $('#newRegionFilter2').on('change', function () {
+        var searchRegion = $('#newRegionFilter2').val();
+        $.ajax({
+            url: '/Admin/FilterRegionActive',
+            type: 'GET',
+            data: { regionId: searchRegion, tabNo: 3 },
+            success: function (response) {
+                $("#tab3").html(response);
             }
-        });
-        // $('.dataTables_length').hide();
-        $('.dataTables_filter').hide();
-    });
+        })
+    })
 
-        $("#exportbtn2").click(function () {
-            //alert("exportbtn was clicked.");
-            var request = @Html.Raw(Json.Serialize(Model));
-            console.log(request);
-            Export(request);
-        });
+    
+
+    $("#exportbtn2").click(function () {
+        //alert("exportbtn was clicked.");
+        var request = @Html.Raw(Json.Serialize(Model));
+        console.log(request);
+        Export(request);
+    });
 
 </script>

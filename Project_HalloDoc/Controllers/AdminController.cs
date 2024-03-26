@@ -1,21 +1,17 @@
-﻿using BusinessLogic.Interfaces;
-using BusinessLogic.Services;
-using DataAccess.Models;
-using DataAccess.DataModels;
-using Microsoft.AspNetCore.Mvc;
-using System.Text;
-using AspNetCore;
-using AspNetCoreHero.ToastNotification.Abstractions;
-using System.Security.Cryptography;
-using System.Net.Mail;
-using System.Net;
-using Project_HalloDoc.Auth;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.CodeAnalysis.Elfie.Serialization;
-using System.Text.Json.Nodes;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using BusinessLogic.Interfaces;
 using DataAccess.DataContext;
+using DataAccess.DataModels;
+using DataAccess.Enums;
+using DataAccess.Models;
+using Microsoft.AspNetCore.Mvc;
+using Project_HalloDoc.Auth;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net;
+using System.Net.Mail;
 using System.Security.Claims;
+using System.Text;
+using System.Text.Json.Nodes;
 //using Org.BouncyCastle.Crypto.Macs;
 //using Org.BouncyCastle.Asn1.Ocsp;
 
@@ -44,35 +40,31 @@ namespace HalloDoc.mvc.Controllers
             return View();
         }
 
-        public IActionResult AdminLogin(AdminLoginModel adminLoginModel)
+        public IActionResult AdminLogin()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AdminLogin(AdminLoginModel user)
         {
             if (ModelState.IsValid)
             {
-                var aspnetuser = _adminService.GetAspnetuser(adminLoginModel.email);
-                if (aspnetuser != null)
+                LoginResponseViewModel? result = _adminService.AdminLogin(user);
+                if (result.Status == ResponseStatus.Success)
                 {
-                    if (aspnetuser.Passwordhash == adminLoginModel.password)
-                    {
-                        var jwtToken = _jwtService.GetJwtToken(aspnetuser);
-                        Response.Cookies.Append("jwt", jwtToken);
-
-                        _notyf.Success("Logged in Successfully");
-                        return RedirectToAction("AdminDashboard", "Admin");
-                    }
-                    else
-                    {
-                        _notyf.Error("Password is incorrect");
-
-                        return View();
-                    }
+                    Response.Cookies.Append("jwt", result.Token);
+                    TempData["Success"] = "Login Successfully";
+                    return RedirectToAction("AdminDashboard", "Admin");
                 }
-                _notyf.Error("Email is incorrect");
-                return View();
+                else
+                {
+                    ModelState.AddModelError("", result.Message);
+                    TempData["Error"] = result.Message;
+                    return View();
+                }
             }
-            else
-            {
-                return View(adminLoginModel);
-            }
+            return View();
         }
 
         [CustomAuthorize("Admin")]
@@ -107,9 +99,9 @@ namespace HalloDoc.mvc.Controllers
             return View(data);
         }
 
-        public IActionResult GetRequestsByStatus(int tabNo)
+        public IActionResult GetRequestsByStatus(int tabNo, int CurrentPage)
         {
-            var list = _adminService.GetRequestsByStatus(tabNo);
+            var list = _adminService.GetRequestsByStatus(tabNo, CurrentPage);
             if (tabNo == 1)
             {
                 return PartialView("_NewRequest", list);
@@ -238,6 +230,12 @@ namespace HalloDoc.mvc.Controllers
         public IActionResult GetPhysician(int selectRegion)
         {
             List<Physician> physicianlist = _adminService.GetPhysicianByRegion(selectRegion);
+            return Json(new { physicianlist });
+        }
+
+        public IActionResult GetPhysician1(int selectRegion1)
+        {
+            List<Physician> physicianlist = _adminService.GetPhysicianByRegion(selectRegion1);
             return Json(new { physicianlist });
         }
 
@@ -449,7 +447,7 @@ namespace HalloDoc.mvc.Controllers
         {
             var model = _adminService.SendAgreementCase(reqId);
             model.reqType = reqType;
-            return PartialView("_SendAgreement", model);
+            return Json(new { redirect = Url.Action("AdminDashboard", "Admin") });
         }
 
         //public Task SendEmail(string email, string subject, string message)
@@ -610,7 +608,7 @@ namespace HalloDoc.mvc.Controllers
             var token = request.Cookies["jwt"];
             if (token == null || !_jwtService.ValidateToken(token, out JwtSecurityToken jwtToken))
             {
-                _notyf.Error("Token Expired");
+                _notyf.Error("Token Expired,Login Again");
                 return View(model);
             }
             var emailClaim = jwtToken.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Email);
@@ -618,7 +616,7 @@ namespace HalloDoc.mvc.Controllers
             if (isSaved)
             {
                 _notyf.Success("Request Created");
-                return RedirectToAction("AdminDshboard");
+                return RedirectToAction("AdminDashboard");
             }
             else
             {
@@ -630,6 +628,45 @@ namespace HalloDoc.mvc.Controllers
         public IActionResult RequestSupport()
         {
             return PartialView("_RequestSupport");
+        }
+
+        public IActionResult FilterRegion(int regionId, int tabNo)
+        {
+            var list = _adminService.GetRequestByRegion(regionId, tabNo);
+            return PartialView("_NewRequest", list);
+        }
+
+        public IActionResult FilterRegionPending(int regionId, int tabNo)
+        {
+            var list = _adminService.GetRequestByRegion(regionId, tabNo);
+            return PartialView("_PendingRequest", list);
+        }
+
+        public IActionResult FilterRegionActive(int regionId, int tabNo)
+        {
+            var list = _adminService.GetRequestByRegion(regionId, tabNo);
+            return PartialView("_ActiveRequest", list);
+        }
+
+        public IActionResult FilterRegionConclude(int regionId, int tabNo)
+        {
+            var list = _adminService.GetRequestByRegion(regionId, tabNo);
+            return PartialView("_ConcludeRequest", list);
+        }
+        public IActionResult FilterRegionToClose(int regionId, int tabNo)
+        {
+            var list = _adminService.GetRequestByRegion(regionId, tabNo);
+            return PartialView("_ToCloseRequest", list);
+        }
+        public IActionResult FilterRegionUnpaid(int regionId, int tabNo)
+        {
+            var list = _adminService.GetRequestByRegion(regionId, tabNo);
+            return PartialView("_UnpaidRequest", list);
+        }
+
+        public IActionResult ShowProvider()
+        {
+            return PartialView("_Provider");
         }
     }
 }

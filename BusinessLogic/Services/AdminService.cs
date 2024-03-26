@@ -1,26 +1,13 @@
 ﻿using BusinessLogic.Interfaces;
-using DataAccess.Models;
 using DataAccess.DataContext;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DataAccess.DataModels;
-using System.Globalization;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Microsoft.CodeAnalysis.Elfie.Serialization;
-using DataAccess.Enums;
 using DataAccess.Enum;
-using System.Collections;
+using DataAccess.Enums;
+using DataAccess.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using System.Collections;
 using System.Text.Json.Nodes;
-using System.Net.Mail;
-using System.Net;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-
-using System.Net;
 //using static Org.BouncyCastle.Math.EC.ECCurve;
 
 namespace BusinessLogic.Services
@@ -28,30 +15,56 @@ namespace BusinessLogic.Services
     public class AdminService : IAdminInterface
     {
         private readonly ApplicationDbContext _db;
+        private readonly IJwtService _jwtService;
 
-        public AdminService(ApplicationDbContext db)
+        public AdminService(ApplicationDbContext db, IJwtService jwtService)
         {
             _db = db;
+            _jwtService = jwtService;
+
         }
 
-        public Aspnetuser GetAspnetuser(string email)
+        //public Aspnetuser GetAspnetuser(string email)
+        //{
+        //    var aspNetUser = _db.Aspnetusers.Include(x => x.Aspnetuserroles).FirstOrDefault(x => x.Email == email);
+        //    return aspNetUser;
+        //}
+
+        public LoginResponseViewModel AdminLogin(AdminLoginModel model)
         {
-            var aspNetUser = _db.Aspnetusers.Include(x => x.Aspnetuserroles).FirstOrDefault(x => x.Email == email);
-            return aspNetUser;
+            var user = _db.Aspnetusers.Where(u => u.Email == model.email).FirstOrDefault();
+
+            if (user == null)
+                return new LoginResponseViewModel() { Status = ResponseStatus.Failed, Message = "User Not Found" };
+            if (user.Passwordhash == null)
+                return new LoginResponseViewModel() { Status = ResponseStatus.Failed, Message = "There is no Password with this Account" };
+            if (user.Passwordhash == model.password)
+            {
+                var jwtToken = _jwtService.GetJwtToken(user);
+
+                return new LoginResponseViewModel() { Status = ResponseStatus.Success, Token = jwtToken };
+            }
+
+            return new LoginResponseViewModel() { Status = ResponseStatus.Failed, Message = "Password does not match" };
         }
 
-        public List<AdminDashTableModel> GetRequestsByStatus(int tabNo)
+        public DashboardModel GetRequestsByStatus(int tabNo, int CurrentPage)
         {
             var query = from r in _db.Requests
                         join rc in _db.Requestclients on r.Requestid equals rc.Requestid
                         select new AdminDashTableModel
                         {
+                            email = r.Email,
                             reqId = r.Requestid,
+                            regionId = rc.Regionid,
                             firstName = rc.Firstname,
                             lastName = rc.Lastname,
                             intDate = rc.Intdate,
                             intYear = rc.Intyear,
                             strMonth = rc.Strmonth,
+                            reqintDate = r.Createddate.Day,
+                            reqintYear = r.Createddate.Year,
+                            reqstrMonth = r.Createddate.ToString("MMM"),
                             requestorFname = r.Firstname,
                             requestorLname = r.Lastname,
                             createdDate = r.Createddate,
@@ -65,7 +78,6 @@ namespace BusinessLogic.Services
                             reqClientId = rc.Requestclientid,
                             notes = rc.Notes,
                         };
-
 
             if (tabNo == 1)
             {
@@ -99,7 +111,25 @@ namespace BusinessLogic.Services
                 query = query.Where(x => x.status == (int)StatusEnum.Unpaid);
             }
             var result = query.ToList();
-            return result;
+            DashboardModel dashboardModel = new DashboardModel();
+            dashboardModel.adminDashTableList = result;
+            dashboardModel.regionList = _db.Regions.ToList();
+            var page = query.ToList();
+            int count = result.Count();
+            int TotalPage = (int)Math.Ceiling(count / (double)5);
+            result = result.Skip((CurrentPage - 1) * 5).Take(5).ToList();
+
+            dashboardModel.adminDashTableList = result;
+            dashboardModel.TotalPage = TotalPage;
+            dashboardModel.CurrentPage = CurrentPage;
+            return dashboardModel;
+        }
+        public DashboardModel GetRequestByRegion(int regionId, int tabNo)
+        {
+            DashboardModel model = new DashboardModel();
+            model = GetRequestsByStatus(tabNo, 1);
+            model.adminDashTableList = model.adminDashTableList.Where(x => x.regionId == regionId).ToList();
+            return model;
         }
 
         public StatusCountModel GetStatusCount()
@@ -520,6 +550,9 @@ namespace BusinessLogic.Services
                 _db.SaveChanges();
                 return true;
             }
+
+
+
             catch (Exception ex)
             {
                 return false;
@@ -946,6 +979,7 @@ namespace BusinessLogic.Services
 
                 if (existUser == null)
                 {
+                    _asp.Id = Guid.NewGuid().ToString();
                     _asp.Username = model.firstname + "_" + model.lastname;
                     _asp.Email = model.email;
                     _asp.Phonenumber = model.phone;
@@ -963,11 +997,11 @@ namespace BusinessLogic.Services
                     _user.Street = model.street;
                     _user.Zip = model.zipcode;
                     _user.Strmonth = model.dateofbirth.Substring(5, 2);
-                    _user.Intdate = Convert.ToInt16(model.dateofbirth.Substring(0, 4));
-                    _user.Intyear = Convert.ToInt16(model.dateofbirth.Substring(8, 2));
+                    _user.Intdate = Convert.ToInt16(model.dateofbirth.Substring(8, 2));
+                    _user.Intyear = Convert.ToInt16(model.dateofbirth.Substring(0, 4));
                     _user.Createdby = _asp.Id;
                     _user.Createddate = DateTime.Now;
-                    _user.Regionid = _db.Regions.Where(r => r.Name.ToLower() == model.state.ToLower()).Select(r => r.Regionid).FirstOrDefault();
+                    _user.Regionid = stateMain.Regionid;
                     _db.Users.Add(_user);
                     _db.SaveChanges();
 
@@ -983,15 +1017,17 @@ namespace BusinessLogic.Services
                     }
                 }
 
-                _req.Requesttypeid = 1;
-                _req.Userid = Convert.ToInt32(admin.Aspnetuserid);
+                _req.Requesttypeid = (int)RequestTypeEnum.Patient;
+                _req.Userid = _db.Users.Where(x => x.Email == sessionEmail).Select(x => x.Userid).First();
                 _req.Firstname = admin.Firstname;
                 _req.Lastname = admin.Lastname;
                 _req.Phonenumber = admin.Mobile;
                 _req.Email = admin.Email;
-                _req.Status = 1;
+                _req.Status = (int)StatusEnum.Unassigned;
                 _req.Confirmationnumber = admin.Firstname.Substring(0, 1) + DateTime.Now.ToString().Substring(0, 19);
                 _req.Createddate = DateTime.Now;
+                _req.Isurgentemailsent = new BitArray(1);
+                _req.Isurgentemailsent[0] = false;
 
                 _db.Requests.Add(_req);
                 _db.SaveChanges();
@@ -1007,7 +1043,7 @@ namespace BusinessLogic.Services
                 _reqClient.City = model.city;
                 _reqClient.State = model.state;
                 _reqClient.Zipcode = model.zipcode;
-                _reqClient.Regionid = _db.Regions.Where(r => r.Name.ToLower() == model.state.ToLower()).Select(r => r.Regionid).FirstOrDefault();
+                _reqClient.Regionid = stateMain.Regionid;
                 _reqClient.Email = model.email;
 
                 _db.Requestclients.Add(_reqClient);
@@ -1015,7 +1051,7 @@ namespace BusinessLogic.Services
 
                 _note.Requestid = _req.Requestid;
                 _note.Adminnotes = model.admin_notes;
-                _note.Createdby = _db.Aspnetusers.Where(r => r.Email == model.email).Select(r => r.Id).FirstOrDefault();
+                _note.Createdby = _db.Aspnetusers.Where(r => r.Email == sessionEmail).Select(r => r.Id).First();
                 _note.Createddate = DateTime.Now;
                 _db.Requestnotes.Add(_note);
                 _db.SaveChanges();

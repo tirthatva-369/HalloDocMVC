@@ -38,10 +38,10 @@
                         <input asp-for="lName" type="text" class=" form-control" id="floatingInputLast" placeholder="Last Name" aria-label="Last Name" />
                         <label class=" text-secondary" for="floatingInputLast">Last Name</label>
                         <span asp-validation-for="lName" class="text-danger"></span>
-                    </div>
+                    </div>        
                     <div class="form-floating mt-3">
-                        <!-- Ensure correct input type for phone number -->
-                        <input asp-for="phoneNo" style="height:58px" id="phoneSendLink" class="form-control contact" aria-label="Contact" type="tel" />
+                        <input asp-for="phoneNo" type="tel" class=" form-control" id="phoneSendLink" placeholder="Contact" aria-label="Contact" />
+                        <label class=" text-secondary" for="phoneSendLink">Contact Number</label>
                         <span asp-validation-for="phoneNo" class="text-danger"></span>
                     </div>
                     <div class="form-floating mt-3">

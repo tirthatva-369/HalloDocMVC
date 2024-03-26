@@ -16,17 +16,45 @@ using DataAccess.Enums;
 using Microsoft.Build.Framework;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BusinessLogic.Services
 {
     public class PatientService : IPatientInterface
     {
         private readonly ApplicationDbContext _db;
+        private readonly IJwtService _jwtService;
 
-
-        public PatientService(ApplicationDbContext db)
+        public PatientService(ApplicationDbContext db, IJwtService jwtService)
         {
             _db = db;
+            _jwtService = jwtService;
+        }
+
+        //public void CreateAccount(CreateAccountModel model)
+        //{
+        //    Aspnetuser acc = new()
+        //    {
+        //        acc.Email= model.email,
+        //    };
+        //}
+
+        public LoginResponseViewModel PatientLogin(LoginModel model)
+        {
+            var user = _db.Aspnetusers.Where(u => u.Email == model.email).FirstOrDefault();
+
+            if (user == null)
+                return new LoginResponseViewModel() { Status = ResponseStatus.Failed, Message = "User Not Found" };
+            if (user.Passwordhash == null)
+                return new LoginResponseViewModel() { Status = ResponseStatus.Failed, Message = "There is no Password with this Account" };
+            if (user.Passwordhash == model.password)
+            {
+                var jwtToken = _jwtService.GetJwtToken(user);
+
+                return new LoginResponseViewModel() { Status = ResponseStatus.Success, Token = jwtToken };
+            }
+
+            return new LoginResponseViewModel() { Status = ResponseStatus.Failed, Message = "Password does not match" };
         }
 
         public void AddPatientInfo(PatientRequestModel patientRequestModel)
@@ -50,7 +78,6 @@ namespace BusinessLogic.Services
                         aspnetuser1.Ip = GetLocalIPv4(NetworkInterfaceType.Ethernet);
                         _db.Aspnetusers.Add(aspnetuser1);
                         _db.SaveChanges();
-
 
                         user.Aspnetuserid = aspnetuser1.Id;
                         user.Firstname = patientRequestModel.firstName;
@@ -469,5 +496,7 @@ namespace BusinessLogic.Services
             }
             return output;
         }
+
+
     }
 }

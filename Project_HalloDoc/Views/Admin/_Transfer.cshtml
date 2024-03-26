@@ -18,7 +18,7 @@
 
                 <div class="mb-3 ">
 
-                    <select class="form-select text-secondary" id="selectRegion" asp-for="selectRegionId" aria-label="Default select example">
+                    <select class="form-select text-secondary" id="selectRegion1" asp-for="selectRegionId" aria-label="Default select example">
                         <option disabled selected>Select Region</option>
                         @if (Model.regionList != null)
                         {
@@ -28,128 +28,130 @@
                             }
                         }
                     </select>
-                    <small id="regionRequired" class="d-none" style="color:red">Region Is Required</small>
+                    <small id="regionRequired1" class="d-none" style="color:red">Region Is Required</small>
 
                 </div>
 
                 <div class="mb-3 text-secondary">
                     <div class="form-floating mb-3">
-                        <select class="form-select text-secondary" id="selectPhysician" asp-for="selectPhysicianId" aria-label="Default select example">
+                        <select class="form-select text-secondary" id="selectPhysician1" asp-for="selectPhysicianId" aria-label="Default select example">
                         </select>
                         <label for="floatingInput">Physicians</label>
                     </div>
-                    <small id="physicianRequired" class="d-none" style="color:red">Physician Is Required</small>
+                    <small id="physicianRequired1" class="d-none" style="color:red">Physician Is Required</small>
 
                 </div>
 
                 <div class="mb-3">
-                    <textarea class="form-control" asp-for="description" id="description" placeholder="Description"></textarea>
-                    <small id="descriptionRequired" class="d-none" style="color:red">Description Is Required</small>
+                    <textarea class="form-control" asp-for="description" id="description1" placeholder="Description"></textarea>
+                    <small id="descriptionRequired1" class="d-none" style="color:red">Description Is Required</small>
 
                 </div>
 
             </div>
             <div class="modal-footer">
-                <button type="submit" id="submitCase" class="btn text-light" style="background-color:#00B7FF">Confirm</button>
+                <button type="submit" id="submitCase1" class="btn text-light" style="background-color:#00B7FF">Confirm</button>
                 <button type="reset" class="btn border border-info" style="color:#00B7FF" data-bs-dismiss="modal">Cancel</button>
             </div>
         </form>
     </div>
 </div>
-<div id="modelcontent2"></div>
+@* <div id="modelContent1"></div> *@
 <script>
-    $('#selectRegion').on('change', function () {
-        let selectRegion = $("#selectRegion").val();
+
+    
+
+    $('#selectRegion1').on('change', function () {
+        let selectRegion = $("#selectRegion1").val();
         if (selectRegion != null) {
-            $("#regionRequired").addClass('d-none').removeClass('d-block');
+            $("#regionRequired1").addClass('d-none').removeClass('d-block');
         }
         else {
-            $("#regionRequired").addClass('d-block').removeClass('d-none');
+            $("#regionRequired1").addClass('d-block').removeClass('d-none');
         }
     });
 
-    $('#selectPhysician').on('change', function () {
-        let selectPhysician = $("#selectPhysician").val();
+    $('#selectPhysician1').on('change', function () {
+        let selectPhysician = $("#selectPhysician1").val();
         if (selectPhysician != null) {
-            $("#physicianRequired").addClass('d-none').removeClass('d-block');
+            $("#physicianRequired1").addClass('d-none').removeClass('d-block');
         }
         else {
-            $("#physicianRequired").addClass('d-block').removeClass('d-none');
+            $("#physicianRequired1").addClass('d-block').removeClass('d-none');
         }
     });
 
-    $('#description').on('input', function () {
-        let description = $("#description").val();
+    $('#description1').on('input', function () {
+        let description = $("#description1").val();
         if (description != "") {
-            $("#descriptionRequired").addClass('d-none').removeClass('d-block');
+            $("#descriptionRequired1").addClass('d-none').removeClass('d-block');
         }
         else {
-            $("#descriptionRequired").addClass('d-block').removeClass('d-none');
+            $("#descriptionRequired1").addClass('d-block').removeClass('d-none');
 
         }
     });
 
-    $("#selectRegion").on("change", function () {
+    $("#selectRegion1").on("change", function () {
 
         showPhysicians($(this).val());
 
     });
     function showPhysicians(regionId) {
-
         $.ajax({
-            url: '/Admin/GetPhysician',
+            url: '/Admin/GetPhysician1',
             type: 'GET',
 
-            data: { selectRegion: regionId },
+            data: { selectRegion1: regionId },
             success: function (response) {
 
-                $('#selectPhysician').html("<option disabled selected value>" + "Select Physician" + "</option>");
+                $('#selectPhysician1').html("<option disabled selected value>" + "Select Physician" + "</option>");
                 console.log(response.physicianlist.length);
                 for (var i = 0; i < response.physicianlist.length; i++) {
                     console.log("hello");
-                    $("#selectPhysician").append('<option value = "' + response.physicianlist[i].physicianid + '" >' + response.physicianlist[i].firstname + '</option>')
+                    $("#selectPhysician1").append('<option value = "' + response.physicianlist[i].physicianid + '" >' + response.physicianlist[i].firstname + '</option>')
 
                 }
             }
         });
     }
 
-    $("#submitCase").on('click', function () {
+    $("#submitCase1").on('click', function () {
 
 
-        var selectRegion = $("#selectRegion").val();
+        var selectRegion = $("#selectRegion1").val();
 
         if (selectRegion == null) {
-            $("#regionRequired").addClass('d-block').removeClass('d-none');
+            $("#regionRequired1").addClass('d-block').removeClass('d-none');
         } else {
-            $("#regionRequired").addClass('d-none').removeClass('d-block');
+            $("#regionRequired1").addClass('d-none').removeClass('d-block');
         }
 
-        var selectPhysician = $("#selectPhysician").val();
+        var selectPhysician = $("#selectPhysician1").val();
 
         if (selectPhysician == null) {
-            $("#physicianRequired").addClass('d-block').removeClass('d-none');
+            $("#physicianRequired1").addClass('d-block').removeClass('d-none');
         } else {
-            $("#physicianRequired").addClass('d-none').removeClass('d-block');
+            $("#physicianRequired1").addClass('d-none').removeClass('d-block');
         }
 
-        var description = $("#description").val();
+        var description = $("#description1").val();
 
         if (description == "") {
-            $("#descriptionRequired").addClass('d-block').removeClass('d-none');
+            $("#descriptionRequired1").addClass('d-block').removeClass('d-none');
         } else {
-            $("#descriptionRequired").addClass('d-none').removeClass('d-block');
+            $("#descriptionRequired1").addClass('d-none').removeClass('d-block');
         }
 
 
 
 
-        if ((selectRegion != null && selectPhysician != null) && description != '') {
+        if ((selectRegion1 != null && selectPhysician1 != null) && description1 != '') {
 
             var payload = {
-                selectRegionId: selectRegion,
-                selectPhysicianId: selectPhysician,
-                description: description,
+                selectRegionId: selectRegion1,
+                selectPhysicianId: selectPhysician1,
+                description: description1,
                 ReqId: @Model.ReqId
                     };
             console.log(payload);

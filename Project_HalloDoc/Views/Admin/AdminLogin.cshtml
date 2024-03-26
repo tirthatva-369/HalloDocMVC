@@ -42,17 +42,17 @@
                     <h3>Login to your account</h3>
 
                     <div class="row w-50 form-floating mb-3 mt-3">
-                        <input type="email" asp-for="email" class="form-control shadow-none border-info" id="floatingInput" placeholder="Email" />
+                        <input type="email" asp-for="email" class="form-control shadow-none border-info" id="emaillogin" placeholder="Email" />
                         <i class="bi bi-person-circle login-icon w-auto fs-4"></i>
-                        <label for="floatingInput" class="input-box-text">Email</label>
-                        @* <span asp-validation-for="email" class="text-danger"></span> *@
+                        <label for="emaillogin" class="input-box-text">Email</label>
+                        <span asp-validation-for="email" class="text-danger"></span>
                     </div>
 
                     <div class="row w-50 form-floating">
-                        <input type="password" asp-for="password" class="form-control shadow-none border-info" id="see" placeholder="Password" />
-                        <label for="floatingPassword" class="input-box-text">Password</label>
-                        @* <span asp-validation-for="password" class="text-danger"></span> *@
+                        <input type="password" asp-for="password" class="form-control shadow-none border-info" id="passwordlogin" placeholder="Password" />
                         <i class="bi bi-eye-fill login-icon w-auto fs-4" id="eye"></i>
+                        <label for="passwordlogin" class="input-box-text">Password</label>
+                        <span asp-validation-for="password" class="text-danger"></span>
                     </div>
                     <button type="submit" class="row btn btn-info text-white font-weight-bold fs-5 mt-3 w-50 p-3">
                         Log In
@@ -95,10 +95,9 @@
             var img = element.querySelector(".d-mode");
             img.src.includes("dark") ? img.src = "../images/light.png" : img.src = "../images/dark.png";
         }
-    </script>
-    <script>
+
         var eye = document.getElementById('eye')
-        var password = document.getElementById('see')
+        var password = document.getElementById('passwordlogin')
         eye.addEventListener('click', function () {
             if (password.type == 'password') {
                 eye.classList.remove('bi-eye-fill');
@@ -114,3 +113,13 @@
     </script>
 </body>
 </html>
+
+@if (TempData["Error"] != null)
+{
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script type="text/javascript">
+        toastr.error('@TempData["Error"]');
+    </script>
+}

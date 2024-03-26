@@ -8,36 +8,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Patient Login</title>
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="~/css/Login.css">
-    @*<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>*@
+    <link rel="stylesheet" href="~/css/AdminLogin.css">
+
 </head>
 <body>
 
     <div class="container-fluid vh-100 d-flex flex-column justify-content-between align-items-center">
 
         <img onclick="darkMode()" class="dark" src="/images/dark.png" alt="dark">
-        <form class="login" method="post">
+        <form class="login" method="post" asp-controller="Patient" asp-action="Login">
             <img id="logo" src="/images/logo.png" alt="logo">
-            <span id="back" onclick="location.href='@Url.Action("Index", "Home")'"><a class="text-decoration-none">&lt; Back</a> </span>
+            <span id="back" class="row w-50 ps-3" onclick="location.href='@Url.Action("Index", "Home")'"><a class="text-decoration-none ">&lt; Back</a> </span>
             <h3>Login to your account</h3>
-            <div class="d-flex flex-column justify-content-center align-items-center">
-                <div class="input-div form-floating mb-3">
-                    <input asp-for="email" type="email" class="form-control email" id="floatingInput" placeholder="name@example.com">
-                    <label for="floatingInput">Email</label>
-                </div>
+
+            <div class="row w-50 form-floating mb-3 mt-3">
+                <input type="email" asp-for="email" class="form-control shadow-none border-info" id="emaillogin" placeholder="Email" />
+                <i class="bi bi-person-circle login-icon w-auto fs-4"></i>
+                <label for="emaillogin" class="input-box-text">Email</label>
                 <span asp-validation-for="email" class="text-danger"></span>
             </div>
 
-            <div class="d-flex flex-column justify-content-center align-items-center">
-                <div class="input-div form-floating">
-                    <input asp-for="password" type="password" class="form-control password" id="floatingPassword" placeholder="Password">
-                    <label for="floatingPassword">Password</label>
-                </div>
-                <span class="text-danger" asp-validation-for="password"></span>
+            <div class="row w-50 form-floating">
+                <input type="password" asp-for="password" class="form-control shadow-none border-info" id="passwordlogin" placeholder="Password" />
+                <i class="bi bi-eye-fill login-icon w-auto fs-4" id="eye"></i>
+                <label for="passwordlogin" class="input-box-text">Password</label>
+                <span asp-validation-for="password" class="text-danger"></span>
             </div>
           
-            <button type="submit">Log In</button>
+            <button type="submit" class="row w-50 ps-3 btn btn-lg btn-info text-white shadow-sm">Log In</button>
             <div>If you don't have account? <a asp-controller="Patient" asp-action="CreateAccount">Create Account</a></div>
             <a asp-controller="Patient" asp-action="ForgetPassword" id="forget-pass">Forget Password?</a>
         </form>
@@ -47,7 +52,9 @@
 
 
     <!-- script  -->
-  
+
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 
     <script>
        
@@ -59,26 +66,32 @@
             img.src.includes("dark") ? img.src = "../images/light.png" : img.src = "../images/dark.png";
         }
 
-        // $(document).ready(function() {
-        //    $('#loginform').submit(function(e) {
-        //        e.preventDefault();
-        //        var email = $('.email').val;
-        //        var password = $('.password').val;
-        //        $.ajax({
-        //            url: '/Patient/Login',
-        //            method: 'Post',
-        //            data: {email:email , password: password},
-        //            success: function(response){
-        //                $('#message').text(response);
-        //            },
-        //            error: function(xhr,status,error){
-        //                $('#message').text(response);
-        //            }
-        //        });
-        //    });
-        // });
+        var eye = document.getElementById('eye')
+        var password = document.getElementById('passwordlogin')
+        eye.addEventListener('click', function () {
+            if (password.type == 'password') {
+                eye.classList.remove('bi-eye-fill');
+                eye.classList.add('bi-eye-slash-fill');
+                password.type = 'text';
+            }
+            else {
+                eye.classList.remove('bi-eye-slash-fill');
+                eye.classList.add('bi-eye-fill');
+                password.type = 'password';
+            }
+        })
 
     </script>
 
 </body>
 </html>
+
+@if (TempData["Error"] != null)
+{
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script type="text/javascript">
+        toastr.error('@TempData["Error"]');
+    </script>
+}

@@ -12,9 +12,10 @@ namespace BusinessLogic.Interfaces
 {
     public interface IAdminInterface
     {
-        Aspnetuser GetAspnetuser(string email);
+        //Aspnetuser GetAspnetuser(string email);
         StatusCountModel GetStatusCount();
-        List<AdminDashTableModel> GetRequestsByStatus(int tabNo);
+        DashboardModel GetRequestsByStatus(int status, int CurrentPage);
+        DashboardModel GetRequestByRegion(int regionId, int tabNo);
         ViewCaseViewModel ViewCase(int reqClientId, int RequestTypeId, int ReqId);
         ViewNotesModel ViewNotes(int reqClientId);
         bool UpdateAdminNotes(string AdminNotes, int RequestId);
@@ -48,5 +49,6 @@ namespace BusinessLogic.Interfaces
         MyProfileModel MyProfile(string email);
         bool VerifyState(string state);
         bool CreateRequest(CreateRequestModel model, string sessionEmail);
+        LoginResponseViewModel AdminLogin(AdminLoginModel model);
     }
 }

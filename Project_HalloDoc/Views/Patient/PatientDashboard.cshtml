@@ -45,16 +45,17 @@
                     </li>
                     <li class="nav-item p-2 fw-bolder">
                         <span class="d-flex gap-1">
-                            <span>@(Model.firstName)</span>
-                            <span>@(Model.lastName)</span>
+                            @* <span>@(Model.firstName)</span>
+                            <span>@(Model.lastName)</span> *@
                         </span>
                     </li>
             </div>
             <li class="nav-item">
-                <button id="logout" onclick="location.href='@(Url.Action("Login", "Patient"))'" class="px-3">
-                    <span class=" d-none d-md-block">Logout</span><i class="bi bi-box-arrow-right d-md-none d-block"></i>
-                </button>
-
+                <a asp-action="PatientLogout" asp-controller="Patient">
+                    <button id="logout" class="px-2">
+                        <span class="d-none d-md-block">Logout</span><i class="bi bi-box-arrow-right d-md-none d-block"></i>
+                    </button>
+                </a>
             </li>
             <li class="nav-item">
                 <img onclick="darkMode()" class="light" src="/images/dark.png" alt="">
@@ -85,7 +86,7 @@
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane"
-                                type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false" onclick="ShowProfile(@Model.id)">
+                                type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false" @* onclick="ShowProfile(@Model.id)" *@>
                             Profile
                         </button>
                     </li>
@@ -121,7 +122,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if (Model.medicalHistoriesList.Count != 0)
+                                    @* @if (Model.medicalHistoriesList.Count != 0)
                                     {
 
                                         foreach (var items in Model.medicalHistoriesList)
@@ -146,7 +147,7 @@
                                     else
                                     {
                                         <tr><td></td><td class="fw-bold">No Items found</td><td></td></tr>
-                                    }
+                                    } *@
                                 </tbody>
                             </table>
 
